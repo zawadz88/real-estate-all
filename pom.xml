@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2013 Piotr Zawadzki. All rights reserved. This program 
+	and the accompanying materials are made available under the terms of the 
+	GNU Public License v3.0 which accompanies this distribution, and is available 
+	at http://www.gnu.org/licenses/gpl.html Contributors: Piotr Zawadzki - initial 
+	API and implementation -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zawadz88.realestate</groupId>
+	<artifactId>real-estate-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Real Estate Android - Parent</name>
+	<description>A sample real estate app</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+		<platform.version>4.2.2_r2</platform.version>
+		<android.platform>17</android.platform>
+		<android.support.version>19</android.support.version>
+		<android.query.version>0.25.10</android.query.version>
+		
+		<hamcrest.version>1.1</hamcrest.version>
+		<junit.version>4.8.2</junit.version>
+		<robolectric.version>2.2</robolectric.version>
+		
+		<pull.to.refresh.library.version>2.1.2</pull.to.refresh.library.version>
+		
+		<!-- Maven plugins -->
+		<maven.android.plugin.version>3.6.1</maven.android.plugin.version>
+		<maven.compiler.plugin.version>3.0</maven.compiler.plugin.version>
+		<maven.jarsigner.plugin.version>1.2</maven.jarsigner.plugin.version>
+		<maven.resources.plugin.version>2.5</maven.resources.plugin.version>
+		<build.helper.maven.plugin.version>1.5</build.helper.maven.plugin.version>
+		<lifecycle.mapping.plugin.version>1.0.0</lifecycle.mapping.plugin.version>
+		<maven.surefire.plugin.version>2.16</maven.surefire.plugin.version>
+		<maven.surefire.report.plugin.version>2.16</maven.surefire.report.plugin.version>
+
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Main -->
+			<dependency>
+				<groupId>android</groupId>
+				<artifactId>android</artifactId>
+				<version>${platform.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			
+			<!-- Support libraries -->
+			<dependency>
+				<groupId>android.support</groupId>
+				<artifactId>compatibility-v4</artifactId>
+				<version>${android.support.version}</version>
+			</dependency>
+			
+			<!-- Networking & utils -->			
+			<dependency>
+				<groupId>com.androidquery</groupId>
+				<artifactId>android-query-full</artifactId>
+				<version>${android.query.version}</version>
+			</dependency>
+
+			<!-- apklibs -->
+			<dependency>
+				<groupId>com.github.chrisbanes.pulltorefresh</groupId>
+				<artifactId>pull-to-refresh-library</artifactId>
+				<version>${pull.to.refresh.library.version}</version>
+				<type>apklib</type>
+			</dependency>		
+        
+			<!-- Testing -->
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-core</artifactId>
+				<version>${hamcrest.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.robolectric</groupId>
+				<artifactId>robolectric</artifactId>
+				<version>${robolectric.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jarsigner-plugin</artifactId>
+					<version>${maven.jarsigner.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.plugin.version}</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>${maven.android.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${build.helper.maven.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>${maven.surefire.report.plugin.version}</version>	
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>	
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>${lifecycle.mapping.plugin.version}</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+										<artifactId>android-maven-plugin</artifactId>
+										<versionRange>[${maven.android.plugin.version},)</versionRange>
+										<goals>
+											<goal>manifest-update</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<modules>
+		<module>pull-to-refresh-library</module>
+		<module>real-estate</module>
+	</modules>
+	
+</project>

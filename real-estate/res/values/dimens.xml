@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="re_app_background_gradient_radius" format="float" type="dimen">350</item>
+</resources>

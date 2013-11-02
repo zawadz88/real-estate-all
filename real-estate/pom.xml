@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.zawadz88.realestate</groupId>
+		<artifactId>real-estate-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+    <groupId>com.zawadz88.realestate</groupId>
+    <artifactId>real-estate</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>apk</packaging>
+    <name>Real Estate</name>
+    <description>Core Real Estate application</description>
+
+    <dependencies>
+
+        <!-- Main -->		
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		
+		<!-- Support libraries -->		
+		<dependency>
+			<groupId>android.support</groupId>
+			<artifactId>compatibility-v4</artifactId>
+		</dependency>
+		
+		<!-- Networking & utils -->
+		<dependency>
+			<groupId>com.androidquery</groupId>
+			<artifactId>android-query-full</artifactId>
+		</dependency>
+		
+		<!-- apklibs -->
+		<dependency>
+			<groupId>com.github.chrisbanes.pulltorefresh</groupId>
+			<artifactId>pull-to-refresh-library</artifactId>
+			<type>apklib</type>
+		</dependency>
+		
+		<!-- Testing -->
+<!--         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <scope>test</scope>
+        </dependency> -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.robolectric</groupId>
+            <artifactId>robolectric</artifactId>
+            <scope>test</scope>
+        </dependency>
+		
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+                    <sdk>
+                        <!-- platform or api level (api level 4 = platform 1.6)-->
+						<platform>${android.platform}</platform>
+                    </sdk>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+	                <execution>
+	                    <id>default-test</id> 
+	                    <configuration>
+							<excludes>
+								<exclude>**\Test*.java</exclude>
+							</excludes>
+							<excludedGroups>com.zawadz88.realestate.test.category.NetworkingTestCategory</excludedGroups>
+	                        <!--<jvm>${JAVA_HOME}\bin\java</jvm>-->
+							<argLine>-Xmx1024m</argLine>    
+							<reportsDirectory>target\surefire-reports\</reportsDirectory>	                            
+	                    </configuration>
+	                </execution>				
+	            </executions>
+            </plugin>			
+        </plugins>
+    </build>	
+	
+	<profiles>
+		<profile>
+	        <id>integration</id>
+	        <build>
+	            <plugins>
+	                <plugin>
+	                    <groupId>org.apache.maven.plugins</groupId>
+	                    <artifactId>maven-surefire-plugin</artifactId>
+	                    <executions>
+	                        <execution>
+	                            <id>integration</id>
+	                            <phase>integration-test</phase>
+	                            <goals>
+	                                <goal>test</goal>
+	                            </goals>
+	                            <configuration>
+	                                <groups>com.zawadz88.realestate.test.category.NetworkingTestCategory</groups>
+	                                <reportsDirectory>target\surefire-reports\</reportsDirectory>
+	                            </configuration>
+	                        </execution>
+	                    </executions>
+	                </plugin>					
+	            </plugins>
+	        </build>
+	    </profile> 
+	</profiles>
+</project>
