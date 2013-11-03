@@ -17,14 +17,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
-		<platform.version>4.2.2_r2</platform.version>
+		<platform.version>4.1.1.4</platform.version>
 		<android.platform>17</android.platform>
 		<android.support.version>19</android.support.version>
 		<android.query.version>0.25.10</android.query.version>
 		
-		<hamcrest.version>1.1</hamcrest.version>
-		<junit.version>4.8.2</junit.version>
+		<junit.version>4.10</junit.version>
 		<robolectric.version>2.2</robolectric.version>
+		<robotium.version>4.0</robotium.version>
 		
 		<pull.to.refresh.library.version>2.1.2</pull.to.refresh.library.version>
 		
@@ -44,7 +44,7 @@
 		<dependencies>
 			<!-- Main -->
 			<dependency>
-				<groupId>android</groupId>
+			<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
 				<version>${platform.version}</version>
 				<scope>provided</scope>
@@ -91,10 +91,12 @@
 			</dependency>	
         
 			<!-- Testing -->
+			
 			<dependency>
-				<groupId>org.hamcrest</groupId>
-				<artifactId>hamcrest-core</artifactId>
-				<version>${hamcrest.version}</version>
+				<groupId>com.google.android</groupId>
+				<artifactId>android-test</artifactId>
+				<version>${platform.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			
 			<dependency>
@@ -102,7 +104,13 @@
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 			</dependency>
-
+			
+			<dependency>
+				<groupId>com.jayway.android.robotium</groupId>
+				<artifactId>robotium-solo</artifactId>
+				<version>${robotium.version}</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.robolectric</groupId>
 				<artifactId>robolectric</artifactId>
@@ -135,6 +143,15 @@
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
 					<version>${maven.android.plugin.version}</version>
+					<configuration>
+                        <sdk>
+                            <platform>16</platform>
+                         </sdk>
+						<zipalign>
+                            <verbose>true</verbose>
+                        </zipalign>
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    </configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -185,6 +202,7 @@
 		<module>pull-to-refresh-library</module>
 		<module>appcompat-resources</module>
 		<module>real-estate</module>
+		<module>real-estate-it</module>
 	</modules>
 	
 </project>
