@@ -56,6 +56,18 @@
 				<artifactId>compatibility-v4</artifactId>
 				<version>${android.support.version}</version>
 			</dependency>
+
+            <dependency>
+                <groupId>android.support</groupId>
+                <artifactId>compatibility-v7-appcompat</artifactId>
+                <version>${android.support.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>android.support</groupId>
+                <artifactId>compatibility-v7</artifactId>
+                <version>${android.support.version}</version>
+            </dependency>
 			
 			<!-- Networking & utils -->			
 			<dependency>
@@ -70,7 +82,13 @@
 				<artifactId>pull-to-refresh-library</artifactId>
 				<version>${pull.to.refresh.library.version}</version>
 				<type>apklib</type>
-			</dependency>		
+			</dependency>	
+			<dependency>
+				<groupId>com.zawadz88.realestate</groupId>
+				<artifactId>appcompat-resources</artifactId>
+				<type>apklib</type>
+				<version>${project.version}</version>
+			</dependency>	
         
 			<!-- Testing -->
 			<dependency>
@@ -165,6 +183,7 @@
 	
 	<modules>
 		<module>pull-to-refresh-library</module>
+		<module>appcompat-resources</module>
 		<module>real-estate</module>
 	</modules>
 	

@@ -2,7 +2,7 @@ package com.zawadz88.realestate.test;
 
 import static org.junit.Assert.assertTrue;
 
-import com.zawadz88.realestate.activity.RealEstateActivity;
+import com.zawadz88.realestate.activity.MainActivity;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class NetworkingDeckardActivityTest {
   @Test
   @Category(NetworkingTestCategory.class)
   public void testSomethingWithNetwork() throws Exception {
-    Activity activity = Robolectric.buildActivity(RealEstateActivity.class).create().get();
+    Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
 	System.out.println("testSomethingWithNetwork");
     assertTrue(activity != null);
   }
