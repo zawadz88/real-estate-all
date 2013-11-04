@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="re_ads_gridview_column_count">3</integer>
+    <dimen name="re_ads_gridview_row_height">250dp</dimen>
+
+</resources>

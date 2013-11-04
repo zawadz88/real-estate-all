@@ -3,6 +3,9 @@
 
     <item name="re_app_background_gradient_radius" format="float" type="dimen">350</item>
 
-    <dimen name="navigation_drawer_width">240dp</dimen>
+    <integer name="re_ads_gridview_column_count">1</integer>
+    <dimen name="re_ads_gridview_row_height">200dp</dimen>
+
+    <dimen name="re_navigation_drawer_width">240dp</dimen>
 
 </resources>

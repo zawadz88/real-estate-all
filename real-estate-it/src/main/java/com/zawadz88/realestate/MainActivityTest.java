@@ -28,6 +28,7 @@ import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
@@ -79,8 +80,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertFalse(listView.getAdapter().isEmpty());
 	}
 
+	@SmallTest
 	public void testContentReplacementOnNavigationDrawerListItemClicked() {
-		final int articlesPosition = 1;
+		final int articlesPosition = MainActivity.RE_NAVIGATION_ARTICLES;
 		final ListView listView = (ListView) solo.getView(R.id.navigation_list);
 		assertEquals(solo.getString(R.string.title_ads), getActivity().getActionBarTitle());
 		getActivity().runOnUiThread(new Runnable() {
@@ -96,6 +98,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			}
 		};
 		assertTrue(solo.waitForCondition(titleChangedCondition, 2000));
+	}
+
+	@SmallTest
+	public void testAdsGridLayoutPresent() {
+		GridView gridView = (GridView) solo.getView(R.id.ads_gridview);
+		assertNotNull("Couldn't find ads gridView!", gridView);
+		assertTrue("GridView is empty!", gridView.getChildCount() > 0);
 	}
 
 	@Override

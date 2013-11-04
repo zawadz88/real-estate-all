@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="re_app_background_gradient_radius" format="float" type="dimen">600</item>
+
+    <integer name="re_ads_gridview_column_count">2</integer>
+    <dimen name="re_ads_gridview_row_height">200dp</dimen>
+
 </resources>

@@ -62,12 +62,6 @@
                 <artifactId>compatibility-v7-appcompat</artifactId>
                 <version>${android.support.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>android.support</groupId>
-                <artifactId>compatibility-v7</artifactId>
-                <version>${android.support.version}</version>
-            </dependency>
 			
 			<!-- Networking & utils -->			
 			<dependency>
@@ -88,7 +82,7 @@
 				<artifactId>appcompat-resources</artifactId>
 				<type>apklib</type>
 				<version>${project.version}</version>
-			</dependency>	
+			</dependency>
         
 			<!-- Testing -->
 			

@@ -1,6 +1,5 @@
 package com.zawadz88.realestate;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +8,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.TextView;
-import com.zawadz88.realestate.R;
+import com.zawadz88.realestate.fragment.AbstractSectionFragment;
+import com.zawadz88.realestate.fragment.AdsSectionFragment;
 import com.zawadz88.realestate.fragment.NavigationDrawerFragment;
+import com.zawadz88.realestate.model.Section;
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractSectionFragment.SectionAttachedListener {
+
+	public static final int RE_NAVIGATION_ADS = 0;
+	public static final int RE_NAVIGATION_ARTICLES = 1;
+	public static final int RE_NAVIGATION_PROJECTS = 2;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -70,27 +75,29 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
 	@Override
 	public void onNavigationDrawerItemSelected(final int position) {
-		System.out.println("onNavigationDrawerItemSelected " + position);
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
+		Fragment sectionFragment = null;
+		Section selectedSection = Section.getSectionForPosition(position);
+		switch (selectedSection) {
+			case ADS:
+				sectionFragment = AdsSectionFragment.newInstance();
+				break;
+			case ARTICLES:
+				sectionFragment = PlaceholderFragment.newInstance(position);
+				break;
+			case PROJECTS:
+				sectionFragment = PlaceholderFragment.newInstance(position);
+				break;
+		}
 		fragmentManager.beginTransaction()
-				.replace(R.id.content_container, PlaceholderFragment.newInstance(position))
+				.replace(R.id.content_container, sectionFragment)
 				.commit();
 	}
 
-	public void onSectionAttached(int number) {
-		System.out.println("onSectionAttached " + number);
-		switch (number) {
-			case 0:
-				mTitle = getString(R.string.title_ads);
-				break;
-			case 1:
-				mTitle = getString(R.string.title_articles);
-				break;
-			case 2:
-				mTitle = getString(R.string.title_projects);
-				break;
-		}
+	public void onSectionAttached(Section section) {
+		System.out.println("onSectionAttached " + section);
+		mTitle = getString(section.getTitleResourceId());
 	}
 
 	public void restoreActionBar() {
@@ -107,12 +114,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
-		/**
-		 * The fragment argument representing the section number for this
-		 * fragment.
-		 */
-		private static final String ARG_SECTION_NUMBER = "section_number";
+	public static class PlaceholderFragment extends AbstractSectionFragment {
 
 		/**
 		 * Returns a new instance of this fragment for the given section
@@ -121,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		public static PlaceholderFragment newInstance(int sectionNumber) {
 			PlaceholderFragment fragment = new PlaceholderFragment();
 			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			args.putSerializable(ARG_SECTION, Section.getSectionForPosition(sectionNumber));
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -134,15 +136,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 								 Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-			textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+			textView.setText(getArguments().getSerializable(ARG_SECTION).toString());
 			return rootView;
 		}
 
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(
-					getArguments().getInt(ARG_SECTION_NUMBER));
-		}
 	}
 }

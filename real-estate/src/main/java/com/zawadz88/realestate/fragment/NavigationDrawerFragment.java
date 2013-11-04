@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.zawadz88.realestate.R;
+import com.zawadz88.realestate.model.Section;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -75,6 +76,11 @@ public class NavigationDrawerFragment extends Fragment {
 		// Select either the default item (0) or the last selected item.
 		selectItem(mCurrentSelectedPosition);
 
+	}
+
+	@Override
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		// Indicate that this fragment would like to influence the set of actions in the action bar.
 		//TODO handle options menu
 		setHasOptionsMenu(true);
@@ -94,9 +100,9 @@ public class NavigationDrawerFragment extends Fragment {
 				android.R.layout.simple_list_item_1,
 				android.R.id.text1,
 				new String[]{
-						getString(R.string.title_ads),
-						getString(R.string.title_articles),
-						getString(R.string.title_projects),
+						getString(Section.ADS.getTitleResourceId()),
+						getString(Section.ARTICLES.getTitleResourceId()),
+						getString(Section.PROJECTS.getTitleResourceId()),
 				}));
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
