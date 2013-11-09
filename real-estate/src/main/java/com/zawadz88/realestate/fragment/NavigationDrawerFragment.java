@@ -1,6 +1,7 @@
 package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,10 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.Section;
 
@@ -95,15 +93,7 @@ public class NavigationDrawerFragment extends Fragment {
 				selectItem(position);
 			}
 		});
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(
-				getActionBar().getThemedContext(),
-				android.R.layout.simple_list_item_1,
-				android.R.id.text1,
-				new String[]{
-						getString(Section.ADS.getTitleResourceId()),
-						getString(Section.ARTICLES.getTitleResourceId()),
-						getString(Section.PROJECTS.getTitleResourceId()),
-				}));
+		mDrawerListView.setAdapter(new NavigationListAdapter());
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
@@ -121,68 +111,70 @@ public class NavigationDrawerFragment extends Fragment {
 		mFragmentContainerView = getActivity().findViewById(fragmentId);
 		mDrawerLayout = drawerLayout;
 
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		// set up the drawer's list view with items and click listener
+		if (mDrawerLayout != null) {//drawer layout does not exist for landscape orientation of sw720dp devices
+			// set a custom shadow that overlays the main content when the drawer opens
+			mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+			// set up the drawer's list view with items and click listener
 
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setHomeButtonEnabled(true);
+			ActionBar actionBar = getActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
 
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the navigation drawer and the action bar app icon.
-		mDrawerToggle = new ActionBarDrawerToggle(
-				getActivity(),                    /* host Activity */
-				mDrawerLayout,                    /* DrawerLayout object */
-				R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-				R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-				R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-		) {
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				super.onDrawerClosed(drawerView);
-				if (!isAdded()) {
-					return;
+			// ActionBarDrawerToggle ties together the the proper interactions
+			// between the navigation drawer and the action bar app icon.
+			mDrawerToggle = new ActionBarDrawerToggle(
+					getActivity(),                    /* host Activity */
+					mDrawerLayout,                    /* DrawerLayout object */
+					R.drawable.ic_navigation_drawer,             /* nav drawer image to replace 'Up' caret */
+					R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
+					R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
+			) {
+				@Override
+				public void onDrawerClosed(View drawerView) {
+					super.onDrawerClosed(drawerView);
+					if (!isAdded()) {
+						return;
+					}
+
+					getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
 				}
 
-				getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+				@Override
+				public void onDrawerOpened(View drawerView) {
+					super.onDrawerOpened(drawerView);
+					if (!isAdded()) {
+						return;
+					}
+
+					if (!mUserLearnedDrawer) {
+						// The user manually opened the drawer; store this flag to prevent auto-showing
+						// the navigation drawer automatically in the future.
+						mUserLearnedDrawer = true;
+						SharedPreferences sp = PreferenceManager
+								.getDefaultSharedPreferences(getActivity());
+						sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).commit();
+					}
+
+					getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+				}
+			};
+
+			// If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
+			// per the navigation drawer design guidelines.
+			if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
+				mDrawerLayout.openDrawer(mFragmentContainerView);
 			}
 
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				if (!isAdded()) {
-					return;
+			// Defer code dependent on restoration of previous instance state.
+			mDrawerLayout.post(new Runnable() {
+				@Override
+				public void run() {
+					mDrawerToggle.syncState();
 				}
+			});
 
-				if (!mUserLearnedDrawer) {
-					// The user manually opened the drawer; store this flag to prevent auto-showing
-					// the navigation drawer automatically in the future.
-					mUserLearnedDrawer = true;
-					SharedPreferences sp = PreferenceManager
-							.getDefaultSharedPreferences(getActivity());
-					sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).commit();
-				}
-
-				getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
-			}
-		};
-
-		// If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
-		// per the navigation drawer design guidelines.
-		if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-			mDrawerLayout.openDrawer(mFragmentContainerView);
+			mDrawerLayout.setDrawerListener(mDrawerToggle);
 		}
-
-		// Defer code dependent on restoration of previous instance state.
-		mDrawerLayout.post(new Runnable() {
-			@Override
-			public void run() {
-				mDrawerToggle.syncState();
-			}
-		});
-
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
 	private void selectItem(int position) {
@@ -224,7 +216,9 @@ public class NavigationDrawerFragment extends Fragment {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		// Forward the new configuration the drawer toggle component.
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		if (mDrawerLayout != null) {
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
 	}
 
 	@Override
@@ -241,7 +235,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
+		if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
 
@@ -269,6 +263,43 @@ public class NavigationDrawerFragment extends Fragment {
 	private ActionBar getActionBar() {
 		return ((ActionBarActivity) getActivity()).getSupportActionBar();
 	}
+
+	private class NavigationListAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return Section.values().length;
+		}
+
+		@Override
+		public Section getItem(final int position) {
+			return Section.getSectionForPosition(position);
+		}
+
+		@Override
+		public long getItemId(final int position) {
+			return 0;
+		}
+
+		@Override
+		public View getView(final int position, final View convertView, final ViewGroup parent) {
+			View view;
+			if (convertView == null) {  // if it's not recycled, initialize some attributes
+				LayoutInflater inflater = (LayoutInflater) NavigationDrawerFragment.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				view = inflater.inflate(R.layout.navigation_drawer_item, parent, false);
+			} else {
+				view = convertView;
+			}
+			((TextView)view.findViewById(R.id.section_title)).setText(getItem(position).getTitleResourceId());
+			if (mDrawerListView.isItemChecked(position)) {
+				view.setBackgroundResource(R.drawable.re_navigation_item_checked);
+			} else {
+				view.setBackgroundResource(R.drawable.re_navigation_item_selector);
+			}
+			return view;
+		}
+	}
+
 
 	/**
 	 * Callbacks interface that all activities using this fragment must implement.

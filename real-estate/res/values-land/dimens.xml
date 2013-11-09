@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="re_ads_gridview_column_count">2</integer>
-    <dimen name="re_ads_gridview_row_height">150dp</dimen>
+    <integer name="re_ads_gridview_column_count">1</integer>
 
 </resources>

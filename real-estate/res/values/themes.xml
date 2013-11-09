@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Splash" parent="Theme.AppCompat">
+    <style name="Theme.Splash" parent="Theme.Realestate">
         <item name="android:windowBackground">@drawable/re_app_background</item>
-        <item name="android:windowNoTitle">false</item>
+       <!-- <item name="android:windowNoTitle">false</item>-->
     </style>
 </resources>

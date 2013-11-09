@@ -28,6 +28,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	 * Used to store the last screen title. For use in {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
+	private Section selectedSection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		Fragment sectionFragment = null;
-		Section selectedSection = Section.getSectionForPosition(position);
+		selectedSection = Section.getSectionForPosition(position);
 		switch (selectedSection) {
 			case ADS:
 				sectionFragment = AdsSectionFragment.newInstance();

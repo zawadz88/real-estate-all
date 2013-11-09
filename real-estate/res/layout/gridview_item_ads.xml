@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:background="#0000ff"
-              android:layout_height="@dimen/re_ads_gridview_row_height" android:gravity="center">
+              android:layout_height="wrap_content"
+              android:padding="5dp"
+              android:gravity="center">
+
+    <com.zawadz88.realestate.view.FixedAspectRatioImageView
+            xmlns:app="http://schemas.android.com/apk/res/com.zawadz88.realestate"
+            android:id="@+id/gridview_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/offer_sample"
+            android:scaleType="centerCrop"
+            android:background="#00ff00"
+            android:layout_gravity="center"
+            app:ratio="1.77"/>
 
     <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/gridview_item_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:textSize="30sp"
-            android:id="@+id/textView" android:layout_gravity="center"/>
-</LinearLayout>
+            android:textSize="@dimen/re_gridview_item_title_font_size"
+            android:textColor="@android:color/white"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:background="#88333333"
+            android:gravity="center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"/>
+
+</FrameLayout>

@@ -7,10 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import com.zawadz88.realestate.MainActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.Section;
@@ -45,7 +42,7 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 	private class AdsAdapter extends BaseAdapter {
 
 
-		private String[] elements = new String[] {"aaaaa", "bbbbb", "ccccc", "ddddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjj"} ;
+		private String[] elements = new String[] {"aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj"} ;
 
 		@Override
 		public int getCount() {
@@ -72,7 +69,32 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 			} else {
 				view = convertView;
 			}
-			((TextView)view.findViewById(R.id.textView)).setText(elements[position]);
+			((TextView)view.findViewById(R.id.gridview_item_title)).setText(elements[position]);
+
+			int modPos = position % 6;
+			int resId = 0;
+			switch (modPos) {
+				case 0:
+					resId = R.drawable.sample4;
+					break;
+				case 1:
+					resId = R.drawable.offer_sample;
+					break;
+				case 2:
+					resId = R.drawable.sample1;
+					break;
+				case 3:
+					resId = R.drawable.sample2;
+					break;
+				case 4:
+					resId = R.drawable.sample3;
+					break;
+				case 5:
+					resId = R.drawable.sample5;
+					break;
+			}
+			((ImageView)view.findViewById(R.id.gridview_item_image)).setImageResource(resId);
+			//((ImageView)view.findViewById(R.id.gridview_item_image)).setImageResource(R.drawable.offer_sample);
 			return view;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 	}
