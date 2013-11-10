@@ -33,6 +33,7 @@ import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.fragment.NavigationDrawerFragment;
+import com.zawadz88.realestate.model.Section;
 
 
 /**
@@ -82,7 +83,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 	@SmallTest
 	public void testContentReplacementOnNavigationDrawerListItemClicked() {
-		final int articlesPosition = MainActivity.RE_NAVIGATION_ARTICLES;
+		final int articlesPosition = Section.ARTICLES.getPosition();
 		final ListView listView = (ListView) solo.getView(R.id.navigation_list);
 		assertEquals(solo.getString(R.string.title_ads), getActivity().getActionBarTitle());
 		getActivity().runOnUiThread(new Runnable() {

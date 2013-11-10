@@ -1,23 +1,16 @@
 package com.zawadz88.realestate;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.TextView;
-import com.zawadz88.realestate.fragment.AbstractSectionFragment;
-import com.zawadz88.realestate.fragment.AdsSectionFragment;
-import com.zawadz88.realestate.fragment.NavigationDrawerFragment;
+import com.zawadz88.realestate.fragment.*;
 import com.zawadz88.realestate.model.Section;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractSectionFragment.SectionAttachedListener {
-
-	public static final int RE_NAVIGATION_ADS = 0;
-	public static final int RE_NAVIGATION_ARTICLES = 1;
-	public static final int RE_NAVIGATION_PROJECTS = 2;
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -28,7 +21,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	 * Used to store the last screen title. For use in {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
-	private Section selectedSection;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +31,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment)
 				getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(
 				R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+
 	}
 
 	@Override
@@ -78,29 +71,42 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	public void onNavigationDrawerItemSelected(final int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		Fragment sectionFragment = null;
-		selectedSection = Section.getSectionForPosition(position);
-		switch (selectedSection) {
-			case ADS:
-				sectionFragment = AdsSectionFragment.newInstance();
-				break;
-			case ARTICLES:
-				sectionFragment = PlaceholderFragment.newInstance(position);
-				break;
-			case PROJECTS:
-				sectionFragment = PlaceholderFragment.newInstance(position);
-				break;
+		AbstractSectionFragment sectionFragment = null;
+		Section selectedSection = Section.getSectionForPosition(position);
+		sectionFragment = (AbstractSectionFragment) fragmentManager.findFragmentByTag(AbstractSectionFragment.SECTION_FRAGMENT_TAG);
+
+		//replace only if the fragment is different than the one added before (this includes orientation change handling)
+		if (sectionFragment == null
+				|| sectionFragment.getArguments() == null
+				|| !sectionFragment.getArguments().containsKey(AbstractSectionFragment.ARG_SECTION)
+				|| !selectedSection.equals(sectionFragment.getArguments().getSerializable(AbstractSectionFragment.ARG_SECTION))) {
+			switch (selectedSection) {
+				case ADS:
+					sectionFragment = AdsSectionFragment.newInstance();
+					break;
+				case ARTICLES:
+					sectionFragment = ArticlesSectionFragment.newInstance();
+					break;
+				case PROJECTS:
+					sectionFragment = ProjectsSectionFragment.newInstance();
+					break;
+			}
+
+
 		}
 		fragmentManager.beginTransaction()
-				.replace(R.id.content_container, sectionFragment)
+				.replace(R.id.content_container, sectionFragment, AbstractSectionFragment.SECTION_FRAGMENT_TAG)
 				.commit();
 	}
 
+	@Override
 	public void onSectionAttached(Section section) {
-		System.out.println("onSectionAttached " + section);
 		mTitle = getString(section.getTitleResourceId());
 	}
 
+	/**
+	 * Sets the title of the action bar to selected section's name
+	 */
 	public void restoreActionBar() {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -112,34 +118,4 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		return mTitle;
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends AbstractSectionFragment {
-
-		/**
-		 * Returns a new instance of this fragment for the given section
-		 * number.
-		 */
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putSerializable(ARG_SECTION, Section.getSectionForPosition(sectionNumber));
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-								 Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-			TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-			textView.setText(getArguments().getSerializable(ARG_SECTION).toString());
-			return rootView;
-		}
-
-	}
 }

@@ -60,6 +60,7 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		System.out.println(" nav onCreate");
 
 		// Read in the flag indicating whether or not the user has demonstrated awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -71,9 +72,6 @@ public class NavigationDrawerFragment extends Fragment {
 			mFromSavedInstanceState = true;
 		}
 
-		// Select either the default item (0) or the last selected item.
-		selectItem(mCurrentSelectedPosition);
-
 	}
 
 	@Override
@@ -82,6 +80,8 @@ public class NavigationDrawerFragment extends Fragment {
 		// Indicate that this fragment would like to influence the set of actions in the action bar.
 		//TODO handle options menu
 		setHasOptionsMenu(true);
+		// Select either the default item (0) or the last selected item.
+		selectItem(mCurrentSelectedPosition);
 	}
 
 	@Override

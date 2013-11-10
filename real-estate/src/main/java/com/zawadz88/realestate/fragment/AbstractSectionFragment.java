@@ -1,6 +1,7 @@
 package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.zawadz88.realestate.MainActivity;
 import com.zawadz88.realestate.model.Section;
@@ -11,17 +12,19 @@ import com.zawadz88.realestate.model.Section;
  * @author Zawada
  */
 public class AbstractSectionFragment extends Fragment {
+	public static final String SECTION_FRAGMENT_TAG = "sectionFragment";
 	/**
 	 * The fragment argument representing the section number for this
 	 * fragment.
 	 */
-	protected static final String ARG_SECTION = "section";
+	public static final String ARG_SECTION = "section";
 
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		if(activity instanceof SectionAttachedListener) {
 			((SectionAttachedListener) activity).onSectionAttached((Section)getArguments().getSerializable(ARG_SECTION));
+			getActivity().supportInvalidateOptionsMenu();//need to invalidate on activity's first start, because onCreateOptionsMenu(..) got executed before onSectionAttached(..)
 		} else {
 			throw new IllegalStateException("Activity must implement SectionAttachedListener!");
 		}
