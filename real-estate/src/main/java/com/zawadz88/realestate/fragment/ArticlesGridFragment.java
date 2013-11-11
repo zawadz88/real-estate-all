@@ -2,6 +2,7 @@ package com.zawadz88.realestate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
+import com.zawadz88.realestate.model.ArticleCategory;
 import com.zawadz88.realestate.model.Section;
 
 /**
@@ -17,17 +19,15 @@ import com.zawadz88.realestate.model.Section;
  *
  * @author Zawada
  */
-public class ProjectsSectionFragment extends AbstractSectionFragment {
+public class ArticlesGridFragment extends Fragment {
 
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
 
-	private GridView mProjectsGridView;
+	private GridView mArticlesGridView;
 
-	public static ProjectsSectionFragment newInstance() {
-		ProjectsSectionFragment fragment = new ProjectsSectionFragment();
-		Bundle args = new Bundle();
-		args.putSerializable(ARG_SECTION, Section.PROJECTS);
-		fragment.setArguments(args);
+	public static ArticlesGridFragment newInstance(final ArticleCategory category) {
+		ArticlesGridFragment fragment = new ArticlesGridFragment();
+
 		return fragment;
 	}
 
@@ -35,8 +35,8 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_default, container, false);
 
-		mProjectsGridView = (GridView) view.findViewById(R.id.ads_gridview);
-		mProjectsGridView.setAdapter(new AdsAdapter());
+		mArticlesGridView = (GridView) view.findViewById(R.id.ads_gridview);
+		mArticlesGridView.setAdapter(new AdsAdapter());
 
 		return view;
 	}
@@ -46,21 +46,22 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
-			mProjectsGridView.smoothScrollToPosition(position);
+			mArticlesGridView.smoothScrollToPosition(position);
 		}
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		int position = mProjectsGridView.getFirstVisiblePosition();
-		outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
+		if (mArticlesGridView != null) {
+			int position = mArticlesGridView.getFirstVisiblePosition();
+			outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
+		}
 	}
-
 	private class AdsAdapter extends BaseAdapter {
 
 
-		private String[] elements = new String[] {"e asad asde", "fsdfadsfdfdsa sdf dsafdsf dsfd fsdfffff", "lorem ipsum", " asd sdsa", "iiiii", "sfdf saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj"} ;
+		private String[] elements = new String[] {"asds asd fs dsf", "bbb dsa dsfad sfdsaf", "cccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsa fdaddd", "e asdfds sad dsf dafdsfeeee", "fsdfadsfdfdsa sdf dsafdsf dsfd fsdfffff", "gggggg", "hhhh", "iiiii", "sfdf saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj"} ;
 
 		@Override
 		public int getCount() {
@@ -81,7 +82,7 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 		public View getView(final int position, final View convertView, final ViewGroup parent) {
 			View view;
 			if (convertView == null) {  // if it's not recycled, initialize some attributes
-				LayoutInflater inflater = (LayoutInflater) ProjectsSectionFragment.this.getActivity()
+				LayoutInflater inflater = (LayoutInflater) ArticlesGridFragment.this.getActivity()
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				view = inflater.inflate(R.layout.section_gridview_item, parent, false);
 			} else {
@@ -93,22 +94,22 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 			int resId = 0;
 			switch (modPos) {
 				case 0:
-					resId = R.drawable.sample2;
+					resId = R.drawable.sample4;
 					break;
 				case 1:
 					resId = R.drawable.offer_sample;
 					break;
 				case 2:
-					resId = R.drawable.sample3;
+					resId = R.drawable.sample1;
 					break;
 				case 3:
-					resId = R.drawable.sample4;
+					resId = R.drawable.sample2;
 					break;
 				case 4:
-					resId = R.drawable.sample5;
+					resId = R.drawable.sample3;
 					break;
 				case 5:
-					resId = R.drawable.sample1;
+					resId = R.drawable.sample5;
 					break;
 			}
 			((ImageView)view.findViewById(R.id.gridview_item_image)).setImageResource(resId);

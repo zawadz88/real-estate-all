@@ -16,23 +16,16 @@
 
 package com.zawadz88.realestate;
 
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
-import com.zawadz88.realestate.fragment.NavigationDrawerFragment;
 import com.zawadz88.realestate.model.Section;
 
 
@@ -85,7 +78,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void testContentReplacementOnNavigationDrawerListItemClicked() {
 		final int articlesPosition = Section.ARTICLES.getPosition();
 		final ListView listView = (ListView) solo.getView(R.id.navigation_list);
-		assertEquals(solo.getString(R.string.title_ads), getActivity().getActionBarTitle());
+		assertEquals(solo.getString(R.string.section_title_ads), getActivity().getActionBarTitle());
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -95,7 +88,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		Condition titleChangedCondition = new Condition() {
 			@Override
 			public boolean isSatisfied() {
-				return solo.getString(R.string.title_articles).equals(getActivity().getActionBarTitle());
+				return solo.getString(R.string.section_title_articles).equals(getActivity().getActionBarTitle());
 			}
 		};
 		assertTrue(solo.waitForCondition(titleChangedCondition, 2000));

@@ -4,7 +4,12 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="title_ads">Ads</string>
-    <string name="title_articles">Articles</string>
-    <string name="title_projects">Projects</string>
+    <string name="section_title_ads">Ads</string>
+    <string name="section_title_articles">Articles</string>
+    <string name="section_title_projects">Projects</string>
+
+    <string name="article_title_newest">Newest</string>
+    <string name="article_title_popular">Popular</string>
+    <string name="article_title_tips">Tips</string>
+    <string name="article_title_loans">Loans</string>
 </resources>

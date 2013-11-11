@@ -8,7 +8,7 @@ import com.zawadz88.realestate.R;
  * @author Zawada
  */
 public enum Section {
-	ADS(0, R.string.title_ads), ARTICLES(1, R.string.title_articles), PROJECTS(2, R.string.title_projects);
+	ADS(0, R.string.section_title_ads), ARTICLES(1, R.string.section_title_articles), PROJECTS(2, R.string.section_title_projects);
 
 	private final int position;
 	private final int titleResourceId;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/ads_gridview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:paddingLeft="5dp"
+          android:paddingRight="5dp"
+          android:numColumns="@integer/re_ads_gridview_column_count"
+          android:verticalSpacing="0dp"
+          android:horizontalSpacing="0dp"
+          android:background="@android:color/transparent"
+          android:listSelector="@android:color/transparent"
+          android:cacheColorHint="@android:color/transparent"
+          android:stretchMode="columnWidth"
+          android:gravity="center"
+        />

@@ -83,6 +83,12 @@
 				<type>apklib</type>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.astuetz.pagerslidingtabstrip</groupId>
+				<artifactId>pagerslidingtabstrip</artifactId>
+				<type>apklib</type>
+				<version>${project.version}</version>
+			</dependency>
         
 			<!-- Testing -->
 			
@@ -195,6 +201,7 @@
 	<modules>
 		<module>pull-to-refresh-library</module>
 		<module>appcompat-resources</module>
+		<module>pagerslidingtabstrip</module>
 		<module>real-estate</module>
 		<module>real-estate-it</module>
 	</modules>
