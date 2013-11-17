@@ -6,9 +6,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
-import android.widget.TextView;
 import com.zawadz88.realestate.fragment.*;
-import com.zawadz88.realestate.model.Section;
+import com.zawadz88.realestate.api.model.Section;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractSectionFragment.SectionAttachedListener {
 

@@ -2,12 +2,12 @@ package com.zawadz88.realestate;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import com.zawadz88.realestate.task.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.model.ArticleEssential;
-import com.zawadz88.realestate.task.AbstractDownloadTask;
-import com.zawadz88.realestate.task.ArticleListDownloadTask;
-import com.zawadz88.realestate.task.util.AsyncTaskListener;
-import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.api.model.ArticleEssential;
+import com.zawadz88.realestate.api.task.AbstractDownloadTask;
+import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.api.AsyncTaskListener;
+import com.zawadz88.realestate.api.TaskResult;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 
@@ -19,7 +19,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 
 	private EventBus mBus;
 
-	private HashMap<String, AbstractDownloadTask> mDownloadTasks = (HashMap<String, AbstractDownloadTask>) Collections.synchronizedMap(new HashMap<String, AbstractDownloadTask>());
+	private Map<String, AbstractDownloadTask> mDownloadTasks = (Map<String, AbstractDownloadTask>) Collections.synchronizedMap(new HashMap<String, AbstractDownloadTask>());
 
 	private List<ArticleEssential> mArticleEssentialList = new ArrayList<ArticleEssential>();
 

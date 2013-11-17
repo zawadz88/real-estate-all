@@ -1,10 +1,8 @@
 package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import com.zawadz88.realestate.MainActivity;
-import com.zawadz88.realestate.model.Section;
+import com.zawadz88.realestate.api.model.Section;
 
 /**
  * Created: 04.11.13

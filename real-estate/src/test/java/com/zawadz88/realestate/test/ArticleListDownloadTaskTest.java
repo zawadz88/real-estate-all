@@ -3,9 +3,9 @@ package com.zawadz88.realestate.test;
 import static junit.framework.Assert.*;
 import static com.jayway.awaitility.Awaitility.*;
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.task.ArticleListDownloadTask;
-import com.zawadz88.realestate.task.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.api.TaskResult;
 import de.greenrobot.event.EventBus;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class ArticleListDownloadTaskTest {
 
 		final EventListener eventListener = new EventListener();
 		eventListener.register();
-		ArticleListDownloadTask asyncTask = new ArticleListDownloadTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG, 0);
+		ArticleListDownloadTask asyncTask = new ArticleListDownloadTask("mostpopular", 0);
 
 		application.startTask(asyncTask);
 

@@ -25,13 +25,17 @@
         </dependency>
 		
 		<!-- Networking & utils -->
-		<dependency>
-			<groupId>com.androidquery</groupId>
-			<artifactId>android-query-full</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit</groupId>
+            <artifactId>retrofit</artifactId>
+        </dependency>
         <dependency>
             <groupId>de.greenrobot</groupId>
             <artifactId>eventbus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
         </dependency>
 		
 		<!-- apklibs -->

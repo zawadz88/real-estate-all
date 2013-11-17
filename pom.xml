@@ -20,7 +20,8 @@
 		<platform.version>4.1.1.4</platform.version>
 		<android.platform>17</android.platform>
 		<android.support.version>19</android.support.version>
-		<android.query.version>0.25.10</android.query.version>
+		<retrofit.version>1.2.2</retrofit.version>
+        <okhttp.version>1.2.1</okhttp.version>
         <eventbus.version>2.1.0</eventbus.version>
 		
 		<junit.version>4.10</junit.version>
@@ -65,12 +66,17 @@
                 <version>${android.support.version}</version>
             </dependency>
 			
-			<!-- Networking & utils -->			
-			<dependency>
-				<groupId>com.androidquery</groupId>
-				<artifactId>android-query-full</artifactId>
-				<version>${android.query.version}</version>
-			</dependency>
+			<!-- Networking & utils -->
+            <dependency>
+                <groupId>com.squareup.retrofit</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>de.greenrobot</groupId>

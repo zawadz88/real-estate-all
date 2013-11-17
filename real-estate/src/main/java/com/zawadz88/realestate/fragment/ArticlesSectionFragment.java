@@ -9,16 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.model.ArticleCategory;
-import com.zawadz88.realestate.model.Section;
-
-import java.util.ArrayList;
+import com.zawadz88.realestate.api.model.ArticleCategory;
+import com.zawadz88.realestate.api.model.Section;
 
 /**
  * Created: 04.11.13

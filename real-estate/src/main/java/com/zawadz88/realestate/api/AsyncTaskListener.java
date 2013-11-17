@@ -1,6 +1,6 @@
-package com.zawadz88.realestate.task.util;
+package com.zawadz88.realestate.api;
 
-import com.zawadz88.realestate.task.AbstractDownloadTask;
+import com.zawadz88.realestate.api.task.AbstractDownloadTask;
 
 public interface AsyncTaskListener {
 

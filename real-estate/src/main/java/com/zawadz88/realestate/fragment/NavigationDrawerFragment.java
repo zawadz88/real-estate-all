@@ -15,7 +15,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.model.Section;
+import com.zawadz88.realestate.api.model.Section;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

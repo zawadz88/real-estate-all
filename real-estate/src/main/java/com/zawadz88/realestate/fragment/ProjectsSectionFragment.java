@@ -10,7 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.model.Section;
+import com.zawadz88.realestate.api.model.Section;
 
 /**
  * Created: 04.11.13

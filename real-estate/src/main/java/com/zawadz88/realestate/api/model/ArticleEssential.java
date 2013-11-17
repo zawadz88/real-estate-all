@@ -1,4 +1,6 @@
-package com.zawadz88.realestate.model;
+package com.zawadz88.realestate.api.model;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created: 16.11.13
@@ -7,12 +9,16 @@ package com.zawadz88.realestate.model;
  */
 public class ArticleEssential {
 
+	@SerializedName("x")
 	private int articleId;
 
+	@SerializedName("sid")
 	private int sectionId;
 
+	@SerializedName("t")
 	private String title;
 
+	@SerializedName("li")
 	private String imageUrl;
 
 	public int getArticleId() {

@@ -1,9 +1,9 @@
-package com.zawadz88.realestate.task;
+package com.zawadz88.realestate.api.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import com.zawadz88.realestate.task.util.AsyncTaskListener;
-import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.api.AsyncTaskListener;
+import com.zawadz88.realestate.api.TaskResult;
 import com.zawadz88.realestate.util.Constants;
 
 /**

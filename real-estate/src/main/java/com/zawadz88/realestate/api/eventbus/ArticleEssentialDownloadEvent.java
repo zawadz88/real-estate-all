@@ -1,6 +1,6 @@
-package com.zawadz88.realestate.task.eventbus;
+package com.zawadz88.realestate.api.eventbus;
 
-import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.api.TaskResult;
 
 /**
  * Created: 17.11.13

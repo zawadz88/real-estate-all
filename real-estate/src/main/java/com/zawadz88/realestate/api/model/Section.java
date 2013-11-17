@@ -1,4 +1,4 @@
-package com.zawadz88.realestate.model;
+package com.zawadz88.realestate.api.model;
 
 import com.zawadz88.realestate.R;
 

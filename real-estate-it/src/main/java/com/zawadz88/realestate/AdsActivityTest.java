@@ -17,17 +17,10 @@
 package com.zawadz88.realestate;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.FlakyTest;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.ListView;
-import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
-import com.zawadz88.realestate.model.Section;
+import com.zawadz88.realestate.api.model.Section;
 
 public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivity> {
 
