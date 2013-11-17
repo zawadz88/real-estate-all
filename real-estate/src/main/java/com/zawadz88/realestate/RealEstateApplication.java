@@ -30,7 +30,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	}
 
 	@Override
-	public void onTaskSuccessful(final AbstractDownloadTask task) {
+	public synchronized void onTaskSuccessful(final AbstractDownloadTask task) {
 		mDownloadTasks.remove(task.getTag());
 		if (task instanceof ArticleListDownloadTask) {
 			mArticleEssentialList.addAll(((ArticleListDownloadTask) task).getArticleList());
@@ -39,17 +39,17 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	}
 
 	@Override
-	public void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
+	public synchronized void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
 		mDownloadTasks.remove(task.getTag());
 		mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED));
 	}
 
 	@Override
-	public void onTaskCancelled(final AbstractDownloadTask task) {
+	public synchronized void onTaskCancelled(final AbstractDownloadTask task) {
 		mDownloadTasks.remove(task.getTag());
 	}
 
-	public void startTask(final AbstractDownloadTask task) {
+	public synchronized void startTask(final AbstractDownloadTask task) {
 		final String tag = task.getTag();
 		if (!mDownloadTasks.containsKey(tag)) {
 			task.setListener(this);
@@ -62,7 +62,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		}
 	}
 
-	public boolean isExecutingTask(final String tag) {
+	public synchronized boolean isExecutingTask(final String tag) {
 		return mDownloadTasks.containsKey(tag);
 	}
 
