@@ -16,10 +16,12 @@
 
 package com.zawadz88.realestate;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.FlakyTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -28,11 +30,6 @@ import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.model.Section;
 
-
-/**
- * Make sure that the main launcher activity opens up properly, which will be
- * verified by {@link ActivityInstrumentationTestCase#testActivityTestCaseSetUpProperly}.
- */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	private Solo solo;
@@ -74,7 +71,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertFalse(listView.getAdapter().isEmpty());
 	}
 
-	@SmallTest
+	@FlakyTest
 	public void testContentReplacementOnNavigationDrawerListItemClicked() {
 		final int articlesPosition = Section.ARTICLES.getPosition();
 		final ListView listView = (ListView) solo.getView(R.id.navigation_list);
@@ -99,6 +96,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		GridView gridView = (GridView) solo.getView(R.id.ads_gridview);
 		assertNotNull("Couldn't find ads gridView!", gridView);
 		assertTrue("GridView is empty!", gridView.getChildCount() > 0);
+	}
+
+	public void testClickOnAdsItem() {
+		final int clickedItemIndex = 5;
+		solo.clickInList(clickedItemIndex, 0);
+		assertTrue(solo.waitForActivity(AdsActivity.class.getSimpleName()));
+		assertNotNull(solo.getCurrentActivity());
+		int position = solo.getCurrentActivity().getIntent().getIntExtra(AdsActivity.EXTRA_POSITION_TAG, -1);
+		assertEquals(clickedItemIndex - 1, position);//different start offset
 	}
 
 	@Override

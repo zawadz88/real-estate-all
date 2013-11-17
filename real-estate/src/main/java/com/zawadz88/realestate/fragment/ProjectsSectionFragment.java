@@ -33,7 +33,7 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_section_default, container, false);
+		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
 		mProjectsGridView = (GridView) view.findViewById(R.id.ads_gridview);
 		mProjectsGridView.setAdapter(new AdsAdapter());

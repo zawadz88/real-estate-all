@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.ArticleCategory;
-import com.zawadz88.realestate.model.Section;
 
 /**
  * Created: 04.11.13
@@ -33,7 +32,7 @@ public class ArticlesGridFragment extends Fragment {
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_section_default, container, false);
+		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
 		mArticlesGridView = (GridView) view.findViewById(R.id.ads_gridview);
 		mArticlesGridView.setAdapter(new AdsAdapter());

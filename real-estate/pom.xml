@@ -29,6 +29,10 @@
 			<groupId>com.androidquery</groupId>
 			<artifactId>android-query-full</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>de.greenrobot</groupId>
+            <artifactId>eventbus</artifactId>
+        </dependency>
 		
 		<!-- apklibs -->
 		<dependency>
@@ -65,6 +69,12 @@
                     <artifactId>support-v4</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>test</scope>
         </dependency>
 		
 		<dependency>

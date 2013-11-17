@@ -1,11 +1,13 @@
 package com.zawadz88.realestate.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.zawadz88.realestate.AdsActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.Section;
 
@@ -30,10 +32,18 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_section_default, container, false);
+		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
 		mAdsGridView = (GridView) view.findViewById(R.id.ads_gridview);
 		mAdsGridView.setAdapter(new AdsAdapter());
+		mAdsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdsActivity.class);
+				intent.putExtra(AdsActivity.EXTRA_POSITION_TAG, position);
+				startActivity(intent);
+			}
+		});
 		return view;
 	}
 
