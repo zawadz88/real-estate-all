@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/offer_sample"
             android:scaleType="centerCrop"
-            android:background="#00ff00"
             android:layout_gravity="center"
             app:ratio="1.77"/>
 

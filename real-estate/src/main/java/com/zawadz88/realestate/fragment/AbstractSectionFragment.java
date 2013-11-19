@@ -1,7 +1,6 @@
 package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
@@ -9,11 +8,10 @@ import com.zawadz88.realestate.api.model.Section;
  *
  * @author Zawada
  */
-public class AbstractSectionFragment extends Fragment {
+public class AbstractSectionFragment extends AbstractListFragment {
 	public static final String SECTION_FRAGMENT_TAG = "sectionFragment";
 	/**
-	 * The fragment argument representing the section number for this
-	 * fragment.
+	 * Fragment argument representing the section number for this fragment.
 	 */
 	public static final String ARG_SECTION = "section";
 
