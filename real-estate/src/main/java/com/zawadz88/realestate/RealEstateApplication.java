@@ -15,13 +15,14 @@ import java.util.*;
 
 public class RealEstateApplication extends Application implements AsyncTaskListener {
 
-	public static final String DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG = "ArticleListDownloadTask";
+	public static final String DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX = "ArticleListDownloadTask:";
 
 	private EventBus mBus;
 
 	private Map<String, AbstractDownloadTask> mDownloadTasks = (Map<String, AbstractDownloadTask>) Collections.synchronizedMap(new HashMap<String, AbstractDownloadTask>());
 
-	private List<ArticleEssential> mArticleEssentialList = new ArrayList<ArticleEssential>();
+	private Map<String, List<ArticleEssential>> mArticleEssentialListsByCategory = new HashMap<String, List<ArticleEssential>>();
+	private Map<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
 
 	@Override
 	public void onCreate() {
@@ -33,15 +34,22 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	public synchronized void onTaskSuccessful(final AbstractDownloadTask task) {
 		mDownloadTasks.remove(task.getTag());
 		if (task instanceof ArticleListDownloadTask) {
-			mArticleEssentialList.addAll(((ArticleListDownloadTask) task).getArticleList());
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL));
+			ArticleListDownloadTask articleListDownloadTask = (ArticleListDownloadTask) task;
+
+			List<ArticleEssential> articleEssentialList = getArticleEssentialListByCategory(articleListDownloadTask.getCategory());
+
+			articleEssentialList.addAll(articleListDownloadTask.getArticleList());
+			mArticleEssentialCurrentPageNumbersByCategory.put(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, articleListDownloadTask.getCategory()));
 		}
 	}
 
 	@Override
 	public synchronized void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
 		mDownloadTasks.remove(task.getTag());
-		mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED));
+		if (task instanceof ArticleListDownloadTask) {
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, ((ArticleListDownloadTask) task).getCategory()));
+		}
 	}
 
 	@Override
@@ -66,8 +74,22 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		return mDownloadTasks.containsKey(tag);
 	}
 
-	public List<ArticleEssential> getArticleEssentialList() {
-		return mArticleEssentialList;
+	public List<ArticleEssential> getArticleEssentialListByCategory(final String categoryName) {
+		List<ArticleEssential> articleEssentialList = mArticleEssentialListsByCategory.get(categoryName);
+		if (articleEssentialList == null) {
+			articleEssentialList = new ArrayList<ArticleEssential>();
+			mArticleEssentialListsByCategory.put(categoryName, articleEssentialList);
+		}
+		return articleEssentialList;
+	}
+
+	public int getCurrentlyLoadedPageNumberForCategory(final String categoryName) {
+		int result = -1;
+		Integer currentNumber = mArticleEssentialCurrentPageNumbersByCategory.get(categoryName);
+		if (currentNumber != null) {
+			result = currentNumber.intValue();
+		}
+		return result;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.zawadz88.realestate.test;
 import static junit.framework.Assert.*;
 import static com.jayway.awaitility.Awaitility.*;
 import com.zawadz88.realestate.RealEstateApplication;
+import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
 import com.zawadz88.realestate.api.TaskResult;
@@ -38,12 +39,12 @@ public class ArticleListDownloadTaskTest {
 
 		final EventListener eventListener = new EventListener();
 		eventListener.register();
-		ArticleListDownloadTask asyncTask = new ArticleListDownloadTask("mostpopular", 0);
+		ArticleListDownloadTask asyncTask = new ArticleListDownloadTask(ArticleCategory.POPULAR.getName(), 0);
 
 		application.startTask(asyncTask);
 
 
-		assertTrue("Task not started!", application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG));
+		assertTrue("Task not started!", application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX));
 
 		Robolectric.runBackgroundTasks();
 
@@ -51,11 +52,11 @@ public class ArticleListDownloadTaskTest {
 		await().until(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				return !application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG);
+				return !application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX);
 			}
 		});
 
-		assertTrue("Task did not succeed!", !application.getArticleEssentialList().isEmpty());
+		assertTrue("Task did not succeed!", !application.getArticleEssentialListByCategory(ArticleCategory.POPULAR.getName()).isEmpty());
 
 		await().until(new Callable<Boolean>() {
 			@Override

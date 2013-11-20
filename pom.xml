@@ -23,7 +23,8 @@
 		<retrofit.version>1.2.2</retrofit.version>
         <okhttp.version>1.2.1</okhttp.version>
         <eventbus.version>2.1.0</eventbus.version>
-		
+        <nineoldandroids.version>2.4.0</nineoldandroids.version>
+		<picasso.version>2.1.1</picasso.version>
 		<junit.version>4.10</junit.version>
         <robolectric.version>2.2</robolectric.version>
         <awaitility.version>1.3.5</awaitility.version>
@@ -82,6 +83,16 @@
                 <groupId>de.greenrobot</groupId>
                 <artifactId>eventbus</artifactId>
                 <version>${eventbus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nineoldandroids</groupId>
+                <artifactId>library</artifactId>
+                <version>${nineoldandroids.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.picasso</groupId>
+                <artifactId>picasso</artifactId>
+                <version>${picasso.version}</version>
             </dependency>
 
 			<!-- apklibs -->

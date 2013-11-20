@@ -13,6 +13,8 @@ import com.zawadz88.realestate.util.Constants;
  */
 public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
 
+	protected static final String SERVER_URL = "http://gazeta.app.gazeta.pl";
+
 	protected AsyncTaskListener taskListener;
 	protected TaskResult taskResult = TaskResult.SUCCESSFUL;
 	protected boolean cancelled;

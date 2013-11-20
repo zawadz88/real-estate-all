@@ -9,7 +9,14 @@ import com.zawadz88.realestate.api.TaskResult;
  */
 public class ArticleEssentialDownloadEvent extends AbstractDownloadEvent {
 
-	public ArticleEssentialDownloadEvent(final TaskResult result) {
+	private final String categoryName;
+
+	public ArticleEssentialDownloadEvent(final TaskResult result, final String categoryName) {
 		super(result);
+		this.categoryName = categoryName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 }

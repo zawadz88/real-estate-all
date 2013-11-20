@@ -21,11 +21,11 @@ public class ArticleListDownloadTask extends AbstractDownloadTask {
 	private List<ArticleEssential> articleList;
 
 	public ArticleListDownloadTask(String category, int pageNumber) {
-		super(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG);
+		super(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + category);
 		this.category = category;
 		this.pageNumber = pageNumber;
 		RestAdapter restAdapter = new RestAdapter.Builder()
-				.setServer("http://gazeta.app.gazeta.pl")
+				.setServer(SERVER_URL)
 				.build();
 
 		service = restAdapter.create(ArticleListService.class);
@@ -33,21 +33,19 @@ public class ArticleListDownloadTask extends AbstractDownloadTask {
 
 	@Override
 	protected void doInBackgroundSafe() throws Exception {
-//		List<ArticleEssential> list = new ArrayList<ArticleEssential>();
-
-//		for (int i = 0; i < 20; i++) {
-//			ArticleEssential item1 = new ArticleEssential();
-//			item1.setArticleId(i);
-//			item1.setSectionId(100 + i);
-//			item1.setTitle("Article" + i);
-//			item1.setImageUrl("image url " + i);
-//			list.add(item1);
-//		}
 		this.articleList = service.getArticleEssentialList(this.category, this.pageNumber);
 	}
 
 	public List<ArticleEssential> getArticleList() {
 		return articleList;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public int getPageNumber() {
+		return pageNumber;
 	}
 
 	public interface ArticleListService {
