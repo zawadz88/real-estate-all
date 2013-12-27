@@ -37,14 +37,8 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 	}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
 
 		mArticlesPager = (ViewPager) view.findViewById(R.id.articles_viewpager);
 		mArticlesPager.setAdapter(new ArticlesPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
@@ -56,8 +50,15 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 	}
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        System.out.println("onStop");
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 

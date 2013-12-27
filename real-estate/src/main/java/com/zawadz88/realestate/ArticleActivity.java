@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Piotr on 27.12.13.
@@ -32,5 +33,22 @@ public class ArticleActivity extends ActionBarActivity {
                     .commit();
         }
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
+        //TODO do stuff...
+        System.out.println("event: " + ev);
     }
 }

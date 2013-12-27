@@ -28,4 +28,12 @@ public class ArticleEssentialDownloadEvent extends AbstractDownloadEvent {
     public List<ArticleEssential> getDownloadedArticles() {
         return downloadedArticles;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleEssentialDownloadEvent{" +
+                "categoryName='" + categoryName + '\'' +
+                ", downloadedArticles=" + downloadedArticles +
+                '}';
+    }
 }

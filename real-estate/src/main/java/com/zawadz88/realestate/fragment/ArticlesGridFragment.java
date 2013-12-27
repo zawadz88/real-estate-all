@@ -271,5 +271,13 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
         public int getPosition() {
             return position;
         }
+
+        @Override
+        public String toString() {
+            return "ArticleItemSelectedEvent{" +
+                    "category=" + category +
+                    ", position=" + position +
+                    '}';
+        }
     }
 }

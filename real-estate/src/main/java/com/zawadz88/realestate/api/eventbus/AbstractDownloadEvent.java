@@ -9,7 +9,7 @@ import com.zawadz88.realestate.api.TaskResult;
  */
 public class AbstractDownloadEvent {
 
-	private final TaskResult result;
+	protected final TaskResult result;
 
 	public AbstractDownloadEvent(final TaskResult result) {
 		this.result = result;
