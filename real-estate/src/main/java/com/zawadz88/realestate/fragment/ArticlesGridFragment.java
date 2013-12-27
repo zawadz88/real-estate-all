@@ -86,7 +86,6 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
             mGridView.setNumColumns(getArguments().getInt(NUM_COLUMNS_TAG));
         }
 
-        //TODO handle via listener, because of fragment's reuse in 2 different activities
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {

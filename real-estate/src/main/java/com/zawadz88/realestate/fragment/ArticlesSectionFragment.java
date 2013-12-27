@@ -57,7 +57,6 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 
     @Override
     public void onStop() {
-        System.out.println("onStop");
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
