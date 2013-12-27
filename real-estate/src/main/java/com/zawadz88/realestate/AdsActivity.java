@@ -12,8 +12,6 @@ import com.zawadz88.realestate.api.model.Section;
  */
 public class AdsActivity extends ActionBarActivity {
 
-	public static final String EXTRA_POSITION_TAG = "position";
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ads);

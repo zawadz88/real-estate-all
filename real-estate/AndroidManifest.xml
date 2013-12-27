@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".AdsActivity" android:theme="@style/Theme.Realestate" />
+        <activity android:name=".ArticleActivity" android:theme="@style/Theme.Realestate" />
 
     </application>
 </manifest>

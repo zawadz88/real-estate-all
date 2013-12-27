@@ -38,7 +38,6 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdsActivity.class);
-				intent.putExtra(AdsActivity.EXTRA_POSITION_TAG, position);
 				startActivity(intent);
 			}
 		});

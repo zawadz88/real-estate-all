@@ -25,7 +25,11 @@ import java.util.List;
  */
 public class ArticlesGridFragment extends AbstractListFragment implements AbsListView.OnScrollListener {
 
-	private static final String ARTICLE_CATEGORY_TAG = "articleCategory";
+    public static final String EXTRA_POSITION_TAG = "position";
+    public static final String EXTRA_CATEGORY_TAG = "category";
+
+    private static final String ARTICLE_CATEGORY_TAG = "articleCategory";
+    private static final String NUM_COLUMNS_TAG = "numColumns";
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
 	private static final int VISIBLE_ITEM_THRESHOLD = 3;
 
@@ -33,21 +37,28 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 
 	private ArticleCategory mCategory;
 
-	public static ArticlesGridFragment newInstance(final ArticleCategory category) {
-		ArticlesGridFragment fragment = new ArticlesGridFragment();
-		Bundle args = new Bundle();
-		args.putSerializable(ARTICLE_CATEGORY_TAG, category);
-		fragment.setArguments(args);
-		return fragment;
-	}
+    public static ArticlesGridFragment newInstance(final ArticleCategory category) {
+        ArticlesGridFragment fragment = new ArticlesGridFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARTICLE_CATEGORY_TAG, category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ArticlesGridFragment newInstance(final ArticleCategory category, final int numColumns) {
+        ArticlesGridFragment fragment = new ArticlesGridFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARTICLE_CATEGORY_TAG, category);
+        args.putInt(NUM_COLUMNS_TAG, numColumns);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.mCategory = (ArticleCategory) getArguments().getSerializable(ARTICLE_CATEGORY_TAG);
 		EventBus.getDefault().register(this);
-		//TODO remove
-		Picasso.with(getActivity()).setDebugging(true);
 	}
 
 	@Override
@@ -70,6 +81,19 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
                 }
             }
         });
+
+        if (getArguments().getInt(NUM_COLUMNS_TAG) > 0) {
+            mGridView.setNumColumns(getArguments().getInt(NUM_COLUMNS_TAG));
+        }
+
+        //TODO handle via listener, because of fragment's reuse in 2 different activities
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                EventBus.getDefault().post(new ArticleItemSelectedEvent(mCategory, position));
+            }
+        });
+
         List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
 
 		if (articles.isEmpty()) {
@@ -229,4 +253,23 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 			return view;
 		}
 	}
+
+    public static final class ArticleItemSelectedEvent {
+
+        private ArticleCategory category;
+        private int position;
+
+        public ArticleItemSelectedEvent(ArticleCategory category, int position) {
+            this.category = category;
+            this.position = position;
+        }
+
+        public ArticleCategory getCategory() {
+            return category;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+    }
 }

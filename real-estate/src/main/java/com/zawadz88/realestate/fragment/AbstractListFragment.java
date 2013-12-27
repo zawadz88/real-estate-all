@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.RealEstateApplication;

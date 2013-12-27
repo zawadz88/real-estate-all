@@ -6,4 +6,4 @@ A sample real estate app showing how to:
   - use Robolectric and Robotium for testing
   - use Navigation Drawer and ActionBarCompat
   - support multiple screen sizes
-  - use Event Bus probably...
+  - use Event Bus for decoupling Fragments and Activities

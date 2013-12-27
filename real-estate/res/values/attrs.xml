@@ -13,4 +13,8 @@
         <!-- Duration of animation when user releases the over scroll. Default is 400 ms. -->
         <attr name="overscroll_animation_duration" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="GridFragment">
+        <attr name="android:numColumns" />
+    </declare-styleable>
 </resources>

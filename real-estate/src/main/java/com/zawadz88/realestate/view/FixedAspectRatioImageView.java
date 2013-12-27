@@ -12,7 +12,6 @@ package com.zawadz88.realestate.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.zawadz88.realestate.R;

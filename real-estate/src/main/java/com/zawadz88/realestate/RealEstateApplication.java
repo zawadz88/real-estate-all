@@ -89,7 +89,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		int result = -1;
 		Integer currentNumber = mArticleEssentialCurrentPageNumbersByCategory.get(categoryName);
 		if (currentNumber != null) {
-			result = currentNumber.intValue();
+			result = currentNumber;
 		}
 		return result;
 	}

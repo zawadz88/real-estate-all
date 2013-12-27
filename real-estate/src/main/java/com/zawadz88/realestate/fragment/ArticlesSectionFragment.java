@@ -1,6 +1,7 @@
 package com.zawadz88.realestate.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.model.Section;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created: 04.11.13
@@ -33,7 +36,13 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 		return fragment;
 	}
 
-	@Override
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
 
@@ -45,7 +54,21 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 
 		return view;
 	}
-	public static class ArticlesPagerAdapter extends FragmentPagerAdapter {
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
+        Intent intent = new Intent(ArticlesSectionFragment.this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, ev.getPosition());
+        intent.putExtra(ArticlesGridFragment.EXTRA_CATEGORY_TAG, ev.getCategory());
+        startActivity(intent);
+    }
+
+    public static class ArticlesPagerAdapter extends FragmentPagerAdapter {
 
 		private Context context;
 
@@ -73,5 +96,6 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 			return categories.length;
 		}
 
-	}
+    }
+
 }

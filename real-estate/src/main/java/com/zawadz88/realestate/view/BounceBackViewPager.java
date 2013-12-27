@@ -96,6 +96,9 @@ public class BounceBackViewPager extends ViewPager {
 			if (mScrollPosition == 0 && mOverscroll < 0) {
 				return true;
 			}
+            if (getAdapter() == null) {
+                return false;
+            }
 			final boolean isLast = (getAdapter().getCount() - 1) == mScrollPosition;
 			if (isLast && mOverscroll > 0) {
 				return true;
