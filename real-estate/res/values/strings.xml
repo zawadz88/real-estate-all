@@ -12,4 +12,7 @@
     <string name="article_title_popular">Popular</string>
     <string name="article_title_tips">Tips</string>
     <string name="article_title_loans">Loans</string>
+    <string name="empty_list_text">List is empty</string>
+    <string name="network_error_title">Couldn\'t connect to server :(</string>
+    <string name="network_error_message">Click to retry.</string>
 </resources>

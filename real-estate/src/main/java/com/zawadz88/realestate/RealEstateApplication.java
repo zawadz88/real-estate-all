@@ -1,5 +1,6 @@
 package com.zawadz88.realestate;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
@@ -40,7 +41,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 
 			articleEssentialList.addAll(articleListDownloadTask.getArticleList());
 			mArticleEssentialCurrentPageNumbersByCategory.put(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, articleListDownloadTask.getCategory()));
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, articleListDownloadTask.getCategory(), articleListDownloadTask.getArticleList()));
 		}
 	}
 
@@ -48,7 +49,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	public synchronized void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
 		mDownloadTasks.remove(task.getTag());
 		if (task instanceof ArticleListDownloadTask) {
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, ((ArticleListDownloadTask) task).getCategory()));
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, ((ArticleListDownloadTask) task).getCategory(), null));
 		}
 	}
 
@@ -57,7 +58,8 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		mDownloadTasks.remove(task.getTag());
 	}
 
-	public synchronized void startTask(final AbstractDownloadTask task) {
+	@SuppressLint("NewApi")
+    public synchronized void startTask(final AbstractDownloadTask task) {
 		final String tag = task.getTag();
 		if (!mDownloadTasks.containsKey(tag)) {
 			task.setListener(this);
@@ -74,7 +76,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		return mDownloadTasks.containsKey(tag);
 	}
 
-	public List<ArticleEssential> getArticleEssentialListByCategory(final String categoryName) {
+	public synchronized List<ArticleEssential> getArticleEssentialListByCategory(final String categoryName) {
 		List<ArticleEssential> articleEssentialList = mArticleEssentialListsByCategory.get(categoryName);
 		if (articleEssentialList == null) {
 			articleEssentialList = new ArrayList<ArticleEssential>();
@@ -83,7 +85,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		return articleEssentialList;
 	}
 
-	public int getCurrentlyLoadedPageNumberForCategory(final String categoryName) {
+	public synchronized int getCurrentlyLoadedPageNumberForCategory(final String categoryName) {
 		int result = -1;
 		Integer currentNumber = mArticleEssentialCurrentPageNumbersByCategory.get(categoryName);
 		if (currentNumber != null) {

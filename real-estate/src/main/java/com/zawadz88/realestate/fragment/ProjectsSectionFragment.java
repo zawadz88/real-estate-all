@@ -21,8 +21,6 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
 
-	private GridView mProjectsGridView;
-
 	public static ProjectsSectionFragment newInstance() {
 		ProjectsSectionFragment fragment = new ProjectsSectionFragment();
 		Bundle args = new Bundle();
@@ -35,8 +33,8 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
-		mProjectsGridView = (GridView) view.findViewById(R.id.ads_gridview);
-		mProjectsGridView.setAdapter(new AdsAdapter());
+		mGridView = (GridView) view.findViewById(R.id.ads_gridview);
+		mGridView.setAdapter(new ProjectsAdapter());
 
 		return view;
 	}
@@ -46,20 +44,18 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
-			mProjectsGridView.smoothScrollToPosition(position);
+			mGridView.smoothScrollToPosition(position);
 		}
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		int position = mProjectsGridView.getFirstVisiblePosition();
+		int position = mGridView.getFirstVisiblePosition();
 		outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
 	}
 
-	private class AdsAdapter extends BaseAdapter {
-
-
+	private class ProjectsAdapter extends BaseAdapter {
 		private String[] elements = new String[] {"e asad asde", "fsdfadsfdfdsa sdf dsafdsf dsfd fsdfffff", "lorem ipsum", " asd sdsa", "iiiii", "sfdf saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj", "aaaaa", "bbb dsa sadsadabb", "ccccc", "dd sdaa asdsa asd asd as sadsa dsa dsad sa dsaddd", "eeeee", "ffffff", "gggggg", "hhhh", "iiiii", "jjjjassssssssssssssssssssssssss saaaaaaaaaaaaaaaaaaaj"} ;
 
 		@Override

@@ -20,8 +20,6 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
 
-	private GridView mAdsGridView;
-
 	public static AdsSectionFragment newInstance() {
 		AdsSectionFragment fragment = new AdsSectionFragment();
 		Bundle args = new Bundle();
@@ -34,9 +32,9 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
-		mAdsGridView = (GridView) view.findViewById(R.id.ads_gridview);
-		mAdsGridView.setAdapter(new AdsAdapter());
-		mAdsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mGridView = (GridView) view.findViewById(R.id.ads_gridview);
+		mGridView.setAdapter(new AdsAdapter());
+		mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdsActivity.class);
@@ -52,14 +50,14 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
-			mAdsGridView.smoothScrollToPosition(position);
+			mGridView.smoothScrollToPosition(position);
 		}
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		int position = mAdsGridView.getFirstVisiblePosition();
+		int position = mGridView.getFirstVisiblePosition();
 		outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
 	}
 
