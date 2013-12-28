@@ -1,25 +1,20 @@
 package com.zawadz88.realestate.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.RealEstateApplication;
 
 /**
  * Created: 17.11.13
  *
  * @author Zawada
  */
-public class AbstractListFragment extends Fragment {
+public class AbstractListFragment extends AbstractFragment {
 
     protected static final long MINIMUM_TOAST_INTERVAL = 10000L;
-
-	protected RealEstateApplication mApplication;
 
     protected GridView mGridView;
     protected View mLoadingView;
@@ -32,12 +27,6 @@ public class AbstractListFragment extends Fragment {
     protected enum GridViewState {
         LOADING, CONTENT, EMPTY, NO_INTERNET
     }
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		mApplication = (RealEstateApplication) getActivity().getApplication();
-	}
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

@@ -184,7 +184,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 
     public static final class ArticleSwipedEvent {
 
-        private int newPosition;
+        private final int newPosition;
 
         public ArticleSwipedEvent(int position) {
             this.newPosition = position;
@@ -201,4 +201,5 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
                     '}';
         }
     }
+
 }
