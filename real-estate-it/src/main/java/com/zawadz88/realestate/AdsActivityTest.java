@@ -21,6 +21,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.fragment.ArticlesGridFragment;
 
 public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivity> {
 
@@ -51,11 +52,11 @@ public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivit
 	@SmallTest
 	public void testReceivedIntent() {
 		Intent intent = new Intent();
-		intent.putExtra(AdsActivity.EXTRA_POSITION_TAG, 3);
+		intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, 3);
 		setActivityIntent(intent);
 		Solo solo = new Solo(getInstrumentation(), getActivity());
 		assertNotNull(solo.getCurrentActivity());
-		int position = solo.getCurrentActivity().getIntent().getIntExtra(AdsActivity.EXTRA_POSITION_TAG, -1);
+		int position = solo.getCurrentActivity().getIntent().getIntExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, -1);
 		assertEquals(3, position);
 		solo.finishOpenedActivities();
 	}

@@ -2,12 +2,14 @@ package com.zawadz88.realestate.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created: 16.11.13
  *
  * @author Zawada
  */
-public class ArticleEssential {
+public class ArticleEssential implements Serializable {
 
 	@SerializedName("x")
 	private int articleId;

@@ -41,7 +41,7 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
         View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
 
 		mArticlesPager = (ViewPager) view.findViewById(R.id.articles_viewpager);
-		mArticlesPager.setAdapter(new ArticlesPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
+		mArticlesPager.setAdapter(new ArticlesGridPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
 
 		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.article_tabs);
 		tabs.setViewPager(mArticlesPager);
@@ -68,13 +68,13 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
         startActivity(intent);
     }
 
-    public static class ArticlesPagerAdapter extends FragmentPagerAdapter {
+    private static class ArticlesGridPagerAdapter extends FragmentPagerAdapter {
 
 		private Context context;
 
 		private ArticleCategory[] categories = ArticleCategory.values();
 
-		public ArticlesPagerAdapter(Context context, FragmentManager fm) {
+		public ArticlesGridPagerAdapter(Context context, FragmentManager fm) {
 			super(fm);
 			this.context = context;
 		}

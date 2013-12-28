@@ -27,6 +27,7 @@ import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.fragment.ArticlesGridFragment;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -101,7 +102,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		solo.clickInList(clickedItemIndex, 0);
 		assertTrue(solo.waitForActivity(AdsActivity.class.getSimpleName()));
 		assertNotNull(solo.getCurrentActivity());
-		int position = solo.getCurrentActivity().getIntent().getIntExtra(AdsActivity.EXTRA_POSITION_TAG, -1);
+		int position = solo.getCurrentActivity().getIntent().getIntExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, -1);
 		assertEquals(clickedItemIndex - 1, position);//different start offset
 	}
 
