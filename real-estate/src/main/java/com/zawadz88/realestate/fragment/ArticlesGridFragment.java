@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
+import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.RealEstateApplication;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
@@ -45,11 +46,12 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
         return fragment;
     }
 
-    public static ArticlesGridFragment newInstance(final ArticleCategory category, final int numColumns) {
+    public static ArticlesGridFragment newInstance(final ArticleCategory category, final int numColumns, final int startPosition) {
         ArticlesGridFragment fragment = new ArticlesGridFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARTICLE_CATEGORY_TAG, category);
         args.putInt(NUM_COLUMNS_TAG, numColumns);
+        args.putInt(LAST_KNOWN_SCROLL_POSITION, startPosition);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,7 +98,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
         List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
 
 		if (articles.isEmpty()) {
-            if (endOfItemsReached) {
+            if (mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
                 setGridViewState(GridViewState.EMPTY);
             } else {
                 setGridViewState(GridViewState.LOADING);
@@ -122,7 +124,9 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
 			mGridView.smoothScrollToPosition(position);
-		}
+		} else if (getArguments() != null) {
+            mGridView.smoothScrollToPosition(getArguments().getInt(LAST_KNOWN_SCROLL_POSITION));
+        }
 	}
 
 	@Override
@@ -142,13 +146,12 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (!loadingMoreItems && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !endOfItemsReached) {
+        if (!mApplication.getLoadingMoreFlagForCategory(mCategory.getName()) && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			// visibleItemCount != totalItemCount is needed for when new items are added this is false
-			loading = true;
             if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-                loadingMoreItems = true;
+                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
             } else if (DeviceUtils.isOnline(mApplication)) { //load next page
-                loadingMoreItems = true;
+                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
                 ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), mApplication.getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
 				mApplication.startTask(downloadTask);
 			} else {
@@ -160,7 +163,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 			return;
 		}
         // show loading view if last cell is visible and there should be more items available
-		if (firstVisibleItem + visibleItemCount == totalItemCount && !endOfItemsReached) {
+		if (firstVisibleItem + visibleItemCount == totalItemCount && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			if (mLoadingMoreView.getVisibility() == View.GONE) {
 				mLoadingMoreView.setVisibility(View.VISIBLE);
 			}
@@ -176,8 +179,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 	}
 
 	public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
-		loadingMoreItems = false;
-		loading = false;
+        mApplication.setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (mLoadingMoreView.getVisibility() == View.VISIBLE) {
             mLoadingMoreView.setVisibility(View.GONE);
         }
@@ -186,7 +188,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
             if (ev.isSuccessful()) {
                 List<ArticleEssential> downloadedArticles = ev.getDownloadedArticles();
                 if (downloadedArticles == null || downloadedArticles.isEmpty()) {
-                    endOfItemsReached = true;
+                    mApplication.setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
                     if (articles.isEmpty()) {
                         setGridViewState(GridViewState.EMPTY);
                     } else {
@@ -210,6 +212,10 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
             }
         }
 	}
+
+    public void onEventMainThread(ArticleActivity.ArticleSwipedEvent ev) {
+        mGridView.smoothScrollToPosition(ev.getNewPosition());
+    }
 
 	private class ArticlesAdapter extends BaseAdapter {
 

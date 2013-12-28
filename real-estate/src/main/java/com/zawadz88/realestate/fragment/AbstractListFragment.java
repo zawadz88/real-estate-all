@@ -26,9 +26,6 @@ public class AbstractListFragment extends Fragment {
     protected View mEmptyView;
     protected LinearLayout mNoInternetLayout;
 
-    protected boolean loadingMoreItems = false;
-	protected boolean loading = false;
-	protected boolean endOfItemsReached = false;
     protected String mNetworkErrorTitle;
     protected long mLastToastTimeStamp;
 

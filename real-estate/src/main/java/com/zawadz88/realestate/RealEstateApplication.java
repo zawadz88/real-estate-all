@@ -23,7 +23,11 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	private Map<String, AbstractDownloadTask> mDownloadTasks = (Map<String, AbstractDownloadTask>) Collections.synchronizedMap(new HashMap<String, AbstractDownloadTask>());
 
 	private Map<String, List<ArticleEssential>> mArticleEssentialListsByCategory = new HashMap<String, List<ArticleEssential>>();
-	private Map<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
+
+    private Map<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
+
+    private Map<String, Boolean> mArticleEssentialLoadingMoreFlagByCategory = new HashMap<String, Boolean>();
+    private Map<String, Boolean> mArticleEssentialEndOfItemsReachedFlagByCategory = new HashMap<String, Boolean>();
 
 	@Override
 	public void onCreate() {
@@ -85,13 +89,39 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		return articleEssentialList;
 	}
 
-	public synchronized int getCurrentlyLoadedPageNumberForCategory(final String categoryName) {
-		int result = -1;
-		Integer currentNumber = mArticleEssentialCurrentPageNumbersByCategory.get(categoryName);
-		if (currentNumber != null) {
-			result = currentNumber;
-		}
-		return result;
-	}
+    public synchronized int getCurrentlyLoadedPageNumberForCategory(final String categoryName) {
+        int result = -1;
+        Integer currentNumber = mArticleEssentialCurrentPageNumbersByCategory.get(categoryName);
+        if (currentNumber != null) {
+            result = currentNumber;
+        }
+        return result;
+    }
+
+    public synchronized boolean getLoadingMoreFlagForCategory(final String categoryName) {
+        boolean result = false;
+        Boolean loadingMoreItems = mArticleEssentialLoadingMoreFlagByCategory.get(categoryName);
+        if (loadingMoreItems != null) {
+            result = loadingMoreItems;
+        }
+        return result;
+    }
+
+    public synchronized  void setLoadingMoreFlagForCategory(final boolean loadingMoreItems, final String categoryName) {
+        mArticleEssentialLoadingMoreFlagByCategory.put(categoryName, loadingMoreItems);
+    }
+
+    public synchronized boolean getEndOfItemsReachedFlagForCategory(final String categoryName) {
+        boolean result = false;
+        Boolean endOfItemsReached = mArticleEssentialEndOfItemsReachedFlagByCategory.get(categoryName);
+        if (endOfItemsReached != null) {
+            result = endOfItemsReached;
+        }
+        return result;
+    }
+
+    public synchronized  void setEndOfItemsReachedFlagForCategory(final boolean endOfItemsReached, final String categoryName) {
+        mArticleEssentialEndOfItemsReachedFlagByCategory.put(categoryName, endOfItemsReached);
+    }
 
 }
