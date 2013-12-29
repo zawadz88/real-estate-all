@@ -24,17 +24,13 @@ public class AbstractListFragment extends AbstractFragment {
     protected String mNetworkErrorTitle;
     protected long mLastToastTimeStamp;
 
-    protected enum GridViewState {
-        LOADING, CONTENT, EMPTY, NO_INTERNET
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mNetworkErrorTitle = getString(R.string.network_error_title);
     }
 
-    protected void setGridViewState(final GridViewState newState) {
+    protected void setGridViewState(final ViewState newState) {
         switch (newState) {
             case LOADING:
                 mGridView.setVisibility(View.GONE);

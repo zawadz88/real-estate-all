@@ -31,13 +31,10 @@ public class ArticleDownloadTask extends AbstractDownloadTask {
 	@Override
 	protected void doInBackgroundSafe() throws Exception {
         Article [] articles = service.getArticle(articleEssential.getSectionId(), articleEssential.getArticleId());
-        if (articles != null && articles.length > 0)
-		this.article = articles[0];
+        if (articles != null && articles.length > 0) {
+            this.article = articles[0];
+        }
 	}
-
-    public ArticleService getService() {
-        return service;
-    }
 
     public ArticleEssential getArticleEssential() {
         return articleEssential;
@@ -49,6 +46,6 @@ public class ArticleDownloadTask extends AbstractDownloadTask {
 
     public interface ArticleService {
 		@GET("/article/{sectionId}.{articleId}.1")
-        Article [] getArticle(@Path("sectionId") int sectionId, @Path("articleId") int articleId);//API returns an array...
+        Article [] getArticle(@Path("sectionId") long sectionId, @Path("articleId") long articleId);//API returns an array...
 	}
 }

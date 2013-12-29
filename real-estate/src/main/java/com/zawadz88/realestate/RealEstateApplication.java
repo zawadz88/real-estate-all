@@ -28,7 +28,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 
 	private Map<String, List<ArticleEssential>> mArticleEssentialListsByCategory = new HashMap<String, List<ArticleEssential>>();
 
-    private Map<Integer, Article> mArticlesByIdMap = new HashMap<Integer, Article>();
+    private Map<Long, Article> mArticlesByIdMap = new HashMap<Long, Article>();
 
     private Map<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
 
@@ -51,12 +51,12 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 
 			articleEssentialList.addAll(articleListDownloadTask.getArticleList());
 			mArticleEssentialCurrentPageNumbersByCategory.put(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, articleListDownloadTask.getCategory(), articleListDownloadTask.getArticleList()));
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, null, articleListDownloadTask.getCategory(), articleListDownloadTask.getArticleList()));
 		} else if (task instanceof ArticleDownloadTask) {
             ArticleDownloadTask articleDownloadTask = (ArticleDownloadTask) task;
             Article article = articleDownloadTask.getArticle();
             mArticlesByIdMap.put(article.getArticleId(), article);
-            mBus.post(new ArticleDownloadEvent(TaskResult.SUCCESSFUL,article.getArticleId(), article));
+            mBus.post(new ArticleDownloadEvent(TaskResult.SUCCESSFUL, null, article.getArticleId(), article));
         }
 	}
 
@@ -64,10 +64,10 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	public synchronized void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
 		mDownloadTasks.remove(task.getTag());
 		if (task instanceof ArticleListDownloadTask) {
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, ((ArticleListDownloadTask) task).getCategory(), null));
+			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, exception, ((ArticleListDownloadTask) task).getCategory(), null));
 		} else if (task instanceof ArticleDownloadTask) {
             ArticleDownloadTask articleDownloadTask = (ArticleDownloadTask) task;
-            mBus.post(new ArticleDownloadEvent(TaskResult.FAILED, articleDownloadTask.getArticleEssential().getArticleId(), null));
+            mBus.post(new ArticleDownloadEvent(TaskResult.FAILED, exception, articleDownloadTask.getArticleEssential().getArticleId(), null));
         }
 	}
 
@@ -138,7 +138,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
         mArticleEssentialEndOfItemsReachedFlagByCategory.put(categoryName, endOfItemsReached);
     }
 
-    public synchronized Article getArticleById(int articleId) {
+    public synchronized Article getArticleById(long articleId) {
         return mArticlesByIdMap.get(articleId);
     }
 

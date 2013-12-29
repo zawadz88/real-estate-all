@@ -15,8 +15,8 @@ public class ArticleEssentialDownloadEvent extends AbstractDownloadEvent {
 	private final String categoryName;
     private final List<ArticleEssential> downloadedArticles;
 
-	public ArticleEssentialDownloadEvent(final TaskResult result, final String categoryName, final List<ArticleEssential> articleEssentialList) {
-		super(result);
+	public ArticleEssentialDownloadEvent(final TaskResult result, final Exception exception, final String categoryName, final List<ArticleEssential> articleEssentialList) {
+		super(result, exception);
 		this.categoryName = categoryName;
         this.downloadedArticles = articleEssentialList;
 	}

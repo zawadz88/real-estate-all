@@ -10,9 +10,11 @@ import com.zawadz88.realestate.api.TaskResult;
 public class AbstractDownloadEvent {
 
 	protected final TaskResult result;
+    protected final Exception exception;
 
-	public AbstractDownloadEvent(final TaskResult result) {
+	public AbstractDownloadEvent(final TaskResult result, final Exception exception) {
 		this.result = result;
+        this.exception = exception;
 	}
 
 	public boolean isSuccessful() {
@@ -22,4 +24,8 @@ public class AbstractDownloadEvent {
 	public TaskResult getResult() {
 		return result;
 	}
+
+    public Exception getException() {
+        return exception;
+    }
 }

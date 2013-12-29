@@ -15,4 +15,5 @@
     <string name="empty_list_text">List is empty</string>
     <string name="network_error_title">Couldn\'t connect to server :(</string>
     <string name="network_error_message">Click to retry.</string>
+    <string name="error_occurred">Error occurred :( Please try again later.</string>
 </resources>

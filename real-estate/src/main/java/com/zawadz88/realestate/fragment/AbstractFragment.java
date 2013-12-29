@@ -11,6 +11,10 @@ public class AbstractFragment extends Fragment {
 
     protected RealEstateApplication mApplication;
 
+    protected enum ViewState {
+        LOADING, CONTENT, EMPTY, NO_INTERNET, ERROR
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

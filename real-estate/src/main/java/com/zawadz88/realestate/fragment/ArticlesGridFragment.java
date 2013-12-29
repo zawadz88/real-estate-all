@@ -71,15 +71,13 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 		mLoadingMoreView = view.findViewById(R.id.loading_more_view);
         mLoadingView = view.findViewById(R.id.list_loading);
         mEmptyView = view.findViewById(R.id.list_empty);
-        mNoInternetLayout = (LinearLayout) view.findViewById(R.id.noInternetLayout);
+        mNoInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
         mNoInternetLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if(DeviceUtils.isOnline(mApplication)) {
-                    setGridViewState(GridViewState.LOADING);
-                    ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(ArticlesGridFragment.this.mCategory.getName(), 0);
-                    mApplication.startTask(downloadTask);
+                    downloadFirstPage();
                 }
             }
         });
@@ -99,18 +97,12 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 
 		if (articles.isEmpty()) {
             if (mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
-                setGridViewState(GridViewState.EMPTY);
+                setGridViewState(ViewState.EMPTY);
             } else {
-                setGridViewState(GridViewState.LOADING);
-                if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-                    //wait for notification
-                } else {
-                    ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), 0);
-                    mApplication.startTask(downloadTask);
-                }
+                downloadFirstPage();
             }
 		} else {
-            setGridViewState(GridViewState.CONTENT);
+            setGridViewState(ViewState.CONTENT);
 			mGridView.setAdapter(new ArticlesAdapter());
 			mGridView.setOnScrollListener(this);
 		}
@@ -118,7 +110,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 		return view;
 	}
 
-	@Override
+    @Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
@@ -190,12 +182,12 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
                 if (downloadedArticles == null || downloadedArticles.isEmpty()) {
                     mApplication.setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
                     if (articles.isEmpty()) {
-                        setGridViewState(GridViewState.EMPTY);
+                        setGridViewState(ViewState.EMPTY);
                     } else {
                         //do nothing, list's data set was not changed
                     }
                 } else {
-                    setGridViewState(GridViewState.CONTENT);
+                    setGridViewState(ViewState.CONTENT);
                     if (mGridView.getAdapter() == null) {
                         mGridView.setAdapter(new ArticlesAdapter());
                         mGridView.setOnScrollListener(this);
@@ -205,7 +197,7 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
                 }
             } else {
                 if (articles == null || articles.isEmpty()) {
-                    setGridViewState(GridViewState.NO_INTERNET);
+                    setGridViewState(ViewState.NO_INTERNET);
                 } else {
                     showNoInternetToastMessage();
                 }
@@ -215,6 +207,12 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 
     public void onEventMainThread(ArticleActivity.ArticleSwipedEvent ev) {
         mGridView.smoothScrollToPosition(ev.getNewPosition());
+    }
+
+    private void downloadFirstPage() {
+        setGridViewState(ViewState.LOADING);
+        ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), 0);
+        mApplication.startTask(downloadTask);
     }
 
 	private class ArticlesAdapter extends BaseAdapter {

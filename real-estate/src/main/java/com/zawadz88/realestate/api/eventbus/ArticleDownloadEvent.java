@@ -10,20 +10,21 @@ import com.zawadz88.realestate.api.model.Article;
  */
 public class ArticleDownloadEvent extends AbstractDownloadEvent {
 
-	private final int articleId;
+	private final long articleId;
     private final Article downloadedArticle;
 
-	public ArticleDownloadEvent(final TaskResult result, final int articleId, final Article article) {
-		super(result);
+	public ArticleDownloadEvent(final TaskResult result, final Exception exception, final long articleId, final Article article) {
+		super(result, exception);
 		this.articleId = articleId;
         this.downloadedArticle = article;
 	}
 
-    public int getArticleId() {
+    public long getArticleId() {
         return articleId;
     }
 
     public Article getDownloadedArticle() {
         return downloadedArticle;
     }
+
 }

@@ -12,10 +12,10 @@ import java.io.Serializable;
 public class ArticleEssential implements Serializable {
 
 	@SerializedName("x")
-	private int articleId;
+	private long articleId;
 
 	@SerializedName("sid")
-	private int sectionId;
+	private long sectionId;
 
 	@SerializedName("t")
 	private String title;
@@ -23,19 +23,19 @@ public class ArticleEssential implements Serializable {
 	@SerializedName("li")
 	private String imageUrl;
 
-	public int getArticleId() {
+	public long getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(final int articleId) {
+	public void setArticleId(final long articleId) {
 		this.articleId = articleId;
 	}
 
-	public int getSectionId() {
+	public long getSectionId() {
 		return sectionId;
 	}
 
-	public void setSectionId(final int sectionId) {
+	public void setSectionId(final long sectionId) {
 		this.sectionId = sectionId;
 	}
 
