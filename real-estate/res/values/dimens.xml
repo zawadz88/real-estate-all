@@ -8,5 +8,8 @@
     <dimen name="re_gridview_item_title_font_size">25sp</dimen>
 
     <dimen name="re_navigation_drawer_width">240dp</dimen>
+    <dimen name="ad_photo_miniature_width">140dp</dimen>
+    <dimen name="ad_photo_miniature_height">100dp</dimen>
+    <dimen name="ad_photo_miniature_divider_width">5dp</dimen>
 
 </resources>

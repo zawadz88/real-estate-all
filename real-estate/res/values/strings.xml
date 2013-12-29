@@ -16,4 +16,7 @@
     <string name="network_error_title">Couldn\'t connect to server :(</string>
     <string name="network_error_message">Click to retry.</string>
     <string name="error_occurred">Error occurred :( Please try again later.</string>
+    <string name="ad_basic_info">Basic info</string>
+    <string name="ad_description">Description</string>
+    <string name="contact_info">Contact info</string>
 </resources>

@@ -23,7 +23,7 @@ import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.api.model.Section;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
 
-public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivity> {
+public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity> {
 
     /**
      * The first constructor parameter must refer to the package identifier of the
@@ -31,8 +31,8 @@ public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivit
      * file.  This is not necessarily the same as the java package name of the class - in fact, in
      * some cases it may not match at all.
      */
-    public AdsActivityTest() {
-        super(AdsActivity.class);
+    public AdActivityTest() {
+        super(AdActivity.class);
     }
 
 	@SmallTest
@@ -43,7 +43,7 @@ public class AdsActivityTest extends ActivityInstrumentationTestCase2<AdsActivit
 	@SmallTest
 	public void testTitleIsSet() {
 		Solo solo = new Solo(getInstrumentation(), getActivity());
-		AdsActivity adsActivity = (AdsActivity) solo.getCurrentActivity();
+		AdActivity adsActivity = (AdActivity) solo.getCurrentActivity();
 		CharSequence title = adsActivity.getActionBar().getTitle();
 		assertEquals(solo.getString(Section.ADS.getTitleResourceId()), title);
 		solo.finishOpenedActivities();

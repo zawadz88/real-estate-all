@@ -18,7 +18,7 @@ import com.zawadz88.realestate.R;
 
 public class FixedAspectRatioImageView extends ImageView {
 
-	public static final int DEFAULT_ASPECT_RATIO = 16 / 9;
+	public static final float DEFAULT_ASPECT_RATIO = 16.0f / 9.0f;
 	private float aspectRatio;
 
 	public FixedAspectRatioImageView(Context context) {
@@ -36,8 +36,8 @@ public class FixedAspectRatioImageView extends ImageView {
     }
 
 	private void init(Context context, AttributeSet attrs) {
-		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.FixedAspectRatioImageView);
-		aspectRatio = styledAttrs.getFloat(R.styleable.FixedAspectRatioImageView_ratio, DEFAULT_ASPECT_RATIO);
+		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.FixedAspectRatioView);
+		aspectRatio = styledAttrs.getFloat(R.styleable.FixedAspectRatioView_ratio, DEFAULT_ASPECT_RATIO);
 		styledAttrs.recycle();
 	}
 
