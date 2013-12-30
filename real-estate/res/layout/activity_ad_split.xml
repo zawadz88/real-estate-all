@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res/com.zawadz88.realestate"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#cccccc">
-
-        <RelativeLayout
-              android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res/com.zawadz88.realestate"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="match_parent"
+              android:background="#cccccc">
+    <ScrollView
+            android:layout_width="360dp"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <TextView
                     android:id="@+id/title"
-                    android:layout_alignParentTop="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/AdTextView"
@@ -20,37 +23,20 @@
                     android:textSize="@dimen/ad_title_font_size"
                     android:text=""/>
 
-            <com.zawadz88.realestate.view.FixedAspectRatioViewPager
-                    android:id="@+id/image_view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    style="@style/AdView"
-                    android:layout_below="@id/title" />
-
             <TextView
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/image_view_pager"
-                    android:layout_alignRight="@id/image_view_pager"
+                    android:layout_gravity="right"
                     style="@style/AdTextView"
                     android:textStyle="bold"
                     android:textSize="@dimen/ad_price_font_size"
                     android:text=""/>
 
-            <com.meetme.android.horizontallistview.HorizontalListView
-                    android:id="@+id/image_miniature_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ad_photo_miniature_height"
-                    android:layout_below="@id/image_view_pager"
-                    style="@style/AdView"
-                    app:dividerWidth="@dimen/ad_photo_miniature_divider_width"/>
-
             <TextView
                     android:id="@+id/basic_info_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/image_miniature_list"
                     style="@style/AdLabelTextView"
                     android:text="@string/ad_basic_info"/>
 
@@ -58,16 +44,45 @@
                     android:id="@+id/basic_info_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/basic_info_label"
                     style="@style/AdTextView"
                     android:textSize="@dimen/ad_basic_info_font_size"
                     android:text=""/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black" />
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <com.zawadz88.realestate.view.FixedAspectRatioViewPager
+                    android:id="@+id/image_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    style="@style/AdView"/>
+
+            <com.meetme.android.horizontallistview.HorizontalListView
+                    android:id="@+id/image_miniature_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ad_photo_miniature_height"
+                    style="@style/AdView"
+                    app:dividerWidth="@dimen/ad_photo_miniature_divider_width"/>
+
 
             <TextView
                     android:id="@+id/description_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/basic_info_content"
                     style="@style/AdLabelTextView"
                     android:text="@string/ad_description"/>
 
@@ -75,16 +90,14 @@
                     android:id="@+id/description_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/description_label"
-                    android:textSize="@dimen/ad_description_font_size"
                     style="@style/AdTextView"
+                    android:textSize="@dimen/ad_description_font_size"
                     android:text=""/>
 
             <TextView
                     android:id="@+id/contact_info_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/description_content"
                     style="@style/AdLabelTextView"
                     android:text="@string/contact_info"/>
 
@@ -92,11 +105,11 @@
                     android:id="@+id/contact_info_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/contact_info_label"
                     style="@style/AdTextView"
                     android:textSize="@dimen/ad_contact_info_font_size"
                     android:text=""/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

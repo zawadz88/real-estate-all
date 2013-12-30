@@ -5,11 +5,18 @@
 
     <integer name="re_ads_gridview_column_count">1</integer>
     <dimen name="re_gridview_item_row_default_height">200dp</dimen>
-    <dimen name="re_gridview_item_title_font_size">25sp</dimen>
+    <dimen name="re_gridview_item_title_font_size">24dp</dimen>
 
     <dimen name="re_navigation_drawer_width">240dp</dimen>
     <dimen name="ad_photo_miniature_width">140dp</dimen>
     <dimen name="ad_photo_miniature_height">100dp</dimen>
-    <dimen name="ad_photo_miniature_divider_width">5dp</dimen>
+    <dimen name="ad_photo_miniature_divider_width">4dp</dimen>
+    <dimen name="ad_default_margin">4dp</dimen>
+    <dimen name="ad_title_font_size">18dp</dimen>
+    <dimen name="ad_price_font_size">18dp</dimen>
+    <dimen name="ad_label_font_size">16dp</dimen>
+    <dimen name="ad_basic_info_font_size">16dp</dimen>
+    <dimen name="ad_description_font_size">16dp</dimen>
+    <dimen name="ad_contact_info_font_size">16dp</dimen>
 
 </resources>

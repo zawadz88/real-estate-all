@@ -3,5 +3,12 @@
     <item name="re_app_background_gradient_radius" format="float" type="dimen">600</item>
 
     <integer name="re_ads_gridview_column_count">2</integer>
+    <dimen name="ad_default_margin">8dp</dimen>
+    <dimen name="ad_title_font_size">20dp</dimen>
+    <dimen name="ad_price_font_size">20dp</dimen>
+    <dimen name="ad_label_font_size">18dp</dimen>
+    <dimen name="ad_basic_info_font_size">18dp</dimen>
+    <dimen name="ad_description_font_size">18dp</dimen>
+    <dimen name="ad_contact_info_font_size">18dp</dimen>
 
 </resources>
