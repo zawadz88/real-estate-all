@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.model.ArticleEssential;
+import com.zawadz88.realestate.api.model.Section;
 import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.fragment.ArticleFragment;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
@@ -22,7 +23,9 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
- * Activity displaying an {@link com.zawadz88.realestate.api.model.Article}
+ * Activity displaying an {@link com.zawadz88.realestate.api.model.Article}.
+ * It shows how to create an activity with a view pager containing a list of items and with a fragment that has the same list
+ * and how to glue them together with each other and also load content.
  *
  * @author Piotr Zawadzki
  */
@@ -58,12 +61,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
             mCurrentPosition = getIntent().getIntExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, 0);
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(mCategory.getTitleResource());
+		initActionBar();
 
         if (findViewById(R.id.article_list_container) != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -114,15 +112,6 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
         return super.onOptionsItemSelected(item);
     }
 
-    public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
-        if (ev.getCategory().getName().equals(mCategory.getName())) {
-            int position = ev.getPosition();
-            if (position < mArticleViewPager.getAdapter().getCount()) {
-                mArticleViewPager.setCurrentItem(position, true);
-            }
-        }
-    }
-
     @Override
     public void onPageScrolled(int i, float v, int i2) {
     }
@@ -149,10 +138,38 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
     public void onPageScrollStateChanged(int i) {
     }
 
+	private void initActionBar() {
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setTitle(mCategory.getTitleResource());
+	}
+
     public RealEstateApplication getRealEstateApplication() {
         return (RealEstateApplication) getApplicationContext();
     }
 
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.fragment.ArticlesGridFragment.ArticleItemSelectedEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
+	public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
+		if (ev.getCategory().getName().equals(mCategory.getName())) {
+			int position = ev.getPosition();
+			if (position < mArticleViewPager.getAdapter().getCount()) {
+				mArticleViewPager.setCurrentItem(position, true);
+			}
+		}
+	}
+
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
     public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
         getRealEstateApplication().setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (ev.getCategoryName().equals(mCategory.getName())) {

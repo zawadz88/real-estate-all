@@ -52,8 +52,19 @@ public class NavigationDrawerFragment extends Fragment {
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
 
+	/**
+	 * Stores the currently selected section's position
+	 */
 	private int mCurrentSelectedPosition = 0;
+
+	/**
+	 * Flag indicating if this fragment was recreated (has saved its instance state and obtained it in {@code onCreate()}).
+	 */
 	private boolean mFromSavedInstanceState;
+
+	/**
+	 * Flag indicating if the navigation drawer was opened, i.e. the user learned how to use it.
+	 */
 	private boolean mUserLearnedDrawer;
 
 	public NavigationDrawerFragment() {

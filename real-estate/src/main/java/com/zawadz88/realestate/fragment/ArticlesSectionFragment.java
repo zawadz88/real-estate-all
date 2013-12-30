@@ -61,6 +61,11 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
         EventBus.getDefault().unregister(this);
     }
 
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.fragment.ArticlesGridFragment.ArticleItemSelectedEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
     public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
         Intent intent = new Intent(ArticlesSectionFragment.this.getActivity(), ArticleActivity.class);
         intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, ev.getPosition());
@@ -68,6 +73,9 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
         startActivity(intent);
     }
 
+	/**
+	 * A {@link android.support.v4.view.ViewPager} adapter containing all possible article categories.
+	 */
     private static class ArticlesGridPagerAdapter extends FragmentPagerAdapter {
 
 		private Context context;

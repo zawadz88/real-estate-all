@@ -170,6 +170,11 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 	}
 
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
 	public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
         mApplication.setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (mLoadingMoreView.getVisibility() == View.VISIBLE) {
@@ -205,16 +210,27 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
         }
 	}
 
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.ArticleActivity.ArticleSwipedEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
     public void onEventMainThread(ArticleActivity.ArticleSwipedEvent ev) {
         mGridView.smoothScrollToPosition(ev.getNewPosition());
     }
 
+	/**
+	 * Download first page of article essentials for this fragment's {@link com.zawadz88.realestate.api.model.ArticleCategory}
+	 */
     private void downloadFirstPage() {
         setGridViewState(ViewState.LOADING);
         ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), 0);
         mApplication.startTask(downloadTask);
     }
 
+	/**
+	 * A {@link android.widget.GridView} adapter managing a list of article essentials
+	 */
 	private class ArticlesAdapter extends BaseAdapter {
 
 		@Override
@@ -257,9 +273,19 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 		}
 	}
 
+	/**
+	 * An EventBus event posted when a {@link android.widget.GridView} item was selected.
+	 */
     public static final class ArticleItemSelectedEvent {
 
+		/**
+		 * Fragment's category
+		 */
         private ArticleCategory category;
+
+		/**
+		 * Position selected
+		 */
         private int position;
 
         public ArticleItemSelectedEvent(ArticleCategory category, int position) {

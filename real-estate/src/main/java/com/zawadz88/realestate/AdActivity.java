@@ -22,7 +22,8 @@ import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
- * Activity displaying an {@link com.zawadz88.realestate.api.model.Ad}
+ * Activity displaying an {@link com.zawadz88.realestate.api.model.Ad}.
+ * It shows how to move things around for different screen sizes in layout XML files.
  *
  * @author Piotr Zawadzki
  */
