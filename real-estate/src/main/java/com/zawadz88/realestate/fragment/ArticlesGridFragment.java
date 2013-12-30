@@ -20,11 +20,11 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying a list of articles
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
-public class ArticlesGridFragment extends AbstractListFragment implements AbsListView.OnScrollListener {
+public class ArticlesGridFragment extends AbstractGridFragment implements AbsListView.OnScrollListener {
 
     public static final String EXTRA_POSITION_TAG = "position";
     public static final String EXTRA_CATEGORY_TAG = "category";

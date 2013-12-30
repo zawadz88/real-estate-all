@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 import com.zawadz88.realestate.RealEstateApplication;
 
 /**
- * Created by Piotr on 28.12.13.
+ * Base class for other real estate fragments
+ *
+ * @author Piotr Zawadzki
  */
 public class AbstractFragment extends Fragment {
 

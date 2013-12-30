@@ -8,14 +8,22 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 
 /**
- * Created: 16.11.13
+ * A task responsible for downloading an {@link com.zawadz88.realestate.api.model.Article}
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ArticleDownloadTask extends AbstractDownloadTask {
 
 	private final ArticleService service;
+
+    /**
+     * Essential information about an article containing article's ID and article's section ID
+     */
 	private final ArticleEssential articleEssential;
+
+    /**
+     * Downloaded article, null if task did not succeed
+     */
 	private Article article;
 
 	public ArticleDownloadTask(ArticleEssential articleEssential) {

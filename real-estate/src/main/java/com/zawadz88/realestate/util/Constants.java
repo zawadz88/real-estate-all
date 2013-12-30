@@ -1,9 +1,9 @@
 package com.zawadz88.realestate.util;
 
 /**
- * Created: 16.11.13
+ * Application constants
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class Constants {
 

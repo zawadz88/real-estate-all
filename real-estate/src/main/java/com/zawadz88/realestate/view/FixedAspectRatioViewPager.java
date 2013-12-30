@@ -6,13 +6,18 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import com.zawadz88.realestate.R;
 
+
 /**
- * Created: 17.11.13
+ * An {@link android.support.v4.view.ViewPager} that maintains a fixed aspect ratio
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class FixedAspectRatioViewPager extends ViewPager {
     public static final float DEFAULT_ASPECT_RATIO = 16.0f / 9.0f;
+
+    /**
+     * Aspect ratio of the image
+     */
 	private float aspectRatio;
 
 	public FixedAspectRatioViewPager(Context context, AttributeSet attrs) {

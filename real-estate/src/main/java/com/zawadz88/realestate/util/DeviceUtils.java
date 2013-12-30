@@ -9,20 +9,33 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 /**
- * Created: 17.11.13
+ * Class providing a set of utility methods related to a device
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class DeviceUtils {
 
+    /**
+     * Checks if OS version is greater and/or equal than HoneyComb
+     * @return true if OS version is greater and/or equal than HoneyComb
+     */
     public static boolean isEqualOrHigherThanHoneycomb() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
+    /**
+     * Checks if OS version is greater and/or equal than Ice Cream Sandwich
+     * @return true if OS version is greater and/or equal than Ice Cream Sandwich
+     */
     public static boolean isEqualOrHigherThanICS() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
 
+    /**
+     * Checks if device is online
+     * @param context
+     * @return true if device is connected to the internet, false otherwise
+     */
     public static boolean isOnline(final Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();

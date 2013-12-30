@@ -22,7 +22,9 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
- * Created by Piotr on 27.12.13.
+ * Activity displaying an {@link com.zawadz88.realestate.api.model.Article}
+ *
+ * @author Piotr Zawadzki
  */
 public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
@@ -31,7 +33,14 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 
     private ViewPager mArticleViewPager;
 
+    /**
+     * Position of the article in the {@link android.support.v4.view.ViewPager}
+     */
     private int mCurrentPosition;
+
+    /**
+     * Category of the article
+     */
     private ArticleCategory mCategory;
 
     @Override
@@ -161,6 +170,9 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
         }
     }
 
+    /**
+     * A {@link android.support.v4.view.ViewPager} adapter managing a list of articles
+     */
     private static class ArticlesPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<ArticleEssential> mArticleEssentialList;
@@ -182,8 +194,14 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 
     }
 
+    /**
+     * EventBus event posted {@link android.support.v4.view.ViewPager} swiped to a different page
+     */
     public static final class ArticleSwipedEvent {
 
+        /**
+         * Position to which view pager swiped
+         */
         private final int newPosition;
 
         public ArticleSwipedEvent(int position) {

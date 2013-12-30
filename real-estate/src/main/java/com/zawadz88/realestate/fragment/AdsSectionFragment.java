@@ -12,9 +12,9 @@ import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying a list of real estate ads
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class AdsSectionFragment extends AbstractSectionFragment {
 

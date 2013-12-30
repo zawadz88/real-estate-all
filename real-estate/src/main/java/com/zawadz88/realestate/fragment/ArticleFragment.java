@@ -15,7 +15,9 @@ import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 
 /**
- * Created by Piotr on 28.12.13.
+ * Fragment displaying an {@link com.zawadz88.realestate.api.model.Article} fetched from the API
+ *
+ * @author Piotr Zawadzki
  */
 public class ArticleFragment extends AbstractFragment {
 

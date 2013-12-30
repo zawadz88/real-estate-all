@@ -16,9 +16,17 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.zawadz88.realestate.R;
 
+/**
+ * An {@link android.widget.ImageView} that maintains a fixed aspect ratio
+ * @author Piotr Zawadzki
+ */
 public class FixedAspectRatioImageView extends ImageView {
 
 	public static final float DEFAULT_ASPECT_RATIO = 16.0f / 9.0f;
+
+    /**
+     * Aspect ratio of the image
+     */
 	private float aspectRatio;
 
 	public FixedAspectRatioImageView(Context context) {

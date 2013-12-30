@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import com.zawadz88.realestate.api.model.Section;
 import com.zawadz88.realestate.fragment.*;
 
+/**
+ * Main activity of the application
+ *
+ * @author Piotr Zawadzki
+ */
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractSectionFragment.SectionAttachedListener {
 
 	/**
@@ -36,8 +41,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		mNavigationDrawerFragment.setUp(
 				R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-
-	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

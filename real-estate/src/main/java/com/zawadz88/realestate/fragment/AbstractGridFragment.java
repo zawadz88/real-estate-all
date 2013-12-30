@@ -8,11 +8,11 @@ import android.widget.Toast;
 import com.zawadz88.realestate.R;
 
 /**
- * Created: 17.11.13
+ * Base class for fragments containing a {@link android.widget.GridView}
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
-public class AbstractListFragment extends AbstractFragment {
+public class AbstractGridFragment extends AbstractFragment {
 
     protected static final long MINIMUM_TOAST_INTERVAL = 10000L;
 

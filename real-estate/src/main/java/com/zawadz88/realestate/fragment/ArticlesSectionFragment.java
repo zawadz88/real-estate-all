@@ -18,9 +18,9 @@ import com.zawadz88.realestate.api.model.Section;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying lists of articles in a {@link android.support.v4.view.ViewPager}
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ArticlesSectionFragment extends AbstractSectionFragment {
 

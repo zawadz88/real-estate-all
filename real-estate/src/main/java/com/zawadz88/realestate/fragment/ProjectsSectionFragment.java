@@ -13,9 +13,9 @@ import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying a list of projects
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ProjectsSectionFragment extends AbstractSectionFragment {
 

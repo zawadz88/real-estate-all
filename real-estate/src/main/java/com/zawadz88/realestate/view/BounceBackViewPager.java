@@ -17,9 +17,9 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.zawadz88.realestate.R;
 
 /**
- * Created: 17.11.13
+ * A {@link android.support.v4.view.ViewPager} that bounces back instead of having an edge effect on overscroll.
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class BounceBackViewPager extends ViewPager {
 

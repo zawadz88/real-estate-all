@@ -5,21 +5,33 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Created: 16.11.13
+ * POJO containing article's information
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class Article implements Serializable {
 
+    /**
+     * Article's unique identifier
+     */
 	@SerializedName("x")
 	private long articleId;
 
+    /**
+     * Section's identifier
+     */
 	@SerializedName("s")
 	private long sectionId;
 
+    /**
+     * Article's title
+     */
 	@SerializedName("t")
 	private String title;
 
+    /**
+     * Article's content. Can contain HTML tags.
+     */
 	@SerializedName("c")
 	private String content;
 
@@ -54,4 +66,14 @@ public class Article implements Serializable {
 	public void setContent(final String content) {
 		this.content = content;
 	}
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "articleId=" + articleId +
+                ", sectionId=" + sectionId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

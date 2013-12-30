@@ -5,21 +5,32 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Created: 16.11.13
+ * POJO containing essential information about an article, e.g. to present in a list of articles without redundant information.
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ArticleEssential implements Serializable {
+    /**
+     * Article's unique identifier
+     */
+    @SerializedName("x")
+    private long articleId;
 
-	@SerializedName("x")
-	private long articleId;
+    /**
+     * Section's identifier
+     */
+    @SerializedName("s")
+    private long sectionId;
 
-	@SerializedName("sid")
-	private long sectionId;
+    /**
+     * Article's title
+     */
+    @SerializedName("t")
+    private String title;
 
-	@SerializedName("t")
-	private String title;
-
+    /**
+     * URL of the image associated with the article
+     */
 	@SerializedName("li")
 	private String imageUrl;
 
