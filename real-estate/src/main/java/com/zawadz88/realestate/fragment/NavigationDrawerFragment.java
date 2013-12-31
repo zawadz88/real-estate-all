@@ -21,6 +21,8 @@ import com.zawadz88.realestate.api.model.Section;
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
+ *
+ * @author Piotr Zawadzki
  */
 public class NavigationDrawerFragment extends Fragment {
 
@@ -50,8 +52,19 @@ public class NavigationDrawerFragment extends Fragment {
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
 
+	/**
+	 * Stores the currently selected section's position
+	 */
 	private int mCurrentSelectedPosition = 0;
+
+	/**
+	 * Flag indicating if this fragment was recreated (has saved its instance state and obtained it in {@code onCreate()}).
+	 */
 	private boolean mFromSavedInstanceState;
+
+	/**
+	 * Flag indicating if the navigation drawer was opened, i.e. the user learned how to use it.
+	 */
 	private boolean mUserLearnedDrawer;
 
 	public NavigationDrawerFragment() {
@@ -60,7 +73,6 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		System.out.println(" nav onCreate");
 
 		// Read in the flag indicating whether or not the user has demonstrated awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.

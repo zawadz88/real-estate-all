@@ -5,10 +5,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.*;
-import com.zawadz88.realestate.fragment.*;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.fragment.*;
 
+/**
+ * Main activity of the application
+ *
+ * @author Piotr Zawadzki
+ */
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractSectionFragment.SectionAttachedListener {
 
 	/**
@@ -35,8 +41,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		mNavigationDrawerFragment.setUp(
 				R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-
-	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -70,9 +75,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	public void onNavigationDrawerItemSelected(final int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		AbstractSectionFragment sectionFragment = null;
 		Section selectedSection = Section.getSectionForPosition(position);
-		sectionFragment = (AbstractSectionFragment) fragmentManager.findFragmentByTag(AbstractSectionFragment.SECTION_FRAGMENT_TAG);
+        AbstractSectionFragment sectionFragment = (AbstractSectionFragment) fragmentManager.findFragmentByTag(AbstractSectionFragment.SECTION_FRAGMENT_TAG);
 
 		//replace only if the fragment is different than the one added before (this includes orientation change handling)
 		if (sectionFragment == null

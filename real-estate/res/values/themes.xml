@@ -4,4 +4,22 @@
         <item name="android:windowBackground">@drawable/re_app_background</item>
        <!-- <item name="android:windowNoTitle">false</item>-->
     </style>
+
+    <style name="AdView">
+        <item name="android:layout_marginLeft">@dimen/ad_default_margin</item>
+        <item name="android:layout_marginRight">@dimen/ad_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/ad_default_margin</item>
+    </style>
+
+    <style name="AdTextView" parent="AdView">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_marginLeft">@dimen/ad_default_margin</item>
+        <item name="android:layout_marginRight">@dimen/ad_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/ad_default_margin</item>
+    </style>
+
+    <style name="AdLabelTextView" parent="AdTextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/ad_label_font_size</item>
+    </style>
 </resources>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="FixedAspectRatioImageView">
+    <declare-styleable name="FixedAspectRatioView">
         <attr name="ratio" format="float" />
     </declare-styleable>
+
     <declare-styleable name="BounceBackViewPager">
         <!--
         determines the maximum amount of translation along the z-axis during the overscroll.
@@ -12,5 +13,17 @@
 
         <!-- Duration of animation when user releases the over scroll. Default is 400 ms. -->
         <attr name="overscroll_animation_duration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="GridFragment">
+        <attr name="android:numColumns" />
+    </declare-styleable>
+
+    <!-- Defines the custom XML attributes supported for a HorizontalListView -->
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
     </declare-styleable>
 </resources>

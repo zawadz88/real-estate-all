@@ -4,11 +4,11 @@ import android.app.Activity;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
- * Created: 04.11.13
+ * Base fragment for displaying content for one of sections
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
-public class AbstractSectionFragment extends AbstractListFragment {
+public class AbstractSectionFragment extends AbstractGridFragment {
 	public static final String SECTION_FRAGMENT_TAG = "sectionFragment";
 	/**
 	 * Fragment argument representing the section number for this fragment.
@@ -26,7 +26,15 @@ public class AbstractSectionFragment extends AbstractListFragment {
 		}
 	}
 
+    /**
+     * Listener interface that listens for when a section fragment gets attached to an activity
+     */
 	public static interface SectionAttachedListener {
+
+        /**
+         * Called when a section fragment gets attached to an activity
+         * @param section section of the fragment that gets attached
+         */
 		void onSectionAttached(Section section);
 	}
 

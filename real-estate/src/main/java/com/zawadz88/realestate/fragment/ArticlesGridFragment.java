@@ -7,88 +7,125 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
+import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.RealEstateApplication;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.model.ArticleEssential;
 import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 
 import java.util.List;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying a list of articles
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
-public class ArticlesGridFragment extends AbstractListFragment implements AbsListView.OnScrollListener {
+public class ArticlesGridFragment extends AbstractGridFragment implements AbsListView.OnScrollListener {
 
-	private static final String ARTICLE_CATEGORY_TAG = "articleCategory";
+    public static final String EXTRA_POSITION_TAG = "position";
+    public static final String EXTRA_CATEGORY_TAG = "category";
+
+    private static final String ARTICLE_CATEGORY_TAG = "articleCategory";
+    private static final String NUM_COLUMNS_TAG = "numColumns";
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
 	private static final int VISIBLE_ITEM_THRESHOLD = 3;
 
-	private GridView mArticlesGridView;
 	private View mLoadingMoreView;
 
 	private ArticleCategory mCategory;
 
-	public static ArticlesGridFragment newInstance(final ArticleCategory category) {
-		ArticlesGridFragment fragment = new ArticlesGridFragment();
-		Bundle args = new Bundle();
-		args.putSerializable(ARTICLE_CATEGORY_TAG, category);
-		fragment.setArguments(args);
-		return fragment;
-	}
+    public static ArticlesGridFragment newInstance(final ArticleCategory category) {
+        ArticlesGridFragment fragment = new ArticlesGridFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARTICLE_CATEGORY_TAG, category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ArticlesGridFragment newInstance(final ArticleCategory category, final int numColumns, final int startPosition) {
+        ArticlesGridFragment fragment = new ArticlesGridFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARTICLE_CATEGORY_TAG, category);
+        args.putInt(NUM_COLUMNS_TAG, numColumns);
+        args.putInt(LAST_KNOWN_SCROLL_POSITION, startPosition);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.mCategory = (ArticleCategory) getArguments().getSerializable(ARTICLE_CATEGORY_TAG);
 		EventBus.getDefault().register(this);
-		//TODO remove
-		Picasso.with(getActivity()).setDebugging(true);
 	}
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
-		mArticlesGridView = (GridView) view.findViewById(R.id.ads_gridview);
+		mGridView = (GridView) view.findViewById(R.id.ads_gridview);
 		mLoadingMoreView = view.findViewById(R.id.loading_more_view);
+        mLoadingView = view.findViewById(R.id.list_loading);
+        mEmptyView = view.findViewById(R.id.list_empty);
+        mNoInternetLayout = (LinearLayout) view.findViewById(R.id.no_internet_layout);
+        mNoInternetLayout.setOnClickListener(new View.OnClickListener() {
 
-		List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
+            @Override
+            public void onClick(View v) {
+                if(DeviceUtils.isOnline(mApplication)) {
+                    downloadFirstPage();
+                }
+            }
+        });
+
+        if (getArguments().getInt(NUM_COLUMNS_TAG) > 0) {
+            mGridView.setNumColumns(getArguments().getInt(NUM_COLUMNS_TAG));
+        }
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                EventBus.getDefault().post(new ArticleItemSelectedEvent(mCategory, position));
+            }
+        });
+
+        List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
 
 		if (articles.isEmpty()) {
-			//TODO show loading view
-			if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-				//wait for notification
-			} else {
-				ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), 0);
-				mApplication.startTask(downloadTask);
-			}
+            if (mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
+                setGridViewState(ViewState.EMPTY);
+            } else {
+                downloadFirstPage();
+            }
 		} else {
-			mArticlesGridView.setAdapter(new AdsAdapter());
-			mArticlesGridView.setOnScrollListener(this);
+            setGridViewState(ViewState.CONTENT);
+			mGridView.setAdapter(new ArticlesAdapter());
+			mGridView.setOnScrollListener(this);
 		}
 
 		return view;
 	}
 
-	@Override
+    @Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
-			mArticlesGridView.smoothScrollToPosition(position);
-		}
+			mGridView.smoothScrollToPosition(position);
+		} else if (getArguments() != null) {
+            mGridView.smoothScrollToPosition(getArguments().getInt(LAST_KNOWN_SCROLL_POSITION));
+        }
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if (mArticlesGridView != null) {
-			int position = mArticlesGridView.getFirstVisiblePosition();
+		if (mGridView != null) {
+			int position = mGridView.getFirstVisiblePosition();
 			outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
 		}
 	}
@@ -101,25 +138,24 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-		if (!loadingMoreItems && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !endOfItemsReached && connectionAvailable) {
+        if (!mApplication.getLoadingMoreFlagForCategory(mCategory.getName()) && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			// visibleItemCount != totalItemCount is needed for when new items are added this is false
-			loadingMoreItems = true;
-			loading = true;
-			//refreshList(); // needed to show loading view
-			//TODO show loading view
-			if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-				//wait for notification
-			} else { //load next page
-				ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), mApplication.getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
+            if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
+                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
+            } else if (DeviceUtils.isOnline(mApplication)) { //load next page
+                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
+                ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), mApplication.getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
 				mApplication.startTask(downloadTask);
-			}
+			} else {
+                showNoInternetToastMessage();
+            }
 		}
 
 		if (firstVisibleItem == 0 && visibleItemCount == 0 && totalItemCount == 0) {
 			return;
 		}
-
-		if (firstVisibleItem + visibleItemCount == totalItemCount) {
+        // show loading view if last cell is visible and there should be more items available
+		if (firstVisibleItem + visibleItemCount == totalItemCount && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			if (mLoadingMoreView.getVisibility() == View.GONE) {
 				mLoadingMoreView.setVisibility(View.VISIBLE);
 			}
@@ -134,31 +170,68 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 	}
 
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
 	public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
-		loadingMoreItems = false;
-		loading = false;
-		if (ev.isSuccessful() && ev.getCategoryName().equals(mCategory.getName())) {
-			List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
-
-			if (articles.isEmpty()) {
-				endOfItemsReached = true;
-				//TODO show empty view, no articles available
-			} else {
-				//TODO refresh list
-				if (mArticlesGridView.getAdapter() == null) {
-					mArticlesGridView.setAdapter(new AdsAdapter());
-					mArticlesGridView.setOnScrollListener(this);
-				} else {
-					((BaseAdapter) mArticlesGridView.getAdapter()).notifyDataSetChanged();
-				}
-
-			}
-		} else {
-			//TODO depending on number of items previously fetched show error message either in footer or in place of GridView
-		}
+        mApplication.setLoadingMoreFlagForCategory(false, mCategory.getName());
+        if (mLoadingMoreView.getVisibility() == View.VISIBLE) {
+            mLoadingMoreView.setVisibility(View.GONE);
+        }
+        if (ev.getCategoryName().equals(mCategory.getName())) {
+            List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
+            if (ev.isSuccessful()) {
+                List<ArticleEssential> downloadedArticles = ev.getDownloadedArticles();
+                if (downloadedArticles == null || downloadedArticles.isEmpty()) {
+                    mApplication.setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
+                    if (articles.isEmpty()) {
+                        setGridViewState(ViewState.EMPTY);
+                    } else {
+                        //do nothing, list's data set was not changed
+                    }
+                } else {
+                    setGridViewState(ViewState.CONTENT);
+                    if (mGridView.getAdapter() == null) {
+                        mGridView.setAdapter(new ArticlesAdapter());
+                        mGridView.setOnScrollListener(this);
+                    } else {
+                        ((BaseAdapter) mGridView.getAdapter()).notifyDataSetChanged();
+                    }
+                }
+            } else {
+                if (articles == null || articles.isEmpty()) {
+                    setGridViewState(ViewState.NO_INTERNET);
+                } else {
+                    showNoInternetToastMessage();
+                }
+            }
+        }
 	}
 
-	private class AdsAdapter extends BaseAdapter {
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.ArticleActivity.ArticleSwipedEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
+    public void onEventMainThread(ArticleActivity.ArticleSwipedEvent ev) {
+        mGridView.smoothScrollToPosition(ev.getNewPosition());
+    }
+
+	/**
+	 * Download first page of article essentials for this fragment's {@link com.zawadz88.realestate.api.model.ArticleCategory}
+	 */
+    private void downloadFirstPage() {
+        setGridViewState(ViewState.LOADING);
+        ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), 0);
+        mApplication.startTask(downloadTask);
+    }
+
+	/**
+	 * A {@link android.widget.GridView} adapter managing a list of article essentials
+	 */
+	private class ArticlesAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
@@ -199,4 +272,41 @@ public class ArticlesGridFragment extends AbstractListFragment implements AbsLis
 			return view;
 		}
 	}
+
+	/**
+	 * An EventBus event posted when a {@link android.widget.GridView} item was selected.
+	 */
+    public static final class ArticleItemSelectedEvent {
+
+		/**
+		 * Fragment's category
+		 */
+        private ArticleCategory category;
+
+		/**
+		 * Position selected
+		 */
+        private int position;
+
+        public ArticleItemSelectedEvent(ArticleCategory category, int position) {
+            this.category = category;
+            this.position = position;
+        }
+
+        public ArticleCategory getCategory() {
+            return category;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        @Override
+        public String toString() {
+            return "ArticleItemSelectedEvent{" +
+                    "category=" + category +
+                    ", position=" + position +
+                    '}';
+        }
+    }
 }

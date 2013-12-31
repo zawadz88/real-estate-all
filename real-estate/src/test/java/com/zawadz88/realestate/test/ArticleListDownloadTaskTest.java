@@ -44,7 +44,7 @@ public class ArticleListDownloadTaskTest {
 		application.startTask(asyncTask);
 
 
-		assertTrue("Task not started!", application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX));
+		assertTrue("Task not started!", application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + ArticleCategory.POPULAR.getName()));
 
 		Robolectric.runBackgroundTasks();
 
@@ -52,7 +52,7 @@ public class ArticleListDownloadTaskTest {
 		await().until(new Callable<Boolean>() {
 			@Override
 			public Boolean call() throws Exception {
-				return !application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX);
+				return !application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + ArticleCategory.POPULAR.getName());
 			}
 		});
 

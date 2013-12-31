@@ -1,6 +1,7 @@
 package com.zawadz88.realestate.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,14 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.model.Section;
+import de.greenrobot.event.EventBus;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying lists of articles in a {@link android.support.v4.view.ViewPager}
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ArticlesSectionFragment extends AbstractSectionFragment {
 
@@ -33,25 +36,53 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 		return fragment;
 	}
 
-	@Override
+    @Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
 
 		mArticlesPager = (ViewPager) view.findViewById(R.id.articles_viewpager);
-		mArticlesPager.setAdapter(new ArticlesPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
+		mArticlesPager.setAdapter(new ArticlesGridPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
 
 		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.article_tabs);
 		tabs.setViewPager(mArticlesPager);
 
 		return view;
 	}
-	public static class ArticlesPagerAdapter extends FragmentPagerAdapter {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+	/**
+	 * Method called when an {@link com.zawadz88.realestate.fragment.ArticlesGridFragment.ArticleItemSelectedEvent}
+	 * is posted from EventBus.
+	 * @param ev posted event
+	 */
+    public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
+        Intent intent = new Intent(ArticlesSectionFragment.this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, ev.getPosition());
+        intent.putExtra(ArticlesGridFragment.EXTRA_CATEGORY_TAG, ev.getCategory());
+        startActivity(intent);
+    }
+
+	/**
+	 * A {@link android.support.v4.view.ViewPager} adapter containing all possible article categories.
+	 */
+    private static class ArticlesGridPagerAdapter extends FragmentPagerAdapter {
 
 		private Context context;
 
 		private ArticleCategory[] categories = ArticleCategory.values();
 
-		public ArticlesPagerAdapter(Context context, FragmentManager fm) {
+		public ArticlesGridPagerAdapter(Context context, FragmentManager fm) {
 			super(fm);
 			this.context = context;
 		}
@@ -73,5 +104,6 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 			return categories.length;
 		}
 
-	}
+    }
+
 }

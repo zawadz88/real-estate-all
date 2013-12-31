@@ -7,20 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.zawadz88.realestate.AdsActivity;
+import com.zawadz88.realestate.AdActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.Section;
 
 /**
- * Created: 04.11.13
+ * Fragment displaying a list of real estate ads
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class AdsSectionFragment extends AbstractSectionFragment {
 
 	private static final String LAST_KNOWN_SCROLL_POSITION = "scrollPosition";
-
-	private GridView mAdsGridView;
 
 	public static AdsSectionFragment newInstance() {
 		AdsSectionFragment fragment = new AdsSectionFragment();
@@ -34,13 +32,12 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_section_default_grid, container, false);
 
-		mAdsGridView = (GridView) view.findViewById(R.id.ads_gridview);
-		mAdsGridView.setAdapter(new AdsAdapter());
-		mAdsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mGridView = (GridView) view.findViewById(R.id.ads_gridview);
+		mGridView.setAdapter(new AdsAdapter());
+		mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdsActivity.class);
-				intent.putExtra(AdsActivity.EXTRA_POSITION_TAG, position);
+				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -52,14 +49,14 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 		super.onActivityCreated(savedInstanceState);
 		if (savedInstanceState != null && savedInstanceState.containsKey(LAST_KNOWN_SCROLL_POSITION)) {
 			int position = savedInstanceState.getInt(LAST_KNOWN_SCROLL_POSITION);
-			mAdsGridView.smoothScrollToPosition(position);
+			mGridView.smoothScrollToPosition(position);
 		}
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		int position = mAdsGridView.getFirstVisiblePosition();
+		int position = mGridView.getFirstVisiblePosition();
 		outState.putInt(LAST_KNOWN_SCROLL_POSITION, position);
 	}
 

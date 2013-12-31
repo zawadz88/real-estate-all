@@ -9,15 +9,27 @@ import retrofit.http.Path;
 import java.util.List;
 
 /**
- * Created: 16.11.13
+ * Task responsible for downloading a list articles' essential information
  *
- * @author Zawada
+ * @author Piotr Zawadzki
  */
 public class ArticleListDownloadTask extends AbstractDownloadTask {
 
 	private final ArticleListService service;
+
+    /**
+     * Name of the {@link com.zawadz88.realestate.api.model.ArticleCategory} for which the list is being downloaded
+     */
 	private String category;
+
+    /**
+     * Number of the page of articles
+     */
 	private int pageNumber;
+
+    /**
+     * Downloaded article list, null if task did not succeed
+     */
 	private List<ArticleEssential> articleList;
 
 	public ArticleListDownloadTask(String category, int pageNumber) {

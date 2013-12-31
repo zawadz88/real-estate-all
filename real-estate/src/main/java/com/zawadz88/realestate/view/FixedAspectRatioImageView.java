@@ -12,14 +12,21 @@ package com.zawadz88.realestate.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import com.zawadz88.realestate.R;
 
+/**
+ * An {@link android.widget.ImageView} that maintains a fixed aspect ratio
+ * @author Piotr Zawadzki
+ */
 public class FixedAspectRatioImageView extends ImageView {
 
-	public static final int DEFAULT_ASPECT_RATIO = 16 / 9;
+	public static final float DEFAULT_ASPECT_RATIO = 16.0f / 9.0f;
+
+    /**
+     * Aspect ratio of the image
+     */
 	private float aspectRatio;
 
 	public FixedAspectRatioImageView(Context context) {
@@ -37,8 +44,8 @@ public class FixedAspectRatioImageView extends ImageView {
     }
 
 	private void init(Context context, AttributeSet attrs) {
-		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.FixedAspectRatioImageView);
-		aspectRatio = styledAttrs.getFloat(R.styleable.FixedAspectRatioImageView_ratio, DEFAULT_ASPECT_RATIO);
+		TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.FixedAspectRatioView);
+		aspectRatio = styledAttrs.getFloat(R.styleable.FixedAspectRatioView_ratio, DEFAULT_ASPECT_RATIO);
 		styledAttrs.recycle();
 	}
 
