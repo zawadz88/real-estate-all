@@ -44,23 +44,10 @@ public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity>
 	public void testTitleIsSet() {
 		Solo solo = new Solo(getInstrumentation(), getActivity());
 		AdActivity adsActivity = (AdActivity) solo.getCurrentActivity();
-		CharSequence title = adsActivity.getActionBar().getTitle();
+		CharSequence title = adsActivity.getSupportActionBar().getTitle();
 		assertEquals(solo.getString(Section.ADS.getTitleResourceId()), title);
 		solo.finishOpenedActivities();
 	}
-
-	@SmallTest
-	public void testReceivedIntent() {
-		Intent intent = new Intent();
-		intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, 3);
-		setActivityIntent(intent);
-		Solo solo = new Solo(getInstrumentation(), getActivity());
-		assertNotNull(solo.getCurrentActivity());
-		int position = solo.getCurrentActivity().getIntent().getIntExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, -1);
-		assertEquals(3, position);
-		solo.finishOpenedActivities();
-	}
-
 
 }
 
