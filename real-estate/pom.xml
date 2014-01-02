@@ -57,11 +57,16 @@
 			<artifactId>appcompat-resources</artifactId>
 			<type>apklib</type>
 		</dependency>
-		<dependency>
-			<groupId>com.astuetz.pagerslidingtabstrip</groupId>
-			<artifactId>pagerslidingtabstrip</artifactId>
-			<type>apklib</type>
-		</dependency>
+        <dependency>
+            <groupId>com.astuetz.pagerslidingtabstrip</groupId>
+            <artifactId>pagerslidingtabstrip</artifactId>
+            <type>apklib</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.chrisbanes.photoview</groupId>
+            <artifactId>photoview-library</artifactId>
+            <type>apklib</type>
+        </dependency>
 
 		<!-- Testing -->
 		

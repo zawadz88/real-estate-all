@@ -7,4 +7,9 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
+    <style name="GalleryActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:titleTextStyle">@style/GalleryTitleTextStyle</item>
+    </style>
+
 </resources>

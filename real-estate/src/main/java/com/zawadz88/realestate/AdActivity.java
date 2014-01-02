@@ -20,7 +20,6 @@ import com.meetme.android.horizontallistview.HorizontalListView;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.api.model.Section;
-import com.zawadz88.realestate.fragment.ArticlesGridFragment;
 
 /**
  * Activity displaying an {@link com.zawadz88.realestate.api.model.Ad}.
@@ -40,6 +39,7 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
 
     private int mPhotoMiniatureWidth;
     private int mPhotoMiniatureDividerWidth;
+    private Ad mAd;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
         mImageMiniatureListView = (HorizontalListView) findViewById(R.id.image_miniature_list);
 
         //TODO fetch from API
-        Ad ad = new Ad();
-        ad.setImages(new String[] {
+        mAd = new Ad();
+        mAd.setImages(new String[]{
                 "http://galeria.domiporta.pl/pictures/original/6/26/54/f6323b0282e87a5cc486782d558235df/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
                 "http://galeria.domiporta.pl/pictures/original/2/95/c8/cb361c8609be0e4fdb9ea406ed58bcb9/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
                 "http://galeria.domiporta.pl/pictures/original/8/fb/73/af6ccc71ee00d0ac1cfafa4a4c05c7c6/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
@@ -71,11 +71,11 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                 "http://galeria.domiporta.pl/pictures/original/8/fb/73/af6ccc71ee00d0ac1cfafa4a4c05c7c6/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
                 "http://galeria.domiporta.pl/pictures/original/2/95/c8/cb361c8609be0e4fdb9ea406ed58bcb9/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
                 "http://galeria.domiporta.pl/pictures/original/8/fb/73/af6ccc71ee00d0ac1cfafa4a4c05c7c6/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg",
-                "http://galeria.domiporta.pl/pictures/original/6/ad/17/f2190115f4f910aab04286d89088e62a/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg"
+                "http://galeria.domiporta.pl/pictures/original/6/mAd/17/f2190115f4f910aab04286d89088e62a/sprzedam-mieszkanie-szczecin-os._zawadzkiego-klonowica.jpg"
         });
-        ad.setTitle("SZCZECIN, OS. ZAWADZKIEGO-KLONOWICA, 44 M2");
-        ad.setPrice("179 000 zł");
-        ad.setBasicInfo("mieszkanie:na sprzedaż\n" +
+        mAd.setTitle("SZCZECIN, OS. ZAWADZKIEGO-KLONOWICA, 44 M2");
+        mAd.setPrice("179 000 zł");
+        mAd.setBasicInfo("mieszkanie:na sprzedaż\n" +
                 "materiał: WIELKA PŁYTA\n" +
                 "forma własności: własność\n" +
                 "liczba pokoi: 2\n" +
@@ -86,8 +86,8 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                 "powierzchnia całkowita: 44 m2\n" +
                 "powierzchnia mieszkalna: 44 m2\n" +
                 "lokalizacja: województwo: zachodniopomorskie, powiat: Szczecin, gmina: Szczecin, miejscowość: Szczecin");
-        ad.setDescription("Rodzaj mieszkania: 2-pokojowe Numer oferty w SWO: 267857 Przynależne: piwnica Liczba WC: 0 Źródło c.w.: sieć miejska Dodatkowe: balkon Prawobrzeże/lewobrzeże: lewobrzeże   Czynsz dla spółdz./wspólnoty: 450,00 pln  !!! UWAGA !!! OFERTA 0%!! KUPUJĄCY NIE PŁACI PROWIZJI, PROWIZJĘ KUPUJĄCEGO POKRYWA SPRZEDAJĄCY.  Do sprzedania na osiedlu Zawadzkiego 2-pokojowe mieszkanie o powierzchni użytkowej 44,4 m2. Mieszkanie zlokalizowane na trzecim piętrze niskiego budynku w środkowej klatce. Pokoje są ustawne, a z dużego pokoju wyjście na balkon. W całym mieszkaniu są okna PCV, a na podłogach wykładzina. Mieszkanie jest zadbane i można w nim mieszkać, ale wymaga drobnego remontu. Drzwi do mieszkania są podwójne, przynależna piwnica o powierzchni 3,2m2. Doskonale nadaje się pod wynajem ze względu na lokalizację i dobre skomunikowanie z centrum miasta, jak i do zamieszkania. Termin wydania do uzgodnienia. Zapraszamy na prezentację.");
-        ad.setContactInfo("Multi Nieruchomości\n" +
+        mAd.setDescription("Rodzaj mieszkania: 2-pokojowe Numer oferty w SWO: 267857 Przynależne: piwnica Liczba WC: 0 Źródło c.w.: sieć miejska Dodatkowe: balkon Prawobrzeże/lewobrzeże: lewobrzeże   Czynsz dla spółdz./wspólnoty: 450,00 pln  !!! UWAGA !!! OFERTA 0%!! KUPUJĄCY NIE PŁACI PROWIZJI, PROWIZJĘ KUPUJĄCEGO POKRYWA SPRZEDAJĄCY.  Do sprzedania na osiedlu Zawadzkiego 2-pokojowe mieszkanie o powierzchni użytkowej 44,4 m2. Mieszkanie zlokalizowane na trzecim piętrze niskiego budynku w środkowej klatce. Pokoje są ustawne, a z dużego pokoju wyjście na balkon. W całym mieszkaniu są okna PCV, a na podłogach wykładzina. Mieszkanie jest zadbane i można w nim mieszkać, ale wymaga drobnego remontu. Drzwi do mieszkania są podwójne, przynależna piwnica o powierzchni 3,2m2. Doskonale nadaje się pod wynajem ze względu na lokalizację i dobre skomunikowanie z centrum miasta, jak i do zamieszkania. Termin wydania do uzgodnienia. Zapraszamy na prezentację.");
+        mAd.setContactInfo("Multi Nieruchomości\n" +
                 "ul. Pocztowa 39 (wejście od ul.5 lipca); ul.Jasna 1\n" +
                 "70-357 Szczecin\n" +
                 "zachodniopomorskie\n" +
@@ -95,14 +95,14 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                 "tel.: (91) 488-34-44\n" +
                 "tel.: (91) 462-64-64");
 
-        mTitleView.setText(ad.getTitle());
-        mPriceView.setText(getString(R.string.price_prefix) + ad.getPrice());
-        mBasicInfoView.setText(ad.getBasicInfo());
-        mDescriptionView.setText(ad.getDescription());
-        mContactInfoView.setText(ad.getContactInfo());
-        mImagePagerView.setAdapter(new PhotoPagerAdapter(ad.getImages()));
+        mTitleView.setText(mAd.getTitle());
+        mPriceView.setText(getString(R.string.price_prefix) + mAd.getPrice());
+        mBasicInfoView.setText(mAd.getBasicInfo());
+        mDescriptionView.setText(mAd.getDescription());
+        mContactInfoView.setText(mAd.getContactInfo());
+        mImagePagerView.setAdapter(new PhotoPagerAdapter(mAd.getImages()));
         mImagePagerView.setOnPageChangeListener(this);
-        mImageMiniatureListView.setAdapter(new PhotoMiniatureAdapter(this, ad.getImages()));
+        mImageMiniatureListView.setAdapter(new PhotoMiniatureAdapter(this, mAd.getImages()));
         mImageMiniatureListView.setOnItemClickListener(this);
 	}
 
@@ -182,6 +182,7 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(AdActivity.this, GalleryActivity.class);
+                    intent.putExtra(GalleryActivity.AD_TAG, mAd);
                     startActivity(intent);
                 }
             });

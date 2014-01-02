@@ -25,6 +25,13 @@ public class SystemUiHiderBase extends SystemUiHider {
 
 	@Override
 	public void setup() {
+        if ((mFlags & FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES) != 0) {
+            mActivity.getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 	}
 
 	@Override

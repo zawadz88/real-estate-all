@@ -6,12 +6,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import com.squareup.picasso.Picasso;
+import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -20,6 +27,9 @@ import com.zawadz88.realestate.util.SystemUiHider;
  * @see SystemUiHider
  */
 public class GalleryActivity extends ActionBarActivity {
+
+    public static final String AD_TAG = "ad";
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -47,7 +57,7 @@ public class GalleryActivity extends ActionBarActivity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
-
+    private ViewPager mPhotoPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,40 +66,20 @@ public class GalleryActivity extends ActionBarActivity {
 
         initActionBar();
 
-        final View controlsView = findViewById(R.id.fullscreen_content_controls);
-        final View contentView = findViewById(R.id.fullscreen_content);
+        final Ad ad = (Ad) getIntent().getSerializableExtra(AD_TAG);
+
+        mPhotoPager = (ViewPager) findViewById(R.id.photo_pager);
+        mPhotoPager.setAdapter(new PhotoPagerAdapter(ad.getImages()));
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
-        mSystemUiHider = SystemUiHider.getInstance(this, contentView, HIDER_FLAGS);
+        mSystemUiHider = SystemUiHider.getInstance(this, mPhotoPager, HIDER_FLAGS);
         mSystemUiHider.setup();
         mSystemUiHider.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-            // Cached values.
-            int mControlsHeight;
-            int mShortAnimTime;
 
             @Override
             @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
             public void onVisibilityChange(boolean visible) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-                    // If the ViewPropertyAnimator API is available
-                    // (Honeycomb MR2 and later), use it to animate the
-                    // in-layout UI controls at the bottom of the
-                    // screen.
-                    if (mControlsHeight == 0) {
-                        mControlsHeight = controlsView.getHeight();
-                    }
-                    if (mShortAnimTime == 0) {
-                        mShortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-                    }
-                    controlsView.animate().translationY(visible ? 0 : mControlsHeight).setDuration(mShortAnimTime);
-                } else {
-                    // If the ViewPropertyAnimator APIs aren't
-                    // available, simply show or hide the in-layout UI
-                    // controls.
-                    controlsView.setVisibility(visible ? View.VISIBLE : View.GONE);
-                }
-
                 if (visible && AUTO_HIDE) {
                     // Schedule a hide().
                     delayedHide(AUTO_HIDE_DELAY_MILLIS);
@@ -97,22 +87,10 @@ public class GalleryActivity extends ActionBarActivity {
             }
         });
 
-        // Set up the user interaction to manually show or hide the system UI.
-        contentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TOGGLE_ON_CLICK) {
-                    mSystemUiHider.toggle();
-                } else {
-                    mSystemUiHider.show();
-                }
-            }
-        });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
+        // Upon interacting with UI, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        mPhotoPager.setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -178,4 +156,63 @@ public class GalleryActivity extends ActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle(getString(R.string.gallery_title));
     }
+
+    /**
+     * A {@link android.support.v4.view.ViewPager} adapter that manages a list of images
+     */
+    private class PhotoPagerAdapter extends PagerAdapter {
+        private final String[] images;
+
+        public PhotoPagerAdapter(String[] images) {
+            this.images = images;
+        }
+
+        @Override
+        public int getCount() {
+            return images.length;
+        }
+
+        public String getPhotoAt(int position) {
+            return images[position];
+        }
+
+        @Override
+        public View instantiateItem(ViewGroup container, int position) {
+            String image = images[position];
+            PhotoView imageView = new PhotoView(container.getContext());
+
+            // Now just add ImageView to ViewPager and return it
+            container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            Picasso.with(GalleryActivity.this)
+                    .load(image)
+                    .placeholder(R.drawable.sample3)
+                    .error(R.drawable.sample2)
+                    .into(imageView);
+
+            // Set up the user interaction to manually show or hide the system UI.
+            imageView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+                @Override
+                public void onViewTap(View view, float x, float y) {
+                    if (TOGGLE_ON_CLICK) {
+                        mSystemUiHider.toggle();
+                    } else {
+                        mSystemUiHider.show();
+                    }
+                }
+            });
+            return imageView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+    }
+
 }

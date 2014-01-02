@@ -8,10 +8,16 @@
         <item name="actionBarStyle">@style/GalleryActionBarStyle</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
+
     </style>
 
     <style name="GalleryActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
+        <item name="background">@color/black_overlay</item>
+        <item name="titleTextStyle">@style/GalleryTitleTextStyle</item>
+    </style>
+
+    <style name="GalleryTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" >
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="AdView">

@@ -114,6 +114,12 @@
 				<type>apklib</type>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.github.chrisbanes.photoview</groupId>
+				<artifactId>photoview-library</artifactId>
+				<type>apklib</type>
+				<version>${project.version}</version>
+			</dependency>
         
 			<!-- Testing -->
 			
@@ -231,6 +237,7 @@
 		<module>pull-to-refresh-library</module>
 		<module>appcompat-resources</module>
 		<module>pagerslidingtabstrip</module>
+		<module>photoview-library</module>
 		<module>real-estate</module>
 		<module>real-estate-it</module>
 	</modules>
