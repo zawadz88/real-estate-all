@@ -35,6 +35,12 @@ public class Article implements Serializable {
 	@SerializedName("c")
 	private String content;
 
+    /**
+     * Web URL of the article
+     */
+    @SerializedName("u")
+    private String url;
+
 	public long getArticleId() {
 		return articleId;
 	}
@@ -67,6 +73,14 @@ public class Article implements Serializable {
 		this.content = content;
 	}
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
@@ -74,6 +88,7 @@ public class Article implements Serializable {
                 ", sectionId=" + sectionId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

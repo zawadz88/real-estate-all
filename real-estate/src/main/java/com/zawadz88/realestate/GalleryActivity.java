@@ -6,14 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.ShareActionProvider;
+import android.view.*;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
@@ -26,7 +25,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  *
  * @see SystemUiHider
  */
-public class GalleryActivity extends ActionBarActivity {
+public class GalleryActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
     public static final String AD_TAG = "ad";
 
@@ -91,6 +90,7 @@ public class GalleryActivity extends ActionBarActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         mPhotoPager.setOnTouchListener(mDelayHideTouchListener);
+        mPhotoPager.setOnPageChangeListener(this);
     }
 
     @Override
@@ -139,6 +139,25 @@ public class GalleryActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.article_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        MenuItem actionItem = menu.findItem(R.id.menu_item_share);
+        actionItem.setVisible(true);
+        ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(actionItem);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        final Ad ad = (Ad) getIntent().getSerializableExtra(AD_TAG);
+        intent.putExtra(Intent.EXTRA_TEXT, ad.getImages()[mPhotoPager.getCurrentItem()]);
+        actionProvider.setShareIntent(intent);
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -155,6 +174,19 @@ public class GalleryActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle(getString(R.string.gallery_title));
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i2) {
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
     }
 
     /**

@@ -12,7 +12,7 @@
     </style>
 
     <style name="GalleryActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="background">@color/black_overlay</item>
+        <item name="background">@drawable/re_black_gradient</item>
         <item name="titleTextStyle">@style/GalleryTitleTextStyle</item>
     </style>
 

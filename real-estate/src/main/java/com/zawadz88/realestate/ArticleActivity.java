@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
 import com.zawadz88.realestate.api.model.ArticleCategory;
 import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.model.Section;
 import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.fragment.ArticleFragment;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
@@ -79,6 +78,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
             mArticleViewPager.setCurrentItem(mCurrentPosition);
         }
         mArticleViewPager.setOnPageChangeListener(this);
+
     }
 
     @Override
@@ -118,6 +118,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 
     @Override
     public void onPageSelected(int i) {
+        supportInvalidateOptionsMenu();
         int count = mArticleViewPager.getAdapter().getCount();
         if (i > count - LOAD_MORE_ITEMS_THRESHOLD && !getRealEstateApplication().getEndOfItemsReachedFlagForCategory(mCategory.getName()) && !getRealEstateApplication().getLoadingMoreFlagForCategory(mCategory.getName())) {
             if (getRealEstateApplication().isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {

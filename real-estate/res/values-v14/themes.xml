@@ -8,7 +8,7 @@
     </style>
 
     <style name="GalleryActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
+        <item name="android:background">@drawable/re_black_gradient</item>
         <item name="android:titleTextStyle">@style/GalleryTitleTextStyle</item>
     </style>
 

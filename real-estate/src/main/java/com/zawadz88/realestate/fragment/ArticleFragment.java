@@ -1,9 +1,10 @@
 package com.zawadz88.realestate.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
+import android.view.*;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.eventbus.ArticleDownloadEvent;
@@ -34,6 +35,12 @@ public class ArticleFragment extends AbstractFragment {
         args.putSerializable(ARTICLE_ESSENTIAL, articleEssential);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -76,6 +83,41 @@ public class ArticleFragment extends AbstractFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.article_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
+        Article article = mApplication.getArticleById(articleEssential.getArticleId());
+        MenuItem actionItem = menu.findItem(R.id.menu_item_share);
+        if(article != null) {
+            actionItem.setVisible(true);
+            ShareActionProvider actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(actionItem);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, article.getUrl());
+            actionProvider.setShareIntent(intent);
+        } else {
+            actionItem.setVisible(false);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
+        Article article = mApplication.getArticleById(articleEssential.getArticleId());
+        if(article == null) {//do not share if article is not initialized
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void onEventMainThread(ArticleDownloadEvent ev) {
         final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
 
@@ -83,6 +125,9 @@ public class ArticleFragment extends AbstractFragment {
             if (ev.isSuccessful()) {
                 Article article = ev.getDownloadedArticle();
                 displayArticle(article);
+                if (getActivity() != null) {
+                    getActivity().supportInvalidateOptionsMenu();
+                }
             } else {
                 if (ev.getException() instanceof RetrofitError) {
                     RetrofitError retrofitError = (RetrofitError) ev.getException();

@@ -22,4 +22,5 @@
 
     <string name="price_prefix">"Price: "</string>
     <string name="gallery_title">Gallery</string>
+    <string name="share">Share</string>
 </resources>
