@@ -102,8 +102,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		solo.clickInList(clickedItemIndex, 0);
 		assertTrue(solo.waitForActivity(AdActivity.class.getSimpleName()));
 		assertNotNull(solo.getCurrentActivity());
-		int position = solo.getCurrentActivity().getIntent().getIntExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, -1);
-		assertEquals(clickedItemIndex - 1, position);//different start offset
 	}
 
 	@Override
