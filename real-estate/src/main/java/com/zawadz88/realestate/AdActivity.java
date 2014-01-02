@@ -20,6 +20,7 @@ import com.meetme.android.horizontallistview.HorizontalListView;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.fragment.ArticlesGridFragment;
 
 /**
  * Activity displaying an {@link com.zawadz88.realestate.api.model.Ad}.
@@ -177,6 +178,13 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                     .placeholder(R.drawable.sample3)
                     .error(R.drawable.sample2)
                     .into(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AdActivity.this, GalleryActivity.class);
+                    startActivity(intent);
+                }
+            });
             return imageView;
         }
 

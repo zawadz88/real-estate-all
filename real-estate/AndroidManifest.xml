@@ -34,11 +34,22 @@
         <activity
                 android:name=".ArticleActivity"
                 android:theme="@style/Theme.Realestate"
+                android:configChanges="orientation|keyboardHidden|screenSize"
                 android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity" />
+        </activity>
+        <activity
+                android:name=".GalleryActivity"
+                android:theme="@style/Theme.Gallery"
+                android:parentActivityName=".AdActivity"
+                >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".AdActivity" />
         </activity>
 
     </application>

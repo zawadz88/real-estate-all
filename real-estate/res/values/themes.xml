@@ -4,6 +4,15 @@
         <item name="android:windowBackground">@drawable/re_app_background</item>
        <!-- <item name="android:windowNoTitle">false</item>-->
     </style>
+    <style name="Theme.Gallery" parent="Theme.Realestate">
+        <item name="actionBarStyle">@style/GalleryActionBarStyle</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="GalleryActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
 
     <style name="AdView">
         <item name="android:layout_marginLeft">@dimen/ad_default_margin</item>
