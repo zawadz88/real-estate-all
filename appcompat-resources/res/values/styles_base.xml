@@ -301,7 +301,7 @@
     </style>
 
     <style name="Widget.AppCompat.Base.ListPopupWindow" parent="">
-        <item name="android:dropDownSelector">@null</item>
+        <item name="android:dropDownSelector">@drawable/realestate_list_selector_holo_light</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_realestate</item>
         <item name="android:dropDownVerticalOffset">0dip</item>
         <item name="android:dropDownHorizontalOffset">0dip</item>
