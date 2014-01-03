@@ -21,6 +21,7 @@
               android:paddingLeft="16dip"
               android:paddingRight="16dip"
               android:minWidth="196dip"
+              android:background="@drawable/selectable_background_realestate"
               android:orientation="vertical">
 
     <LinearLayout
