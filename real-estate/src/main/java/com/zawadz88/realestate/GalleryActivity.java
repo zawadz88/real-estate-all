@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.*;
+import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.api.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
@@ -212,13 +213,14 @@ public class GalleryActivity extends ActionBarActivity implements ViewPager.OnPa
         public View instantiateItem(ViewGroup container, int position) {
             String image = images[position];
             PhotoView imageView = new PhotoView(container.getContext());
-
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             // Now just add ImageView to ViewPager and return it
             container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             Picasso.with(GalleryActivity.this)
                     .load(image)
-                    .placeholder(R.drawable.sample3)
-                    .error(R.drawable.sample2)
+                    .placeholder(R.drawable.robot_icon)
+                    .error(R.drawable.robot_icon)
+                    .fit().centerInside()
                     .into(imageView);
 
             // Set up the user interaction to manually show or hide the system UI.

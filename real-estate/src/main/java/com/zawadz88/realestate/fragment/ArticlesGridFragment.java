@@ -266,8 +266,9 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 
 			Picasso.with(getActivity())
 					.load(articleEssentialItem.getImageUrl())
-					.placeholder(R.drawable.sample3)
-					.error(R.drawable.sample2)
+					.placeholder(R.drawable.robot_icon)
+					.error(R.drawable.robot_icon)
+                    .fit().centerCrop()
 					.into(imageView);
 			return view;
 		}
