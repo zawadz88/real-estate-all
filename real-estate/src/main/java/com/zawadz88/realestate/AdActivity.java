@@ -169,14 +169,16 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
         public View instantiateItem(ViewGroup container, int position) {
             String image = images[position];
             ImageView imageView = new ImageView(container.getContext());
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            imageView.setBackgroundResource(R.drawable.re_vertical_gradient);
 
             // Now just add ImageView to ViewPager and return it
             container.addView(imageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             Picasso.with(AdActivity.this)
                     .load(image)
-                    .placeholder(R.drawable.sample3)
-                    .error(R.drawable.sample2)
+                    .placeholder(R.drawable.robot_icon)
+                    .error(R.drawable.robot_icon)
+                    .fit().centerCrop()
                     .into(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -240,8 +242,9 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
             String image = data[position];
             Picasso.with(AdActivity.this)
                     .load(image)
-                    .placeholder(R.drawable.sample3)
-                    .error(R.drawable.sample2)
+                    .placeholder(R.drawable.robot_icon)
+                    .error(R.drawable.robot_icon)
+                    .fit().centerCrop()
                     .into(imageView);
 
             return convertView;

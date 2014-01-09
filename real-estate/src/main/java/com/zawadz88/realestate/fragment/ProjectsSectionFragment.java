@@ -107,9 +107,11 @@ public class ProjectsSectionFragment extends AbstractSectionFragment {
 					resId = R.drawable.sample1;
 					break;
 			}
-			((ImageView)view.findViewById(R.id.gridview_item_image)).setImageResource(resId);
-			//((ImageView)view.findViewById(R.id.gridview_item_image)).setImageResource(R.drawable.offer_sample);
-			return view;  //To change body of implemented methods use File | Settings | File Templates.
+            ImageView imageView = (ImageView) view.findViewById(R.id.gridview_item_image);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            //TODO the above should be changed by Picasso after loading the image since ScaleType.CENTER_INSIDE is used for preloaders
+            imageView.setImageResource(resId);
+            return view;  //To change body of implemented methods use File | Settings | File Templates.
 		}
 	}
 }

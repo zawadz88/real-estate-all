@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
@@ -262,13 +263,25 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 			((TextView)view.findViewById(R.id.gridview_item_title)).setText(articleEssentialItem.getTitle());
 
 
-			ImageView imageView = (ImageView)view.findViewById(R.id.gridview_item_image);
+			final ImageView imageView = (ImageView)view.findViewById(R.id.gridview_item_image);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
 			Picasso.with(getActivity())
 					.load(articleEssentialItem.getImageUrl())
-					.placeholder(R.drawable.sample3)
-					.error(R.drawable.sample2)
-					.into(imageView);
+					.placeholder(R.drawable.robot_icon)
+					.error(R.drawable.robot_icon)
+                    .fit()
+					.into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
 			return view;
 		}
 	}

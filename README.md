@@ -7,6 +7,7 @@ A sample real estate app showing how to:
   - use Navigation Drawer and ActionBarCompat
   - support multiple screen sizes
   - use Event Bus for decoupling fragments and activities
+  - use Picasso for image loading and Retrofit for HTTP requests
 
 Known issues on IntelliJ
 =====
