@@ -3,11 +3,16 @@ Real Estate Sample App
 
 A sample real estate app showing how to:
   - use Maven build system with multiple modules
-  - use Robolectric and Robotium for testing
+  - use Robolectric, Robotium and Calabash for testing
   - use Navigation Drawer and ActionBarCompat
   - support multiple screen sizes
   - use Event Bus for decoupling fragments and activities
   - use Picasso for image loading and Retrofit for HTTP requests
+
+Calabash
+=====
+  - To install Calabash follow the steps from [calabash-android](https://github.com/calabash/calabash-android/blob/master/documentation/installation.md)
+  - Usage is described [here](https://github.com/calabash/calabash-android) and a list of predefined steps is [here](https://github.com/calabash/calabash-android/blob/master/ruby-gem/lib/calabash-android/canned_steps.md)
 
 Known issues on IntelliJ
 =====

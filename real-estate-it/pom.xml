@@ -73,6 +73,62 @@
 				</configuration>
 				<extensions>true</extensions>
 			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>Version Calculation</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <environmentVariables>
+                                <SCREENSHOT_PATH>${basedir}/target/calabash/screenshots/</SCREENSHOT_PATH>
+                            </environmentVariables>
+                            <executable>${calabash.executable}</executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash.bat</calabash.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>unix</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash.sh</calabash.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash.sh</calabash.executable>
+            </properties>
+        </profile>
+    </profiles>
 </project>
