@@ -1,5 +1,6 @@
 Then /^the navigation drawer should be open$/ do
-  performAction( 'assert_view_property', 'drawer_layout', 'drawerOpen', 'true' )
+  isOpen = performAction('call_activity_method', 'isDrawerOpen')['success']
+  raise "The navigation drawer is closed" unless( isOpen == true )
 end
 
 Then /^the Action Bar title should be "([^\"]*)"$/ do |text|
