@@ -117,8 +117,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		actionBar.setTitle(mTitle);
 	}
 
-	public CharSequence getActionBarTitle() {
-		return mTitle;
+	public String getActionBarTitle() {
+		return String.valueOf(mTitle);
 	}
 
 }

@@ -11,7 +11,14 @@ A sample real estate app showing how to:
 
 Calabash
 =====
-  - To install Calabash follow the steps from [calabash-android](https://github.com/calabash/calabash-android/blob/master/documentation/installation.md)
+  - In this project I used a custom calabash-android gem from this [pull request](https://github.com/calabash/calabash-android/pull/329)
+  - To install Calabash:
+    - follow the prerequisite steps from [calabash-android](https://github.com/calabash/calabash-android/blob/master/documentation/installation.md)
+    - checkout calabash-android from pull request:
+```git clone https://github.com/AlexeyDsov/calabash-android.git -b callActivityMethod```
+    - follow the steps from [here](https://github.com/calabash/calabash-android/wiki/Building-calabash-android) without git clone
+    - when the gem is built go to ```pkg``` folder and execute:
+```gem install [name of the gem].gem```
   - Usage is described [here](https://github.com/calabash/calabash-android) and a list of predefined steps is [here](https://github.com/calabash/calabash-android/blob/master/ruby-gem/lib/calabash-android/canned_steps.md)
 
 Known issues on IntelliJ
