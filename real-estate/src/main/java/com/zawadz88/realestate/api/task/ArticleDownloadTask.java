@@ -14,7 +14,7 @@ import retrofit.http.Path;
  */
 public class ArticleDownloadTask extends AbstractDownloadTask {
 
-	private final ArticleService service;
+	private ArticleService service;
 
     /**
      * Essential information about an article containing article's ID and article's section ID
@@ -33,7 +33,7 @@ public class ArticleDownloadTask extends AbstractDownloadTask {
 				.setServer(SERVER_URL)
 				.build();
 
-		service = restAdapter.create(ArticleService.class);
+		setService(restAdapter.create(ArticleService.class));
 	}
 
 	@Override
@@ -52,7 +52,11 @@ public class ArticleDownloadTask extends AbstractDownloadTask {
         return article;
     }
 
-    public interface ArticleService {
+	public void setService(final ArticleService service) {
+		this.service = service;
+	}
+
+	public interface ArticleService {
 		@GET("/article/{sectionId}.{articleId}.1")
         Article [] getArticle(@Path("sectionId") long sectionId, @Path("articleId") long articleId);//API returns an array...
 	}

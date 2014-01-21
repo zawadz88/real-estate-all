@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ArticleListDownloadTask extends AbstractDownloadTask {
 
-	private final ArticleListService service;
+	private ArticleListService service;
 
     /**
      * Name of the {@link com.zawadz88.realestate.api.model.ArticleCategory} for which the list is being downloaded
@@ -40,7 +40,7 @@ public class ArticleListDownloadTask extends AbstractDownloadTask {
 				.setServer(SERVER_URL)
 				.build();
 
-		service = restAdapter.create(ArticleListService.class);
+		setService(restAdapter.create(ArticleListService.class));
 	}
 
 	@Override
@@ -58,6 +58,10 @@ public class ArticleListDownloadTask extends AbstractDownloadTask {
 
 	public int getPageNumber() {
 		return pageNumber;
+	}
+
+	public void setService(final ArticleListService service) {
+		this.service = service;
 	}
 
 	public interface ArticleListService {
