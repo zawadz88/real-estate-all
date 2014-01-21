@@ -5,6 +5,7 @@
     tools:context=".GalleryActivity" >
 
     <com.zawadz88.realestate.view.BounceBackViewPager
+            android:keepScreenOn="true"
             android:background="@android:color/black"
             android:id="@+id/photo_pager"
             android:layout_width="match_parent"

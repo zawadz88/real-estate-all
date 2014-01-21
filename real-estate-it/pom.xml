@@ -79,8 +79,8 @@
                 <version>1.2.1</version>
                 <executions>
                     <execution>
-                        <id>Version Calculation</id>
-                        <phase>validate</phase>
+                        <id>calabash-tests</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -128,6 +128,24 @@
             </activation>
             <properties>
                 <calabash.executable>${basedir}/scripts/calabash.sh</calabash.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows-jenkins</id>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash-jenkins.bat</calabash.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>unix-jenkins</id>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash-jenkins.sh</calabash.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>mac-jenkins</id>
+            <properties>
+                <calabash.executable>${basedir}/scripts/calabash-jenkins.sh</calabash.executable>
             </properties>
         </profile>
     </profiles>
