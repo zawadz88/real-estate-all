@@ -17,7 +17,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
-		<platform.version>4.1.1.4</platform.version>
+        <platform.version>4.1.1.4</platform.version>
+        <platform.test.version>4.1.1.4</platform.test.version>
 		<android.platform>17</android.platform>
 		<android.support.version>19</android.support.version>
 		<retrofit.version>1.2.2</retrofit.version>
@@ -120,13 +121,13 @@
 				<type>apklib</type>
 				<version>${project.version}</version>
 			</dependency>
-        
+
 			<!-- Testing -->
 			
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android-test</artifactId>
-				<version>${platform.version}</version>
+				<version>${platform.test.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			

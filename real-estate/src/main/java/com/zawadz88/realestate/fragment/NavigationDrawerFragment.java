@@ -13,7 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.api.model.Section;
 
@@ -109,9 +112,14 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
-	public boolean isDrawerOpen() {
-		return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
-	}
+
+    public boolean isDrawerOpen() {
+        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    }
+
+    public boolean isDrawerOpen(View view) {
+        return isDrawerOpen();
+    }
 
 	/**
 	 * Users of this fragment must call this method to set up the navigation drawer interactions.
@@ -189,7 +197,7 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 	}
 
-	private void selectItem(int position) {
+    private void selectItem(int position) {
 		mCurrentSelectedPosition = position;
 		if (mDrawerListView != null) {
 			mDrawerListView.setItemChecked(position, true);

@@ -166,7 +166,7 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
         }
 
         @Override
-        public View instantiateItem(ViewGroup container, int position) {
+        public View instantiateItem(final ViewGroup container, final int position) {
             String image = images[position];
             ImageView imageView = new ImageView(container.getContext());
             imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -185,6 +185,7 @@ public class AdActivity extends ActionBarActivity implements AdapterView.OnItemC
                 public void onClick(View view) {
                     Intent intent = new Intent(AdActivity.this, GalleryActivity.class);
                     intent.putExtra(GalleryActivity.AD_TAG, mAd);
+                    intent.putExtra(GalleryActivity.START_POSITION_TAG, position);
                     startActivity(intent);
                 }
             });

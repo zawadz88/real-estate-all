@@ -22,10 +22,16 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    /**
+     * Drawer layout containing the navigation drawer and content. This is null for 10'' tablets in landscape mode
+     */
+    private DrawerLayout mDrawerLayout;
+
 	/**
 	 * Used to store the last screen title. For use in {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
+
 
 
 	@Override
@@ -37,10 +43,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		mNavigationDrawerFragment = (NavigationDrawerFragment)
 				getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(
-				R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
     }
 
 	@Override
@@ -117,8 +123,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		actionBar.setTitle(mTitle);
 	}
 
-	public CharSequence getActionBarTitle() {
-		return mTitle;
+    /**
+     * Returns the current Action Bar Title
+     * @return
+     */
+	public String getActionBarTitle() {
+		return String.valueOf(mTitle);
 	}
+
+    /**
+     * Returns true in navigation drawer is open or if drawer layout is not present (navigation drawer fragment is always visible then)
+     * @return
+     */
+    public boolean isDrawerOpen() {
+        return mDrawerLayout != null ? mDrawerLayout.isDrawerOpen(findViewById(R.id.navigation_drawer)) : true;
+    }
 
 }

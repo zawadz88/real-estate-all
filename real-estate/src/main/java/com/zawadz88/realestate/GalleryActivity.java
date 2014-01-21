@@ -29,6 +29,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class GalleryActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
     public static final String AD_TAG = "ad";
+    public static final String START_POSITION_TAG = "startPosition";
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -70,6 +71,9 @@ public class GalleryActivity extends ActionBarActivity implements ViewPager.OnPa
 
         mPhotoPager = (ViewPager) findViewById(R.id.photo_pager);
         mPhotoPager.setAdapter(new PhotoPagerAdapter(ad.getImages()));
+
+        int startPosition = getIntent().getIntExtra(START_POSITION_TAG, 0);
+        mPhotoPager.setCurrentItem(startPosition, false);
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
