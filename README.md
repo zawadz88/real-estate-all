@@ -14,6 +14,7 @@ Calabash
   - In this project I used a custom calabash-android gem from this [pull request](https://github.com/calabash/calabash-android/pull/329)
   - To install Calabash:
     - follow the prerequisite steps from [calabash-android](https://github.com/calabash/calabash-android/blob/master/documentation/installation.md)
+    - install bundler gem ```gem install bundler```
     - checkout calabash-android from pull request:
 ```git clone https://github.com/AlexeyDsov/calabash-android.git -b callActivityMethod```
     - follow the steps from [here](https://github.com/calabash/calabash-android/wiki/Building-calabash-android) without git clone
