@@ -1,10 +1,11 @@
 package com.zawadz88.realestate.test;
 
+import com.zawadz88.realestate.service.ContentHolder;
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.TaskResult;
-import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.api.model.ArticleCategory;
-import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.model.ArticleCategory;
+import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import de.greenrobot.event.EventBus;
 import org.junit.After;
 import org.junit.Before;
@@ -87,7 +88,7 @@ public class ArticleListDownloadTaskTest {
 	}
 
 	private DownloadAssert thenDownload() {
-		return new DownloadAssert(mCategory, mApplication, mEventListener);
+		return new DownloadAssert(mCategory, mApplication.getContentHolder(), mEventListener);
 	}
 
 
@@ -120,22 +121,22 @@ public class ArticleListDownloadTaskTest {
 
 	public static class DownloadAssert {
 		private final ArticleCategory category;
-		private final RealEstateApplication application;
+		private final ContentHolder mContentHolder;
 		private final EventListener eventListener;
 
-		public DownloadAssert(final ArticleCategory category, final RealEstateApplication application, final EventListener eventListener) {
+		public DownloadAssert(final ArticleCategory category, final ContentHolder contentHolder, final EventListener eventListener) {
 			this.category = category;
-			this.application = application;
+			this.mContentHolder = contentHolder;
 			this.eventListener = eventListener;
 		}
 
 		public DownloadAssert fetchedArticles() {
-			assertTrue("Task did not succeed!", !application.getArticleEssentialListByCategory(category.getName()).isEmpty());
+			assertTrue("Task did not succeed!", !mContentHolder.getArticleEssentialListByCategory(category.getName()).isEmpty());
 			return this;
 		}
 
 		public DownloadAssert didNotFetchArticles() {
-			assertTrue("Task did not succeed!", application.getArticleEssentialListByCategory(category.getName()).isEmpty());
+			assertTrue("Task did not succeed!", mContentHolder.getArticleEssentialListByCategory(category.getName()).isEmpty());
 			return this;
 		}
 

@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.api.model.ArticleCategory;
-import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.model.ArticleCategory;
+import com.zawadz88.realestate.model.Section;
 import de.greenrobot.event.EventBus;
 
 /**

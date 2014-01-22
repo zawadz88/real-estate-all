@@ -26,8 +26,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
-import com.zawadz88.realestate.api.model.Section;
-import com.zawadz88.realestate.fragment.ArticlesGridFragment;
+import com.zawadz88.realestate.model.Section;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 

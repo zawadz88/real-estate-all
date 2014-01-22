@@ -15,7 +15,7 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.*;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
-import com.zawadz88.realestate.api.model.Ad;
+import com.zawadz88.realestate.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;

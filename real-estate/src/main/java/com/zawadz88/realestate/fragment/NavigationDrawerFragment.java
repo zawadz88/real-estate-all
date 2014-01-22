@@ -18,7 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.model.Section;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

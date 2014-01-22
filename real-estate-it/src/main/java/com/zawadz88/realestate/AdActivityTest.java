@@ -16,12 +16,10 @@
 
 package com.zawadz88.realestate;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 import com.jayway.android.robotium.solo.Solo;
-import com.zawadz88.realestate.api.model.Section;
-import com.zawadz88.realestate.fragment.ArticlesGridFragment;
+import com.zawadz88.realestate.model.Section;
 
 public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity> {
 

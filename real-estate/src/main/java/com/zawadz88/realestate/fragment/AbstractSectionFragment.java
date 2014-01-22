@@ -1,7 +1,7 @@
 package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
-import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.model.Section;
 
 /**
  * Base fragment for displaying content for one of sections

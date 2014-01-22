@@ -1,14 +1,14 @@
-package com.zawadz88.realestate.api.task;
+package com.zawadz88.realestate.task;
 
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.model.Article;
-import com.zawadz88.realestate.api.model.ArticleEssential;
+import com.zawadz88.realestate.model.Article;
+import com.zawadz88.realestate.model.ArticleEssential;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
 /**
- * A task responsible for downloading an {@link com.zawadz88.realestate.api.model.Article}
+ * A task responsible for downloading an {@link com.zawadz88.realestate.model.Article}
  *
  * @author Piotr Zawadzki
  */

@@ -11,10 +11,10 @@ import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.api.model.ArticleCategory;
-import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.model.ArticleCategory;
+import com.zawadz88.realestate.model.ArticleEssential;
+import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 
@@ -94,10 +94,10 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
             }
         });
 
-        List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
+        List<ArticleEssential> articles = mContentHolder.getArticleEssentialListByCategory(mCategory.getName());
 
 		if (articles.isEmpty()) {
-            if (mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
+            if (mContentHolder.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
                 setGridViewState(ViewState.EMPTY);
             } else {
                 downloadFirstPage();
@@ -139,13 +139,13 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (!mApplication.getLoadingMoreFlagForCategory(mCategory.getName()) && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
+        if (!mContentHolder.getLoadingMoreFlagForCategory(mCategory.getName()) && visibleItemCount != totalItemCount && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_ITEM_THRESHOLD) && !mContentHolder.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			// visibleItemCount != totalItemCount is needed for when new items are added this is false
             if (mApplication.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
+				mContentHolder.setLoadingMoreFlagForCategory(true, mCategory.getName());
             } else if (DeviceUtils.isOnline(mApplication)) { //load next page
-                mApplication.setLoadingMoreFlagForCategory(true, mCategory.getName());
-                ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), mApplication.getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
+				mContentHolder.setLoadingMoreFlagForCategory(true, mCategory.getName());
+                ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), mContentHolder.getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
 				mApplication.startTask(downloadTask);
 			} else {
                 showNoInternetToastMessage();
@@ -156,7 +156,7 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 			return;
 		}
         // show loading view if last cell is visible and there should be more items available
-		if (firstVisibleItem + visibleItemCount == totalItemCount && !mApplication.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
+		if (firstVisibleItem + visibleItemCount == totalItemCount && !mContentHolder.getEndOfItemsReachedFlagForCategory(mCategory.getName())) {
 			if (mLoadingMoreView.getVisibility() == View.GONE) {
 				mLoadingMoreView.setVisibility(View.VISIBLE);
 			}
@@ -172,21 +172,21 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 	}
 
 	/**
-	 * Method called when an {@link com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent}
+	 * Method called when an {@link com.zawadz88.realestate.event.ArticleEssentialDownloadEvent}
 	 * is posted from EventBus.
 	 * @param ev posted event
 	 */
 	public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
-        mApplication.setLoadingMoreFlagForCategory(false, mCategory.getName());
+		mContentHolder.setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (mLoadingMoreView.getVisibility() == View.VISIBLE) {
             mLoadingMoreView.setVisibility(View.GONE);
         }
         if (ev.getCategoryName().equals(mCategory.getName())) {
-            List<ArticleEssential> articles = this.mApplication.getArticleEssentialListByCategory(mCategory.getName());
+            List<ArticleEssential> articles = this.mContentHolder.getArticleEssentialListByCategory(mCategory.getName());
             if (ev.isSuccessful()) {
                 List<ArticleEssential> downloadedArticles = ev.getDownloadedArticles();
                 if (downloadedArticles == null || downloadedArticles.isEmpty()) {
-                    mApplication.setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
+					mContentHolder.setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
                     if (articles.isEmpty()) {
                         setGridViewState(ViewState.EMPTY);
                     } else {
@@ -221,7 +221,7 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
     }
 
 	/**
-	 * Download first page of article essentials for this fragment's {@link com.zawadz88.realestate.api.model.ArticleCategory}
+	 * Download first page of article essentials for this fragment's {@link com.zawadz88.realestate.model.ArticleCategory}
 	 */
     private void downloadFirstPage() {
         setGridViewState(ViewState.LOADING);
@@ -236,12 +236,12 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 
 		@Override
 		public int getCount() {
-			return mApplication.getArticleEssentialListByCategory(mCategory.getName()).size();
+			return mContentHolder.getArticleEssentialListByCategory(mCategory.getName()).size();
 		}
 
 		@Override
 		public Object getItem(final int position) {
-			return mApplication.getArticleEssentialListByCategory(mCategory.getName()).get(position);
+			return mContentHolder.getArticleEssentialListByCategory(mCategory.getName()).get(position);
 		}
 
 		@Override
@@ -259,7 +259,7 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 			} else {
 				view = convertView;
 			}
-			ArticleEssential articleEssentialItem = mApplication.getArticleEssentialListByCategory(mCategory.getName()).get(position);
+			ArticleEssential articleEssentialItem = mContentHolder.getArticleEssentialListByCategory(mCategory.getName()).get(position);
 			((TextView)view.findViewById(R.id.gridview_item_title)).setText(articleEssentialItem.getTitle());
 
 

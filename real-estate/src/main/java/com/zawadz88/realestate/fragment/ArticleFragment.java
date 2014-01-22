@@ -7,16 +7,16 @@ import android.support.v7.widget.ShareActionProvider;
 import android.view.*;
 import android.widget.TextView;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.api.eventbus.ArticleDownloadEvent;
-import com.zawadz88.realestate.api.model.Article;
-import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.task.ArticleDownloadTask;
+import com.zawadz88.realestate.event.ArticleDownloadEvent;
+import com.zawadz88.realestate.model.Article;
+import com.zawadz88.realestate.model.ArticleEssential;
+import com.zawadz88.realestate.task.ArticleDownloadTask;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 import retrofit.RetrofitError;
 
 /**
- * Fragment displaying an {@link com.zawadz88.realestate.api.model.Article} fetched from the API
+ * Fragment displaying an {@link com.zawadz88.realestate.model.Article} fetched from the API
  *
  * @author Piotr Zawadzki
  */
@@ -62,7 +62,7 @@ public class ArticleFragment extends AbstractFragment {
                 }
             }
         });
-        Article article = mApplication.getArticleById(articleEssential.getArticleId());
+        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
         if (article != null) {
             displayArticle(article);
         } else {
@@ -93,7 +93,7 @@ public class ArticleFragment extends AbstractFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
-        Article article = mApplication.getArticleById(articleEssential.getArticleId());
+        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
         MenuItem actionItem = menu.findItem(R.id.menu_item_share);
         if(article != null) {
             actionItem.setVisible(true);
@@ -110,7 +110,7 @@ public class ArticleFragment extends AbstractFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
-        Article article = mApplication.getArticleById(articleEssential.getArticleId());
+        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
         if(article == null) {//do not share if article is not initialized
             return true;
         } else {

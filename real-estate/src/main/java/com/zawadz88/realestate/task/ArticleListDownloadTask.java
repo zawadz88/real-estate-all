@@ -1,7 +1,7 @@
-package com.zawadz88.realestate.api.task;
+package com.zawadz88.realestate.task;
 
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.model.ArticleEssential;
+import com.zawadz88.realestate.model.ArticleEssential;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -18,7 +18,7 @@ public class ArticleListDownloadTask extends BaseDownloadTask {
 	private ArticleListService service;
 
     /**
-     * Name of the {@link com.zawadz88.realestate.api.model.ArticleCategory} for which the list is being downloaded
+     * Name of the {@link com.zawadz88.realestate.model.ArticleCategory} for which the list is being downloaded
      */
 	private String category;
 

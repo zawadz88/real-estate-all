@@ -1,6 +1,6 @@
-package com.zawadz88.realestate.api.eventbus;
+package com.zawadz88.realestate.event;
 
-import com.zawadz88.realestate.api.TaskResult;
+import com.zawadz88.realestate.task.util.TaskResult;
 
 /**
  * An event that is passed via EventBus that is to be used a base class for all download events

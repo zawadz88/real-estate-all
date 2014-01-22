@@ -10,19 +10,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.api.model.ArticleCategory;
-import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.model.ArticleCategory;
+import com.zawadz88.realestate.model.ArticleEssential;
+import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.fragment.ArticleFragment;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
+import com.zawadz88.realestate.service.ContentHolder;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 
 import java.util.List;
 
 /**
- * Activity displaying an {@link com.zawadz88.realestate.api.model.Article}.
+ * Activity displaying an {@link com.zawadz88.realestate.model.Article}.
  * It shows how to create an activity with a view pager containing a list of items and with a fragment that has the same list
  * and how to glue them together with each other and also load content.
  *
@@ -72,7 +73,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 
         mArticleViewPager = (ViewPager) findViewById(R.id.articles_viewpager);
         mArticleViewPager.setSaveEnabled(false);
-        List<ArticleEssential> articleEssentialList = getRealEstateApplication().getArticleEssentialListByCategory(mCategory.getName());
+        List<ArticleEssential> articleEssentialList = getContentHolder().getArticleEssentialListByCategory(mCategory.getName());
         mArticleViewPager.setAdapter(new ArticlesPagerAdapter(articleEssentialList, getSupportFragmentManager()));
         if (mCurrentPosition >=0 && mCurrentPosition < articleEssentialList.size()) {
             mArticleViewPager.setCurrentItem(mCurrentPosition);
@@ -120,12 +121,12 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
     public void onPageSelected(int i) {
         supportInvalidateOptionsMenu();
         int count = mArticleViewPager.getAdapter().getCount();
-        if (i > count - LOAD_MORE_ITEMS_THRESHOLD && !getRealEstateApplication().getEndOfItemsReachedFlagForCategory(mCategory.getName()) && !getRealEstateApplication().getLoadingMoreFlagForCategory(mCategory.getName())) {
+        if (i > count - LOAD_MORE_ITEMS_THRESHOLD && !getContentHolder().getEndOfItemsReachedFlagForCategory(mCategory.getName()) && !getContentHolder().getLoadingMoreFlagForCategory(mCategory.getName())) {
             if (getRealEstateApplication().isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-                getRealEstateApplication().setLoadingMoreFlagForCategory(true, mCategory.getName());
+				getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
             } else if (DeviceUtils.isOnline(getApplicationContext())) { //load next page
-                getRealEstateApplication().setLoadingMoreFlagForCategory(true, mCategory.getName());
-                ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), getRealEstateApplication().getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
+				getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
+                ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), getContentHolder().getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
                 getRealEstateApplication().startTask(downloadTask);
             } else {
                 //TODO show a toast, without duplicating a toast from gridview for tablets in landscape
@@ -148,9 +149,13 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 		actionBar.setTitle(mCategory.getTitleResource());
 	}
 
-    public RealEstateApplication getRealEstateApplication() {
-        return (RealEstateApplication) getApplicationContext();
-    }
+	public RealEstateApplication getRealEstateApplication() {
+		return (RealEstateApplication) getApplicationContext();
+	}
+
+	public ContentHolder getContentHolder() {
+		return getRealEstateApplication().getContentHolder();
+	}
 
 	/**
 	 * Method called when an {@link com.zawadz88.realestate.fragment.ArticlesGridFragment.ArticleItemSelectedEvent}
@@ -167,17 +172,17 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 	}
 
 	/**
-	 * Method called when an {@link com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent}
+	 * Method called when an {@link com.zawadz88.realestate.event.ArticleEssentialDownloadEvent}
 	 * is posted from EventBus.
 	 * @param ev posted event
 	 */
     public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
-        getRealEstateApplication().setLoadingMoreFlagForCategory(false, mCategory.getName());
+		getContentHolder().setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (ev.getCategoryName().equals(mCategory.getName())) {
             if (ev.isSuccessful()) {
                 List<ArticleEssential> downloadedArticles = ev.getDownloadedArticles();
                 if (downloadedArticles == null || downloadedArticles.isEmpty()) {
-                    getRealEstateApplication().setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
+					getContentHolder().setEndOfItemsReachedFlagForCategory(true, mCategory.getName());
                 } else {
                     mArticleViewPager.getAdapter().notifyDataSetChanged();
                 }

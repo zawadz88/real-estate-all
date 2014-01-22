@@ -1,19 +1,19 @@
-package com.zawadz88.realestate.api.eventbus;
+package com.zawadz88.realestate.event;
 
-import com.zawadz88.realestate.api.TaskResult;
-import com.zawadz88.realestate.api.model.ArticleEssential;
+import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.model.ArticleEssential;
 
 import java.util.List;
 
 /**
- * An event that is passed via EventBus when a list of {@link com.zawadz88.realestate.api.model.ArticleEssential} was done downloading.
+ * An event that is passed via EventBus when a list of {@link com.zawadz88.realestate.model.ArticleEssential} was done downloading.
  *
  * @author Piotr Zawadzki
  */
 public class ArticleEssentialDownloadEvent extends AbstractDownloadEvent {
 
     /**
-     * Name of the {@link com.zawadz88.realestate.api.model.ArticleCategory} for which a list was being fetched
+     * Name of the {@link com.zawadz88.realestate.model.ArticleCategory} for which a list was being fetched
      */
 	private final String categoryName;
 

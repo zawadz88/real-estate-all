@@ -18,11 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.meetme.android.horizontallistview.HorizontalListView;
 import com.squareup.picasso.Picasso;
-import com.zawadz88.realestate.api.model.Ad;
-import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.model.Ad;
+import com.zawadz88.realestate.model.Section;
 
 /**
- * Activity displaying an {@link com.zawadz88.realestate.api.model.Ad}.
+ * Activity displaying an {@link com.zawadz88.realestate.model.Ad}.
  * It shows how to move things around for different screen sizes in layout XML files.
  *
  * @author Piotr Zawadzki

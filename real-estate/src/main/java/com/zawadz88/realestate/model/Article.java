@@ -1,4 +1,4 @@
-package com.zawadz88.realestate.api.model;
+package com.zawadz88.realestate.model;
 
 import com.google.gson.annotations.SerializedName;
 

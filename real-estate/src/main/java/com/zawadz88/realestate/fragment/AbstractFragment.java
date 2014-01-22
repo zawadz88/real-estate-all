@@ -2,6 +2,7 @@ package com.zawadz88.realestate.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import com.zawadz88.realestate.service.ContentHolder;
 import com.zawadz88.realestate.RealEstateApplication;
 
 /**
@@ -12,8 +13,9 @@ import com.zawadz88.realestate.RealEstateApplication;
 public class AbstractFragment extends Fragment {
 
     protected RealEstateApplication mApplication;
+	protected ContentHolder mContentHolder;
 
-    protected enum ViewState {
+	protected enum ViewState {
         LOADING, CONTENT, EMPTY, NO_INTERNET, ERROR
     }
 
@@ -21,6 +23,7 @@ public class AbstractFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mApplication = (RealEstateApplication) getActivity().getApplication();
+		mContentHolder = mApplication.getContentHolder();
     }
 
 }

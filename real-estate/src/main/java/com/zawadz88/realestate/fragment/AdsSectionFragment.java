@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.zawadz88.realestate.AdActivity;
 import com.zawadz88.realestate.R;
-import com.zawadz88.realestate.api.model.Section;
+import com.zawadz88.realestate.model.Section;
 
 /**
  * Fragment displaying a list of real estate ads

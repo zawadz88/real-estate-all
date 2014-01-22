@@ -1,13 +1,14 @@
-package com.zawadz88.realestate.api;
+package com.zawadz88.realestate.service;
 
-import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.eventbus.ArticleDownloadEvent;
-import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.api.model.Article;
-import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.task.ArticleDownloadTask;
-import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
-import com.zawadz88.realestate.api.task.BaseDownloadTask;
+import com.zawadz88.realestate.event.ArticleDownloadEvent;
+import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
+import com.zawadz88.realestate.model.Article;
+import com.zawadz88.realestate.model.ArticleEssential;
+import com.zawadz88.realestate.task.ArticleDownloadTask;
+import com.zawadz88.realestate.task.ArticleListDownloadTask;
+import com.zawadz88.realestate.task.BaseDownloadTask;
+import com.zawadz88.realestate.task.util.AsyncTaskListener;
+import com.zawadz88.realestate.task.util.TaskResult;
 import de.greenrobot.event.EventBus;
 
 import java.util.List;
@@ -20,15 +21,15 @@ import java.util.List;
  */
 public class DownloadTaskResultDelegate implements AsyncTaskListener {
 
-	private final RealEstateApplication mApplication;
+	private final ContentHolder mContentHolder;
 
 	/**
 	 * Default event bus
 	 */
 	private final EventBus mBus;
 
-	public DownloadTaskResultDelegate(final RealEstateApplication realEstateApplication) {
-		mApplication = realEstateApplication;
+	public DownloadTaskResultDelegate(final ContentHolder contentHolder) {
+		mContentHolder = contentHolder;
 		mBus = EventBus.getDefault();
 	}
 
@@ -36,14 +37,14 @@ public class DownloadTaskResultDelegate implements AsyncTaskListener {
 	public void onTaskSuccessful(final BaseDownloadTask task) {
 		if (task instanceof ArticleListDownloadTask) {
 			ArticleListDownloadTask articleListDownloadTask = (ArticleListDownloadTask) task;
-			List<ArticleEssential> articleEssentialList = mApplication.getArticleEssentialListByCategory(articleListDownloadTask.getCategory());
+			List<ArticleEssential> articleEssentialList = mContentHolder.getArticleEssentialListByCategory(articleListDownloadTask.getCategory());
 			articleEssentialList.addAll(articleListDownloadTask.getArticleList());
-			mApplication.setCurrentlyLoadedPageNumberForCategory(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
+			mContentHolder.setCurrentlyLoadedPageNumberForCategory(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
 			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, null, articleListDownloadTask.getCategory(), articleListDownloadTask.getArticleList()));
 		} else if (task instanceof ArticleDownloadTask) {
 			ArticleDownloadTask articleDownloadTask = (ArticleDownloadTask) task;
 			Article article = articleDownloadTask.getArticle();
-			mApplication.addArticle(article);
+			mContentHolder.addArticle(article);
 			mBus.post(new ArticleDownloadEvent(TaskResult.SUCCESSFUL, null, article.getArticleId(), article));
 		}
 	}

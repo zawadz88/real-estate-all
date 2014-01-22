@@ -1,8 +1,8 @@
 package com.zawadz88.realestate.test;
 
 import com.zawadz88.realestate.RealEstateApplication;
-import com.zawadz88.realestate.api.DownloadTaskResultDelegate;
-import com.zawadz88.realestate.api.task.BaseDownloadTask;
+import com.zawadz88.realestate.service.DownloadTaskResultDelegate;
+import com.zawadz88.realestate.task.BaseDownloadTask;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

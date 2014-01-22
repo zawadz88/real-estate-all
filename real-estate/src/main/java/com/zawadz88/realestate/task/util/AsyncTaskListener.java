@@ -1,9 +1,9 @@
-package com.zawadz88.realestate.api;
+package com.zawadz88.realestate.task.util;
 
-import com.zawadz88.realestate.api.task.BaseDownloadTask;
+import com.zawadz88.realestate.task.BaseDownloadTask;
 
 /**
- * Listener interface listening on {@link com.zawadz88.realestate.api.task.BaseDownloadTask}s
+ * Listener interface listening on {@link com.zawadz88.realestate.task.BaseDownloadTask}s
  *
  * @author Piotr Zawadzki
  */

@@ -1,4 +1,4 @@
-package com.zawadz88.realestate.api.model;
+package com.zawadz88.realestate.model;
 
 import java.io.Serializable;
 import java.util.Arrays;

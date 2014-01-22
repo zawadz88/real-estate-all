@@ -1,10 +1,10 @@
-package com.zawadz88.realestate.api.eventbus;
+package com.zawadz88.realestate.event;
 
-import com.zawadz88.realestate.api.TaskResult;
-import com.zawadz88.realestate.api.model.Article;
+import com.zawadz88.realestate.task.util.TaskResult;
+import com.zawadz88.realestate.model.Article;
 
 /**
- * An event that is passed via EventBus when an {@link com.zawadz88.realestate.api.model.Article} was done downloading.
+ * An event that is passed via EventBus when an {@link com.zawadz88.realestate.model.Article} was done downloading.
  *
  * @author Piotr Zawadzki
  */
