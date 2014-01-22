@@ -4,12 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 import com.zawadz88.realestate.api.AsyncTaskListener;
+import com.zawadz88.realestate.api.DownloadTaskResultDelegate;
 import com.zawadz88.realestate.api.TaskResult;
 import com.zawadz88.realestate.api.eventbus.ArticleDownloadEvent;
 import com.zawadz88.realestate.api.eventbus.ArticleEssentialDownloadEvent;
 import com.zawadz88.realestate.api.model.Article;
 import com.zawadz88.realestate.api.model.ArticleEssential;
-import com.zawadz88.realestate.api.task.AbstractDownloadTask;
+import com.zawadz88.realestate.api.task.BaseDownloadTask;
 import com.zawadz88.realestate.api.task.ArticleDownloadTask;
 import com.zawadz88.realestate.api.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.util.DeviceUtils;
@@ -27,15 +28,12 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
     public static final String DOWNLOAD_ARTICLE_TAG_PREFIX = "ArticleDownloadTask:";
 
     /**
-     * Default event bus
-     */
-	private EventBus mBus;
-
-    /**
-     * Map containing currently executing {@link com.zawadz88.realestate.api.task.AbstractDownloadTask}s.
+     * Map containing currently executing {@link com.zawadz88.realestate.api.task.BaseDownloadTask}s.
      * Tasks are mapped with tags that are unique for a given download
      */
-	private Map<String, AbstractDownloadTask> mDownloadTasks = (Map<String, AbstractDownloadTask>) Collections.synchronizedMap(new HashMap<String, AbstractDownloadTask>());
+	private Map<String, BaseDownloadTask> mDownloadTasks = (Map<String, BaseDownloadTask>) Collections.synchronizedMap(new HashMap<String, BaseDownloadTask>());
+
+	private DownloadTaskResultDelegate mTaskResultDelegate;
 
     /**
      * Map of article essential lists grouped by {@link com.zawadz88.realestate.api.model.ArticleCategory} names
@@ -67,46 +65,33 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mBus = EventBus.getDefault();
+		mTaskResultDelegate = new DownloadTaskResultDelegate(this);
 	}
 
 	@Override
-	public synchronized void onTaskSuccessful(final AbstractDownloadTask task) {
+	public synchronized void onTaskSuccessful(final BaseDownloadTask task) {
 		mDownloadTasks.remove(task.getTag());
-		if (task instanceof ArticleListDownloadTask) {
-			ArticleListDownloadTask articleListDownloadTask = (ArticleListDownloadTask) task;
-
-			List<ArticleEssential> articleEssentialList = getArticleEssentialListByCategory(articleListDownloadTask.getCategory());
-
-			articleEssentialList.addAll(articleListDownloadTask.getArticleList());
-			mArticleEssentialCurrentPageNumbersByCategory.put(articleListDownloadTask.getCategory(), articleListDownloadTask.getPageNumber());
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.SUCCESSFUL, null, articleListDownloadTask.getCategory(), articleListDownloadTask.getArticleList()));
-		} else if (task instanceof ArticleDownloadTask) {
-            ArticleDownloadTask articleDownloadTask = (ArticleDownloadTask) task;
-            Article article = articleDownloadTask.getArticle();
-            mArticlesByIdMap.put(article.getArticleId(), article);
-            mBus.post(new ArticleDownloadEvent(TaskResult.SUCCESSFUL, null, article.getArticleId(), article));
-        }
+		mTaskResultDelegate.onTaskSuccessful(task);
 	}
 
 	@Override
-	public synchronized void onTaskFailed(final AbstractDownloadTask task, final Exception exception) {
+	public synchronized void onTaskFailed(final BaseDownloadTask task, final Exception exception) {
 		mDownloadTasks.remove(task.getTag());
-		if (task instanceof ArticleListDownloadTask) {
-			mBus.post(new ArticleEssentialDownloadEvent(TaskResult.FAILED, exception, ((ArticleListDownloadTask) task).getCategory(), null));
-		} else if (task instanceof ArticleDownloadTask) {
-            ArticleDownloadTask articleDownloadTask = (ArticleDownloadTask) task;
-            mBus.post(new ArticleDownloadEvent(TaskResult.FAILED, exception, articleDownloadTask.getArticleEssential().getArticleId(), null));
-        }
+		mTaskResultDelegate.onTaskFailed(task, exception);
 	}
 
 	@Override
-	public synchronized void onTaskCancelled(final AbstractDownloadTask task) {
+	public synchronized void onTaskCancelled(final BaseDownloadTask task) {
 		mDownloadTasks.remove(task.getTag());
+		mTaskResultDelegate.onTaskCancelled(task);
+	}
+
+	public void setTaskResultDelegate(final DownloadTaskResultDelegate taskResultDelegate) {
+		this.mTaskResultDelegate = taskResultDelegate;
 	}
 
 	@SuppressLint("NewApi")
-    public synchronized void startTask(final AbstractDownloadTask task) {
+    public synchronized void startTask(final BaseDownloadTask task) {
 		final String tag = task.getTag();
 		if (!mDownloadTasks.containsKey(tag)) {
 			task.setListener(this);
@@ -155,6 +140,15 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
         }
         return result;
     }
+
+	/**
+	 *
+	 * @param categoryName
+	 * @param pageNumber
+	 */
+	public synchronized void setCurrentlyLoadedPageNumberForCategory(final String categoryName, final int pageNumber) {
+		mArticleEssentialCurrentPageNumbersByCategory.put(categoryName, pageNumber);
+	}
 
     /**
      *
@@ -207,8 +201,11 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
      * @param articleId
      * @return
      */
-    public synchronized Article getArticleById(long articleId) {
+    public synchronized Article getArticleById(final long articleId) {
         return mArticlesByIdMap.get(articleId);
     }
 
+	public synchronized void addArticle(final Article article) {
+		mArticlesByIdMap.put(article.getArticleId(), article);
+	}
 }

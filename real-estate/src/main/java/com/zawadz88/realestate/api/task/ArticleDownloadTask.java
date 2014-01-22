@@ -12,7 +12,7 @@ import retrofit.http.Path;
  *
  * @author Piotr Zawadzki
  */
-public class ArticleDownloadTask extends AbstractDownloadTask {
+public class ArticleDownloadTask extends BaseDownloadTask {
 
 	private ArticleService service;
 

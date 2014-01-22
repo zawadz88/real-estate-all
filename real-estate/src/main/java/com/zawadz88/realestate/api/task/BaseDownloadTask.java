@@ -11,7 +11,7 @@ import com.zawadz88.realestate.util.Constants;
  *
  * @author Piotr Zawadzki
  */
-public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
+public class BaseDownloadTask extends AsyncTask<Void, Void, Void> {
 
     /**
      * Base URL for API calls
@@ -28,10 +28,15 @@ public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
      */
 	protected TaskResult taskResult = TaskResult.SUCCESSFUL;
 
-    /**
-     * True, if task was cancelled
-     */
+	/**
+	 * True, if task was cancelled
+	 */
 	protected boolean cancelled;
+
+	/**
+	 * True, if task which was cancelled got notified
+	 */
+	protected boolean cancelledTaskNotified;
 
     /**
      * Exception that occurred if download failed, null if task did not fail
@@ -43,7 +48,7 @@ public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
      */
 	protected String tag;
 
-	protected AbstractDownloadTask(final String tag) {
+	public BaseDownloadTask(final String tag) {
 		this.tag = tag;
 	}
 
@@ -63,14 +68,12 @@ public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
      * Method to be overriden instead of {@code doInBackground}. Error handling is not necessary in this method.
      * @throws Exception
      */
-	protected abstract void doInBackgroundSafe() throws Exception;
+	protected void doInBackgroundSafe() throws Exception {}
 
 	@Override
 	protected void onPostExecute(Void params) {
 		if (taskListener != null) {
-			if (cancelled) {
-				taskListener.onTaskCancelled(this);
-			} else if (exception != null) {
+			if (exception != null) {
 				taskListener.onTaskFailed(this, this.exception);
 			} else {
 				taskListener.onTaskSuccessful(this);
@@ -80,20 +83,19 @@ public abstract class AbstractDownloadTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected void onCancelled() {
+		handleCancelled();
+	}
+
+	@Override
+	protected void onCancelled(final Void aVoid) {
+		handleCancelled();
+	}
+
+	private void handleCancelled() {
 		if (taskListener != null) {
 			taskListener.onTaskCancelled(this);
 		}
 	}
-
-	public void cancel() {
-		cancelled = true;
-		onCancelled();
-	}
-
-	public boolean isCancelledOverride() {
-		return cancelled;
-	}
-
 
 	public AsyncTaskListener getListener() {
 		return taskListener;

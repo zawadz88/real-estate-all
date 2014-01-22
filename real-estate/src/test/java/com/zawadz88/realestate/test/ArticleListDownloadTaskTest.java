@@ -38,8 +38,6 @@ public class ArticleListDownloadTaskTest {
 	private EventListener mEventListener;
 	private ArticleCategory mCategory;
 
-	private DownloadAssert downloadAssert;
-
 	public ArticleListDownloadTaskTest(final String categoryName) {
 		this.mCategory = ArticleCategory.valueOf(categoryName);
 	}
@@ -73,11 +71,7 @@ public class ArticleListDownloadTaskTest {
 		addTaskToExecutionQueue(asyncTask);
 
 		//Then
-		thenDownload().isExecutingForCategory();
-
-		startExecutingTasks();
-
-		thenDownload().finishedExecuting().fetchedArticles().emittedTaskSuccessfulEvent();
+		thenDownload().fetchedArticles().emittedTaskSuccessfulEvent();
 	}
 
 	@Test
@@ -89,8 +83,7 @@ public class ArticleListDownloadTaskTest {
 		addTaskToExecutionQueue(asyncTask);
 
 		//Then
-		startExecutingTasks();
-		thenDownload().finishedExecuting().didNotFetchArticles().emittedTaskFailedEvent();
+		thenDownload().didNotFetchArticles().emittedTaskFailedEvent();
 	}
 
 	private DownloadAssert thenDownload() {
@@ -100,12 +93,6 @@ public class ArticleListDownloadTaskTest {
 
 	private void addTaskToExecutionQueue(final ArticleListDownloadTask asyncTask) {
 		mApplication.startTask(asyncTask);
-	}
-
-	/**
-	 * Util method telling Robolectric to start executing AsyncTasks which were previously paused
-	 */
-	private void startExecutingTasks() {
 		Robolectric.runBackgroundTasks();
 		Robolectric.runUiThreadTasks();
 	}
@@ -140,21 +127,6 @@ public class ArticleListDownloadTaskTest {
 			this.category = category;
 			this.application = application;
 			this.eventListener = eventListener;
-		}
-
-		public DownloadAssert isExecutingForCategory() {
-			assertTrue("Task not executing!", application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + category.getName()));
-			return this;
-		}
-
-		public DownloadAssert finishedExecuting() {
-			await().until(new Callable<Boolean>() {
-				@Override
-				public Boolean call() throws Exception {
-					return !application.isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + category.getName());
-				}
-			});
-			return this;
 		}
 
 		public DownloadAssert fetchedArticles() {

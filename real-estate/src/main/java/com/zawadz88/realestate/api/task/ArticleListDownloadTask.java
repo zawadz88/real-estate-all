@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Piotr Zawadzki
  */
-public class ArticleListDownloadTask extends AbstractDownloadTask {
+public class ArticleListDownloadTask extends BaseDownloadTask {
 
 	private ArticleListService service;
 
