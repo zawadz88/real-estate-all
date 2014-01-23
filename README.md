@@ -8,6 +8,7 @@ A sample real estate app showing how to:
   - support multiple screen sizes
   - use Event Bus for decoupling fragments and activities
   - use Picasso for image loading and Retrofit for HTTP requests
+  - use maven to upload apks to [TestFairy](https://app.testfairy.com/) and run [monkey](http://developer.android.com/tools/help/monkey.html)
 
 Calabash
 =====
