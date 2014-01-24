@@ -8,15 +8,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
-import com.zawadz88.realestate.model.ArticleCategory;
-import com.zawadz88.realestate.model.ArticleEssential;
-import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.fragment.ArticleFragment;
 import com.zawadz88.realestate.fragment.ArticlesGridFragment;
+import com.zawadz88.realestate.model.ArticleCategory;
+import com.zawadz88.realestate.model.ArticleEssential;
 import com.zawadz88.realestate.service.ContentHolder;
+import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
 
@@ -29,7 +28,7 @@ import java.util.List;
  *
  * @author Piotr Zawadzki
  */
-public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
+public class ArticleActivity extends AbstractRealEstateActivity implements ViewPager.OnPageChangeListener {
 
     private static final String PAGE_ITEM_TAG = "pageItem";
     private static final int LOAD_MORE_ITEMS_THRESHOLD = 3;
@@ -89,15 +88,20 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(PAGE_ITEM_TAG, mArticleViewPager.getCurrentItem());
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -123,9 +127,9 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
         int count = mArticleViewPager.getAdapter().getCount();
         if (i > count - LOAD_MORE_ITEMS_THRESHOLD && !getContentHolder().getEndOfItemsReachedFlagForCategory(mCategory.getName()) && !getContentHolder().getLoadingMoreFlagForCategory(mCategory.getName())) {
             if (getRealEstateApplication().isExecutingTask(RealEstateApplication.DOWNLOAD_ARTICLE_ESSENTIAL_LIST_TAG_PREFIX + this.mCategory.getName())) {
-				getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
+                getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
             } else if (DeviceUtils.isOnline(getApplicationContext())) { //load next page
-				getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
+                getContentHolder().setLoadingMoreFlagForCategory(true, mCategory.getName());
                 ArticleListDownloadTask downloadTask = new ArticleListDownloadTask(this.mCategory.getName(), getContentHolder().getCurrentlyLoadedPageNumberForCategory(mCategory.getName()) + 1);
                 getRealEstateApplication().startTask(downloadTask);
             } else {
@@ -147,10 +151,6 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setTitle(mCategory.getTitleResource());
-	}
-
-	public RealEstateApplication getRealEstateApplication() {
-		return (RealEstateApplication) getApplicationContext();
 	}
 
 	public ContentHolder getContentHolder() {
@@ -177,7 +177,7 @@ public class ArticleActivity extends ActionBarActivity implements ViewPager.OnPa
 	 * @param ev posted event
 	 */
     public void onEventMainThread(ArticleEssentialDownloadEvent ev) {
-		getContentHolder().setLoadingMoreFlagForCategory(false, mCategory.getName());
+        getContentHolder().setLoadingMoreFlagForCategory(false, mCategory.getName());
         if (ev.getCategoryName().equals(mCategory.getName())) {
             if (ev.isSuccessful()) {
                 List<ArticleEssential> downloadedArticles = ev.getDownloadedArticles();

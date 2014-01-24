@@ -62,7 +62,7 @@ public class ArticleFragment extends AbstractFragment {
                 }
             }
         });
-        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
+        Article article = getContentHolder().getArticleById(articleEssential.getArticleId());
         if (article != null) {
             displayArticle(article);
         } else {
@@ -85,6 +85,7 @@ public class ArticleFragment extends AbstractFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.article_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -93,7 +94,7 @@ public class ArticleFragment extends AbstractFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
-        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
+        Article article = getContentHolder().getArticleById(articleEssential.getArticleId());
         MenuItem actionItem = menu.findItem(R.id.menu_item_share);
         if(article != null) {
             actionItem.setVisible(true);
@@ -110,7 +111,7 @@ public class ArticleFragment extends AbstractFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final ArticleEssential articleEssential = (ArticleEssential) getArguments().getSerializable(ARTICLE_ESSENTIAL);
-        Article article = mContentHolder.getArticleById(articleEssential.getArticleId());
+        Article article = getContentHolder().getArticleById(articleEssential.getArticleId());
         if(article == null) {//do not share if article is not initialized
             return true;
         } else {

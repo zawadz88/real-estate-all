@@ -73,7 +73,7 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	 */
 	@SuppressLint("NewApi")
     public synchronized boolean startTask(final BaseDownloadTask task) {
-		boolean started = false;
+        boolean started = false;
 		final String tag = task.getTag();
 		if (!mDownloadTasks.containsKey(tag)) {
 			started = true;

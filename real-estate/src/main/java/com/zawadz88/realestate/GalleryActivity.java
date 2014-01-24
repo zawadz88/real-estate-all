@@ -10,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.view.*;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  *
  * @see SystemUiHider
  */
-public class GalleryActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
+public class GalleryActivity extends AbstractRealEstateActivity implements ViewPager.OnPageChangeListener {
 
     public static final String AD_TAG = "ad";
     public static final String START_POSITION_TAG = "startPosition";

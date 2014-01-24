@@ -41,6 +41,8 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
         View view = inflater.inflate(R.layout.fragment_section_articles, container, false);
 
 		mArticlesPager = (ViewPager) view.findViewById(R.id.articles_viewpager);
+        setRetainInstance(false);
+        mArticlesPager.setSaveEnabled(false);
 		mArticlesPager.setAdapter(new ArticlesGridPagerAdapter(getActivity().getApplicationContext(), getChildFragmentManager()));
 
 		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.article_tabs);

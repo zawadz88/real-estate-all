@@ -34,7 +34,6 @@
         <activity
                 android:name=".ArticleActivity"
                 android:theme="@style/Theme.Realestate"
-                android:configChanges="orientation|keyboardHidden|screenSize"
                 android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

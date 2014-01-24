@@ -23,7 +23,7 @@
 		<android.support.version>19</android.support.version>
 		<retrofit.version>1.2.2</retrofit.version>
         <okhttp.version>1.2.1</okhttp.version>
-        <eventbus.version>2.1.0</eventbus.version>
+        <eventbus.version>2.2.0</eventbus.version>
         <nineoldandroids.version>2.4.0</nineoldandroids.version>
 		<picasso.version>2.1.1</picasso.version>
 		<junit.version>4.10</junit.version>

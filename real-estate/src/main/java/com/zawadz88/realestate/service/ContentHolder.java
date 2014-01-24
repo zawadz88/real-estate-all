@@ -3,6 +3,7 @@ package com.zawadz88.realestate.service;
 import com.zawadz88.realestate.model.Article;
 import com.zawadz88.realestate.model.ArticleEssential;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,34 +15,34 @@ import java.util.Map;
  *
  * @author Piotr Zawadzki
  */
-public class ContentHolder {
+public class ContentHolder implements Serializable {
 
 	/**
 	 * Map of article essential lists grouped by {@link com.zawadz88.realestate.model.ArticleCategory} names
 	 */
-	private Map<String, List<ArticleEssential>> mArticleEssentialListsByCategory = new HashMap<String, List<ArticleEssential>>();
+	private HashMap<String, List<ArticleEssential>> mArticleEssentialListsByCategory = new HashMap<String, List<ArticleEssential>>();
 
 	/**
 	 * Map o {@link com.zawadz88.realestate.model.Article}s grouped by article IDs
 	 */
-	private Map<Long, Article> mArticlesByIdMap = new HashMap<Long, Article>();
+	private HashMap<Long, Article> mArticlesByIdMap = new HashMap<Long, Article>();
 
 	/**
 	 * Map containing numbers of lastly fetched article essential pages for {@link com.zawadz88.realestate.model.ArticleCategory} name
 	 */
-	private Map<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
+	private HashMap<String, Integer> mArticleEssentialCurrentPageNumbersByCategory = new HashMap<String, Integer>();
 
 	/**
 	 * Map containing <i>loading more</i> flags for {@link com.zawadz88.realestate.model.ArticleCategory} names.
 	 * A <i>loading more</i> flag is set to {@code true} if the app is loading a next page of articles for a given category.
 	 */
-	private Map<String, Boolean> mArticleEssentialLoadingMoreFlagByCategory = new HashMap<String, Boolean>();
+	private HashMap<String, Boolean> mArticleEssentialLoadingMoreFlagByCategory = new HashMap<String, Boolean>();
 
 	/**
 	 * Map containing <i>end of items reached</i> flags for {@link com.zawadz88.realestate.model.ArticleCategory} names.
 	 * A <i>end of items reached</i> flag is set to {@code true} if there is no more items to be fetched for a given category
 	 */
-	private Map<String, Boolean> mArticleEssentialEndOfItemsReachedFlagByCategory = new HashMap<String, Boolean>();
+	private HashMap<String, Boolean> mArticleEssentialEndOfItemsReachedFlagByCategory = new HashMap<String, Boolean>();
 
 	/**
 	 * Get a list of {@link com.zawadz88.realestate.model.ArticleEssential}s for a given category name

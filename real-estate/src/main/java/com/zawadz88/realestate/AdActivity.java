@@ -7,7 +7,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,7 @@ import com.zawadz88.realestate.model.Section;
  *
  * @author Piotr Zawadzki
  */
-public class AdActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, ViewPager.OnPageChangeListener {
+public class AdActivity extends AbstractRealEstateActivity implements AdapterView.OnItemClickListener, ViewPager.OnPageChangeListener {
 
     private TextView mTitleView;
     private TextView mBasicInfoView;
