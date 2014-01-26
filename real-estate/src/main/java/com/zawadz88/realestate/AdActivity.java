@@ -43,6 +43,7 @@ public class AdActivity extends AbstractRealEstateActivity implements AdapterVie
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 		setContentView(R.layout.activity_ad);
         initActionBar();
         mPhotoMiniatureWidth = (int) getResources().getDimension(R.dimen.ad_photo_miniature_width);

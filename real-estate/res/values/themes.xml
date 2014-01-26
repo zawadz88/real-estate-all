@@ -2,7 +2,6 @@
 <resources>
     <style name="Theme.Splash" parent="Theme.Realestate">
         <item name="android:windowBackground">@drawable/re_app_background</item>
-       <!-- <item name="android:windowNoTitle">false</item>-->
     </style>
     <style name="Theme.Gallery" parent="Theme.Realestate">
         <item name="actionBarStyle">@style/GalleryActionBarStyle</item>

@@ -36,7 +36,7 @@ public class MainActivity extends AbstractRealEstateActivity implements Navigati
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawableResource(R.drawable.re_app_background_gradient);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 		setContentView(R.layout.activity_main);
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment)
