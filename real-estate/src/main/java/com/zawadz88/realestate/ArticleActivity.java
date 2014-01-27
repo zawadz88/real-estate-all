@@ -48,6 +48,7 @@ public class ArticleActivity extends AbstractRealEstateActivity implements ViewP
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         setContentView(R.layout.activity_article);
         if (getIntent().getExtras() == null || getIntent().getSerializableExtra(ArticlesGridFragment.EXTRA_CATEGORY_TAG) == null) {
             finish();

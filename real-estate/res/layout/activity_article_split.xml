@@ -8,7 +8,8 @@
     <FrameLayout android:id="@+id/article_list_container"
               android:layout_width="300dp"
               android:layout_height="match_parent"
-              tools:layout="@layout/fragment_section_default_grid"/>
+              tools:layout="@layout/fragment_section_default_grid"
+              android:background="@color/re_default_background_grey"/>
 
     <com.zawadz88.realestate.view.BounceBackViewPager
             android:id="@+id/articles_viewpager"
