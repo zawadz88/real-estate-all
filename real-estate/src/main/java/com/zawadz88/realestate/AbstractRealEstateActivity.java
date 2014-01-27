@@ -17,19 +17,18 @@ public class AbstractRealEstateActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long startTime = System.currentTimeMillis();
-        if (savedInstanceState != null && savedInstanceState.containsKey(CONTENT_HOLDER_TAG)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(CONTENT_HOLDER_TAG) && getRealEstateApplication().isNewlyCreated()) {
             ContentHolder contentHolder = (ContentHolder) savedInstanceState.getSerializable(CONTENT_HOLDER_TAG);
             if (contentHolder != null) {
                 getRealEstateApplication().setContentHolder(contentHolder);
                 getRealEstateApplication().setTaskResultDelegate(new DownloadTaskResultDelegate(contentHolder));
             }
         }
+        getRealEstateApplication().setNewlyCreated(false);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        long startTime = System.currentTimeMillis();
         outState.putSerializable(CONTENT_HOLDER_TAG, getRealEstateApplication().getContentHolder());
         super.onSaveInstanceState(outState);
     }

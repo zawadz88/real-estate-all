@@ -29,6 +29,12 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 	private DownloadTaskResultDelegate mTaskResultDelegate;
 	private ContentHolder mContentHolder;
 
+    /**
+     * A flag indicating if the application has been just created. This should be set to false in onCreate of all activities.
+     * Used mainly to replace the {@link com.zawadz88.realestate.service.ContentHolder} instance with the one stored in the {@code savedInstanceState} Bundle
+     */
+    private boolean mNewlyCreated = true;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -97,4 +103,11 @@ public class RealEstateApplication extends Application implements AsyncTaskListe
 		return mDownloadTasks.containsKey(tag);
 	}
 
+    public boolean isNewlyCreated() {
+        return mNewlyCreated;
+    }
+
+    public void setNewlyCreated(boolean newlyCreated) {
+        this.mNewlyCreated = newlyCreated;
+    }
 }
