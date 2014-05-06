@@ -45,6 +45,15 @@
             <groupId>com.squareup.picasso</groupId>
             <artifactId>picasso</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.androidannotations</groupId>
+            <artifactId>androidannotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.androidannotations</groupId>
+            <artifactId>androidannotations-api</artifactId>
+        </dependency>
 		
 		<!-- apklibs -->
 		<dependency>

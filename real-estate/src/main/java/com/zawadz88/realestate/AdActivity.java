@@ -19,6 +19,10 @@ import com.meetme.android.horizontallistview.HorizontalListView;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.model.Ad;
 import com.zawadz88.realestate.model.Section;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.DimensionRes;
 
 /**
  * Activity displaying an {@link com.zawadz88.realestate.model.Ad}.
@@ -26,37 +30,47 @@ import com.zawadz88.realestate.model.Section;
  *
  * @author Piotr Zawadzki
  */
+@EActivity(R.layout.activity_ad)
 public class AdActivity extends AbstractRealEstateActivity implements AdapterView.OnItemClickListener, ViewPager.OnPageChangeListener {
 
-    private TextView mTitleView;
-    private TextView mBasicInfoView;
-    private TextView mDescriptionView;
-    private TextView mContactInfoView;
-    private TextView mPriceView;
-    private ViewPager mImagePagerView;
-    private HorizontalListView mImageMiniatureListView;
+    @ViewById(R.id.title)
+    TextView mTitleView;
 
-    private int mPhotoMiniatureWidth;
-    private int mPhotoMiniatureDividerWidth;
+    @ViewById(R.id.basic_info_content)
+    TextView mBasicInfoView;
+
+    @ViewById(R.id.description_content)
+    TextView mDescriptionView;
+
+    @ViewById(R.id.contact_info_content)
+    TextView mContactInfoView;
+
+    @ViewById(R.id.price)
+    TextView mPriceView;
+
+    @ViewById(R.id.image_view_pager)
+    ViewPager mImagePagerView;
+
+    @ViewById(R.id.image_miniature_list)
+    HorizontalListView mImageMiniatureListView;
+
+    @DimensionRes(R.dimen.ad_photo_miniature_width)
+    float mPhotoMiniatureWidth;
+
+    @DimensionRes(R.dimen.ad_photo_miniature_divider_width)
+    float mPhotoMiniatureDividerWidth;
+
     private Ad mAd;
 
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-		setContentView(R.layout.activity_ad);
         initActionBar();
-        mPhotoMiniatureWidth = (int) getResources().getDimension(R.dimen.ad_photo_miniature_width);
-        mPhotoMiniatureDividerWidth = (int) getResources().getDimension(R.dimen.ad_photo_miniature_divider_width);
+	}
 
-        mTitleView = (TextView) findViewById(R.id.title);
-        mBasicInfoView = (TextView) findViewById(R.id.basic_info_content);
-        mDescriptionView = (TextView) findViewById(R.id.description_content);
-        mContactInfoView = (TextView) findViewById(R.id.contact_info_content);
-        mPriceView = (TextView) findViewById(R.id.price);
-        mImagePagerView = (ViewPager) findViewById(R.id.image_view_pager);
-        mImageMiniatureListView = (HorizontalListView) findViewById(R.id.image_miniature_list);
-
+    @AfterViews
+    void populateViews() {
         //TODO fetch from API
         mAd = new Ad();
         mAd.setImages(new String[]{
@@ -104,7 +118,7 @@ public class AdActivity extends AbstractRealEstateActivity implements AdapterVie
         mImagePagerView.setOnPageChangeListener(this);
         mImageMiniatureListView.setAdapter(new PhotoMiniatureAdapter(this, mAd.getImages()));
         mImageMiniatureListView.setOnItemClickListener(this);
-	}
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,7 +153,7 @@ public class AdActivity extends AbstractRealEstateActivity implements AdapterVie
 
     @Override
     public void onPageSelected(int i) {
-        mImageMiniatureListView.scrollTo(i * (mPhotoMiniatureWidth + (i == 0 ? 0 : mPhotoMiniatureDividerWidth)));
+        mImageMiniatureListView.scrollTo(i * ((int) mPhotoMiniatureWidth + (i == 0 ? 0 : (int) mPhotoMiniatureDividerWidth)));
     }
 
     @Override

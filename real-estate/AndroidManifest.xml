@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-                android:name=".AdActivity"
+                android:name=".AdActivity_"
                 android:theme="@style/Theme.Splash"
                 android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->

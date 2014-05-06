@@ -35,3 +35,6 @@ Known issues on IntelliJ
 **Problem**: No Android SDK selected.<br>
 **Solution**: Select *real-estate-all*, right-click and select Open Module Settings. Select your Java and Android SDK locations.
 
+**Problem**: IntelliJ cannot find ActivityName_ classes
+**Solution**: Add generated source code to source root [description](http://hintdesk.com/android-introduction-to-androidannotations-maven-in-intellij-idea/)
+

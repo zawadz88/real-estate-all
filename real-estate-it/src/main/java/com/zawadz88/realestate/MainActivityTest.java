@@ -99,7 +99,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void testClickOnAdsItem() {
 		final int clickedItemIndex = 2;
 		solo.clickInList(clickedItemIndex, 0);
-		assertTrue(solo.waitForActivity(AdActivity.class.getSimpleName()));
+		assertTrue(solo.waitForActivity(AdActivity_.class.getSimpleName()));
 		assertNotNull(solo.getCurrentActivity());
 	}
 

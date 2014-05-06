@@ -21,7 +21,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.jayway.android.robotium.solo.Solo;
 import com.zawadz88.realestate.model.Section;
 
-public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity> {
+public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity_> {
 
     /**
      * The first constructor parameter must refer to the package identifier of the
@@ -30,7 +30,7 @@ public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity>
      * some cases it may not match at all.
      */
     public AdActivityTest() {
-        super(AdActivity.class);
+        super(AdActivity_.class);
     }
 
 	@SmallTest
@@ -41,7 +41,7 @@ public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity>
 	@SmallTest
 	public void testTitleIsSet() {
 		Solo solo = new Solo(getInstrumentation(), getActivity());
-		AdActivity adsActivity = (AdActivity) solo.getCurrentActivity();
+        AdActivity_ adsActivity = (AdActivity_) solo.getCurrentActivity();
 		CharSequence title = adsActivity.getSupportActionBar().getTitle();
 		assertEquals(solo.getString(Section.ADS.getTitleResourceId()), title);
 		solo.finishOpenedActivities();

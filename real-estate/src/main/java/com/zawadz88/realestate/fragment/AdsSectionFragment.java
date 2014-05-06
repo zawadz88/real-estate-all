@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.zawadz88.realestate.AdActivity;
 import com.zawadz88.realestate.R;
+import com.zawadz88.realestate.AdActivity_;
 import com.zawadz88.realestate.model.Section;
 
 /**
@@ -37,7 +37,7 @@ public class AdsSectionFragment extends AbstractSectionFragment {
 		mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdActivity.class);
+				Intent intent = new Intent(AdsSectionFragment.this.getActivity(), AdActivity_.class);
 				startActivity(intent);
 			}
 		});
