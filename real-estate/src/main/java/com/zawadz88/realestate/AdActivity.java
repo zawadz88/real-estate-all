@@ -197,9 +197,9 @@ public class AdActivity extends AbstractRealEstateActivity implements AdapterVie
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(AdActivity.this, GalleryActivity.class);
-                    intent.putExtra(GalleryActivity.AD_TAG, mAd);
-                    intent.putExtra(GalleryActivity.START_POSITION_TAG, position);
+                    Intent intent = new Intent(AdActivity.this, GalleryActivity_.class);
+                    intent.putExtra(GalleryActivity_.AD_TAG, mAd);
+                    intent.putExtra(GalleryActivity_.START_POSITION_TAG, position);
                     startActivity(intent);
                 }
             });

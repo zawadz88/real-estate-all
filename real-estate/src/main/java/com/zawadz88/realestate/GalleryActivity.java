@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.zawadz88.realestate.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -25,6 +28,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  *
  * @see SystemUiHider
  */
+@EActivity(R.layout.activity_gallery)
 public class GalleryActivity extends AbstractRealEstateActivity implements ViewPager.OnPageChangeListener {
 
     public static final String AD_TAG = "ad";
@@ -57,18 +61,20 @@ public class GalleryActivity extends AbstractRealEstateActivity implements ViewP
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
-    private ViewPager mPhotoPager;
+
+    @ViewById(R.id.photo_pager)
+    ViewPager mPhotoPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_gallery);
-
         initActionBar();
+    }
 
+    @AfterViews
+    void populateViews() {
         final Ad ad = (Ad) getIntent().getSerializableExtra(AD_TAG);
-
-        mPhotoPager = (ViewPager) findViewById(R.id.photo_pager);
         mPhotoPager.setAdapter(new PhotoPagerAdapter(ad.getImages()));
 
         int startPosition = getIntent().getIntExtra(START_POSITION_TAG, 0);

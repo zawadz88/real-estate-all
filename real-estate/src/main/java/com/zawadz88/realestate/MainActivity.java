@@ -96,7 +96,7 @@ public class MainActivity extends AbstractRealEstateActivity implements Navigati
 					sectionFragment = ArticlesSectionFragment.newInstance();
 					break;
 				case PROJECTS:
-					sectionFragment = ProjectsSectionFragment.newInstance();
+					sectionFragment = ProjectsSectionFragment_.newInstance();
 					break;
 			}
 

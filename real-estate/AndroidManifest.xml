@@ -32,7 +32,7 @@
                     android:value=".MainActivity" />
         </activity>
         <activity
-                android:name=".ArticleActivity"
+                android:name=".ArticleActivity_"
                 android:theme="@style/Theme.Splash"
                 android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -41,7 +41,7 @@
                     android:value=".MainActivity" />
         </activity>
         <activity
-                android:name=".GalleryActivity"
+                android:name=".GalleryActivity_"
                 android:theme="@style/Theme.Gallery"
                 android:parentActivityName=".AdActivity"
                 >

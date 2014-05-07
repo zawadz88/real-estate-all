@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.zawadz88.realestate.ArticleActivity;
+import com.zawadz88.realestate.ArticleActivity_;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.RealEstateApplication;
 import com.zawadz88.realestate.event.ArticleEssentialDownloadEvent;
@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus;
 import java.util.List;
 
 /**
- * Fragment displaying a list of articles
+ * Fragment displaying a list (grid) of articles
  *
  * @author Piotr Zawadzki
  */
@@ -41,6 +41,8 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 
 	private ArticleCategory mCategory;
     private int mLastKnownScrollPosition;
+
+    private ArticlesGridFragment() {}
 
     public static ArticlesGridFragment newInstance(final ArticleCategory category) {
         ArticlesGridFragment fragment = new ArticlesGridFragment();
@@ -230,7 +232,7 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 	 * is posted from EventBus.
 	 * @param ev posted event
 	 */
-    public void onEventMainThread(ArticleActivity.ArticleSwipedEvent ev) {
+    public void onEventMainThread(ArticleActivity_.ArticleSwipedEvent ev) {
         scrollToPosition(ev.getNewPosition(), true);
     }
 

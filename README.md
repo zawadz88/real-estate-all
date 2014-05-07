@@ -38,3 +38,6 @@ Known issues on IntelliJ
 **Problem**: IntelliJ cannot find ActivityName_ classes<br>
 **Solution**: Add generated source code to source root [description](http://hintdesk.com/android-introduction-to-androidannotations-maven-in-intellij-idea/)
 
+**Problem**: When running SqlGenerator a FileNotFoundException is thrown<br>
+**Solution**: Make sure that in your Run Configuration you have set *sql-generator* as your Working Directory
+

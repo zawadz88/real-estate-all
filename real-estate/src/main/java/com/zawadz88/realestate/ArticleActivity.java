@@ -18,6 +18,9 @@ import com.zawadz88.realestate.service.ContentHolder;
 import com.zawadz88.realestate.task.ArticleListDownloadTask;
 import com.zawadz88.realestate.util.DeviceUtils;
 import de.greenrobot.event.EventBus;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -28,12 +31,14 @@ import java.util.List;
  *
  * @author Piotr Zawadzki
  */
+@EActivity(R.layout.activity_article)
 public class ArticleActivity extends AbstractRealEstateActivity implements ViewPager.OnPageChangeListener {
 
     private static final String PAGE_ITEM_TAG = "pageItem";
     private static final int LOAD_MORE_ITEMS_THRESHOLD = 3;
 
-    private ViewPager mArticleViewPager;
+    @ViewById(R.id.articles_viewpager)
+    ViewPager mArticleViewPager;
 
     /**
      * Position of the article in the {@link android.support.v4.view.ViewPager}
@@ -49,7 +54,6 @@ public class ArticleActivity extends AbstractRealEstateActivity implements ViewP
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        setContentView(R.layout.activity_article);
         if (getIntent().getExtras() == null || getIntent().getSerializableExtra(ArticlesGridFragment.EXTRA_CATEGORY_TAG) == null) {
             finish();
             return;
@@ -62,7 +66,10 @@ public class ArticleActivity extends AbstractRealEstateActivity implements ViewP
         }
 
 		initActionBar();
+    }
 
+    @AfterViews
+    void populateViews() {
         if (findViewById(R.id.article_list_container) != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             ArticlesGridFragment articlesGridFragment = ArticlesGridFragment.newInstance(mCategory, 1, mCurrentPosition);
@@ -71,7 +78,6 @@ public class ArticleActivity extends AbstractRealEstateActivity implements ViewP
                     .commit();
         }
 
-        mArticleViewPager = (ViewPager) findViewById(R.id.articles_viewpager);
         mArticleViewPager.setSaveEnabled(false);
         List<ArticleEssential> articleEssentialList = getContentHolder().getArticleEssentialListByCategory(mCategory.getName());
         mArticleViewPager.setAdapter(new ArticlesPagerAdapter(articleEssentialList, getSupportFragmentManager()));
@@ -79,7 +85,6 @@ public class ArticleActivity extends AbstractRealEstateActivity implements ViewP
             mArticleViewPager.setCurrentItem(mCurrentPosition);
         }
         mArticleViewPager.setOnPageChangeListener(this);
-
     }
 
     @Override
