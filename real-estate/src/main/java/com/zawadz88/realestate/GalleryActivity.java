@@ -18,6 +18,7 @@ import com.zawadz88.realestate.model.Ad;
 import com.zawadz88.realestate.util.SystemUiHider;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -29,6 +30,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * @see SystemUiHider
  */
 @EActivity(R.layout.activity_gallery)
+@OptionsMenu(R.menu.article_menu)
 public class GalleryActivity extends AbstractRealEstateActivity implements ViewPager.OnPageChangeListener {
 
     public static final String AD_TAG = "ad";
@@ -147,12 +149,6 @@ public class GalleryActivity extends AbstractRealEstateActivity implements ViewP
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.article_menu, menu);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

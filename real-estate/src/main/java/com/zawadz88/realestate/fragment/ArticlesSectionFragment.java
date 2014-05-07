@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.zawadz88.realestate.ArticleActivity;
+import com.zawadz88.realestate.ArticleActivity_;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.ArticleCategory;
 import com.zawadz88.realestate.model.Section;
@@ -69,7 +70,7 @@ public class ArticlesSectionFragment extends AbstractSectionFragment {
 	 * @param ev posted event
 	 */
     public void onEventMainThread(ArticlesGridFragment.ArticleItemSelectedEvent ev) {
-        Intent intent = new Intent(ArticlesSectionFragment.this.getActivity(), ArticleActivity.class);
+        Intent intent = new Intent(ArticlesSectionFragment.this.getActivity(), ArticleActivity_.class);
         intent.putExtra(ArticlesGridFragment.EXTRA_POSITION_TAG, ev.getPosition());
         intent.putExtra(ArticlesGridFragment.EXTRA_CATEGORY_TAG, ev.getCategory());
         startActivity(intent);
