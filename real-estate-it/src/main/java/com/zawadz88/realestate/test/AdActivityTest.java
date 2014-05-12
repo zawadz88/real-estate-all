@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.zawadz88.realestate;
+package com.zawadz88.realestate.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 import com.jayway.android.robotium.solo.Solo;
+import com.zawadz88.realestate.AdActivity_;
 import com.zawadz88.realestate.model.Section;
 
 public class AdActivityTest extends ActivityInstrumentationTestCase2<AdActivity_> {

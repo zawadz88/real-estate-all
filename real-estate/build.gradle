@@ -1,0 +1,93 @@
+apply plugin: 'android'
+apply plugin: 'android-apt'
+apply plugin: 'robolectric'
+
+dependencies {
+    compile ("android.support:compatibility-v4:$androidSupportVersion")
+    compile ("android.support:compatibility-v7-appcompat:$androidSupportVersion")
+	compile ("com.squareup.retrofit:retrofit:$retrofitVersion")
+	compile ("com.squareup.okhttp:okhttp:$okhttpVersion")
+	compile ("de.greenrobot:eventbus:$eventbusVersion")
+	compile ("com.nineoldandroids:library:$nineoldandroidsVersion")
+	compile ("com.squareup.picasso:picasso:$picassoVersion")
+	apt 	("org.androidannotations:androidannotations:$androidannotationsVersion")
+	compile ("org.androidannotations:androidannotations-api:$androidannotationsVersion")
+	compile ("com.j256.ormlite:ormlite-android:$ormliteVersion")
+
+    compile project (':pull-to-refresh-library')
+	compile project (':appcompat-resources')
+	compile project (':pagerslidingtabstrip')
+	compile project (':photoview-library')
+
+    robolectricCompile ("org.robolectric:robolectric:2.2")
+    robolectricCompile ("junit:junit:4.10")
+    robolectricCompile ("com.jayway.awaitility:awaitility:1.3.5")
+    robolectricCompile ("org.mockito:mockito-core:1.9.5")
+
+    androidTestCompile ("com.jayway.android.robotium:robotium-solo:$robotiumVersion")
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile 
+        resourcePackageName 'com.zawadz88.realestate'
+    }
+}
+
+android {
+
+    compileSdkVersion 19
+    buildToolsVersion "$androidBuildToolsVersion"
+
+    defaultConfig {
+        minSdkVersion project.androidMinVersion
+        targetSdkVersion project.androidTargetVersion
+    }
+
+	sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        androidTest {
+            java {
+                srcDirs = [
+                        '../real-estate-it/src/main/java'
+                ]
+            }
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+        }
+        release {
+        }
+    }
+
+}
+
+tasks.withType(Test) {
+    /*
+    * AndroidManifest.xml is in project root not in default src/main,
+    * so need to change the working directory to project root...
+    * */
+    workingDir '.'
+
+    scanForTestClasses = false
+    include "**/*Test.class" // whatever Ant pattern matches your test class files
+
+}

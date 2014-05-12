@@ -1,0 +1,69 @@
+//useful debug stuff
+//project.configurations.compile.getProperties().each { println it }
+//println android.sourceSets.main.java.srcDirs
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://maven-repo.gazeta.pl:3080/artifactory/repo"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.1'
+        classpath 'com.novoda.gradle:robolectric-plugin:0.0.1-SNAPSHOT'
+    }
+}
+
+configure(allprojects) {
+    group = 'com.zawadz88.realestate'
+
+    ext.androidMinVersion 		 = 8
+    ext.androidTargetVersion     = 17
+    ext.androidVersion           = "4.1.1.4"
+    ext.androidSDKVersion        = "17"
+    ext.androidBuildToolsVersion = "19.0.1"
+    ext.androidSupportVersion    = "19"
+    ext.robotiumVersion          = "4.3.1"
+    ext.dexmakerVersion          = "1.0"
+    ext.dexmakerMockitoVersion   = "1.0"
+    ext.mockitoVersion           = "1.9.5"
+	ext.retrofitVersion			 = "1.2.2"
+	ext.okhttpVersion			 = "1.2.1"
+	ext.eventbusVersion			 = "2.1.0"
+	ext.nineoldandroidsVersion	 = "2.4.0"
+	ext.picassoVersion			 = "2.1.1"
+	ext.androidannotationsVersion= "3.0.1"
+	ext.ormliteVersion			 = "4.48"
+	
+}
+
+configure(subprojects) { subproject ->
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "http://maven-repo.gazeta.pl:3080/artifactory/repo"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+    }
+	
+    tasks.withType(Compile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+
+//-------------------------
+//-- Root project
+//-------------------------
+
+configure(rootProject) { description = 'Real Estate App' }
+
+apply plugin: 'build-dashboard'

@@ -1,0 +1,9 @@
+rootProject.name = 'Real Estate App'
+
+include 'real-estate'
+include 'pull-to-refresh-library'
+include 'photoview-library'
+include 'pagerslidingtabstrip'
+include 'appcompat-resources'
+
+include 'sql-generator'

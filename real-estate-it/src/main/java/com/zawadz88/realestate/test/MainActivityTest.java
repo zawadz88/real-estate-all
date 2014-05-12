@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zawadz88.realestate;
+package com.zawadz88.realestate.test;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +26,8 @@ import android.widget.GridView;
 import android.widget.ListView;
 import com.jayway.android.robotium.solo.Condition;
 import com.jayway.android.robotium.solo.Solo;
+import com.zawadz88.realestate.AdActivity_;
+import com.zawadz88.realestate.MainActivity;
 import com.zawadz88.realestate.model.Section;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -53,17 +55,16 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 	@SmallTest
 	public void testNavigationLayoutsNotNull() {
-		DrawerLayout drawerLayout = (DrawerLayout) solo.getView(R.id.drawer_layout);
-		Fragment navigationDrawer = getActivity().getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-		FrameLayout contentLayout = (FrameLayout) solo.getView(R.id.content_container);
+		DrawerLayout drawerLayout = (DrawerLayout) solo.getView(com.zawadz88.realestate.R.id.drawer_layout);
+		Fragment navigationDrawer = getActivity().getSupportFragmentManager().findFragmentById(com.zawadz88.realestate.R.id.navigation_drawer);
+		FrameLayout contentLayout = (FrameLayout) solo.getView(com.zawadz88.realestate.R.id.content_container);
 		assertNotNull("DrawerLayout does not exist!", drawerLayout);
 		assertNotNull("navigationDrawer does not exist!", navigationDrawer);
 		assertNotNull("contentLayout does not exist!", contentLayout);
 	}
 
 	@SmallTest
-	public void testNavigationDrawerListNotEmpty() {
-		ListView listView = (ListView) solo.getView(R.id.navigation_list);
+	public void testNavigationDrawerListNotEmpty() {                                                                                                  		ListView listView = (ListView) solo.getView(com.zawadz88.realestate.R.id.navigation_list);
 		assertNotNull(listView);
 		assertNotNull(listView.getAdapter());
 		assertFalse(listView.getAdapter().isEmpty());
@@ -72,8 +73,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	@FlakyTest
 	public void testContentReplacementOnNavigationDrawerListItemClicked() {
 		final int articlesPosition = Section.ARTICLES.getPosition();
-		final ListView listView = (ListView) solo.getView(R.id.navigation_list);
-		assertEquals(solo.getString(R.string.section_title_ads), getActivity().getActionBarTitle());
+		final ListView listView = (ListView) solo.getView(com.zawadz88.realestate.R.id.navigation_list);
+		assertEquals(solo.getString(com.zawadz88.realestate.R.string.section_title_ads), getActivity().getActionBarTitle());
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -83,7 +84,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		Condition titleChangedCondition = new Condition() {
 			@Override
 			public boolean isSatisfied() {
-				return solo.getString(R.string.section_title_articles).equals(getActivity().getActionBarTitle());
+				return solo.getString(com.zawadz88.realestate.R.string.section_title_articles).equals(getActivity().getActionBarTitle());
 			}
 		};
 		assertTrue(solo.waitForCondition(titleChangedCondition, 2000));
@@ -91,7 +92,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 	@SmallTest
 	public void testAdsGridLayoutPresent() {
-		GridView gridView = (GridView) solo.getView(R.id.ads_gridview);
+		GridView gridView = (GridView) solo.getView(com.zawadz88.realestate.R.id.ads_gridview);
 		assertNotNull("Couldn't find ads gridView!", gridView);
 		assertTrue("GridView is empty!", gridView.getChildCount() > 0);
 	}

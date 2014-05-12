@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
-import com.zawadz88.realestate.ArticleActivity;
 import com.zawadz88.realestate.ArticleActivity_;
 import com.zawadz88.realestate.R;
 import com.zawadz88.realestate.model.ArticleCategory;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zawadz88.realestate;
+package com.zawadz88.realestate.test;
 
 import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;
