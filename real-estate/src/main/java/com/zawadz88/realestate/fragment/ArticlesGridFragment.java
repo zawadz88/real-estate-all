@@ -42,7 +42,7 @@ public class ArticlesGridFragment extends AbstractGridFragment implements AbsLis
 	private ArticleCategory mCategory;
     private int mLastKnownScrollPosition;
 
-    private ArticlesGridFragment() {}
+    public ArticlesGridFragment() {}
 
     public static ArticlesGridFragment newInstance(final ArticleCategory category) {
         ArticlesGridFragment fragment = new ArticlesGridFragment();
